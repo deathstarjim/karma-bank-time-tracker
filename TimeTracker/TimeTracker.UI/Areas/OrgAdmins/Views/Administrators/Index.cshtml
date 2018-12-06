@@ -1,0 +1,32 @@
+@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.AdministratorsViewModel
+
+@{
+    ViewBag.Title = "Administrators";
+    Layout = "~/Areas/OrgAdmins/Views/Shared/_OrgAdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Organization Adminstrator's Home</h1>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">Home</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<div class="container-fluid">
+    <div class="row">
+        @Html.Partial("_AdministratorsList", Model)
+
+        @Html.Partial("_ClockedInAdministratorsList", Model)
+    </div>
+</div>

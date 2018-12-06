@@ -1,0 +1,46 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.ReportsViewModel
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-header">Volunteer Punches by Date Range</h3>
+    </div>
+    <div class="card-body box-profile">
+        <div class="row mb-2">
+            <div class="col-md-12">
+                @using (Ajax.BeginForm("CreditsByDateRange", "Reports", new AjaxOptions
+                {
+                    UpdateTargetId = "results",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST"
+                },
+                    new { autocomplete = "off" }))
+                {
+                    <div class="form-group">
+                        <label>Date range:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            @Html.EditorFor(model => Model.CreditDateRange, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary">Run Report</button>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#" id="vol-punches-by-date-range" class="btn btn-success">
+                                    <i class="far fa-file-excel"></i>
+                                    Export to Excel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

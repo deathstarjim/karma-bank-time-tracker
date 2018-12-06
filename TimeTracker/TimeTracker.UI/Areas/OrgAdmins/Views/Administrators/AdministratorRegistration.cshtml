@@ -1,0 +1,44 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.AdministratorsViewModel
+
+@{
+    ViewBag.Title = "Administrator Registration";
+    Layout = "~/Areas/OrgAdmins/Views/Shared/_OrgAdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Create a New Administrator</h1>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "Administrators", new { Area = "OrgAdmins" })'>Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">Create Administrator</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        Add a new administrator to your organziation
+                    </div>
+                    <div class="card-body box-profile">
+                        @Html.EditorFor(model => Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

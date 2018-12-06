@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row margin-top">
+    <div class="col-md-4">
+        <div class="HomePageBlock">
+            <i class="far fa-address-card fa-7x"></i>
+            <h2>Registration</h2>
+            <p>
+                Register today and start making a difference!
+            </p>
+            <p>
+                <a class="btn btn-primary" href='@Url.Action("VolunteerRegistration", "Volunteers", new { Area = "Volunteers" })'>Volunteer Registration</a>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="HomePageBlock">
+            <i class="far fa-clock fa-7x"></i>
+            <h2>Clock In &amp; Out</h2>
+            <p>
+                Clock in and start earning credits!
+            </p>
+            <p>
+                <a class="btn btn-primary" href='@Url.Action("Index", "Volunteers", new { Area = "Volunteers" })'>Clock In &amp; Out</a>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="HomePageBlock">
+            <i class="fas fa-business-time fa-7x"></i>
+            <h2>Time Punches</h2>
+            <p>
+                See how many credits you've earned!
+            </p>
+            <p>
+                <a class="btn btn-primary" href='@Url.Action("Index", "TimePunch", new { Area = "Volunteers" })'>View Time Punches</a>
+            </p>
+        </div>
+    </div>
+</div>

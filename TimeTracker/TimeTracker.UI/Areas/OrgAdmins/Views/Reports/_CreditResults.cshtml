@@ -1,0 +1,37 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.ReportsViewModel
+
+@if (Model.CreditResults.Count > 0)
+{
+    <table class="table table-responsive table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Opportunity Name</th>
+                <th>Punch In Date / Time</th>
+                <th>Punch Out Date / Time</th>
+                <th>Duration in Minutes</th>
+                <th>Duration in Hours</th>
+                <th>Credits Earned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in Model.CreditResults)
+            {
+                <tr>
+                    <td>@result.VolunteerName</td>
+                    <td>@result.VolOppName</td>
+                    <td>@result.PunchInDateTime.ToShortDateString() @result.PunchInDateTime.ToShortTimeString()</td>
+                    <td>@result.PunchOutDateTime.ToShortDateString() @result.PunchOutDateTime.ToShortTimeString()</td>
+                    <td>@result.DurationInMinutes</td>
+                    <td>@result.DurationInHours</td>
+                    <td>@result.CreditsEarned</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.CreditResults.Count == 0)
+{
+    <h3>No results were found.</h3>
+}

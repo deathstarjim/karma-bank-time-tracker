@@ -1,0 +1,267 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.BaseOrgAdminViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- jQuery UI CSS -->
+    <link href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/OrgAdmins/Content/adminlte.css" />
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Areas/OrgAdmins/Plugins/datatables/dataTables.bootstrap4.css" />
+
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="~/Areas/OrgAdmins/Plugins/daterangepicker/daterangepicker-bs3.css" />
+
+    <!-- time picker -->
+    <link rel="stylesheet" href="~/Areas/OrgAdmins/Plugins/timepicker/bootstrap-timepicker.css" />
+    <link href="~/Areas/OrgAdmins/Plugins/datetimepicker/jquery.timepicker.css" rel="stylesheet" />
+
+    <!-- iCheck -->
+    <link href="~/Areas/OrgAdmins/Plugins/iCheck/all.css" rel="stylesheet" />
+
+    <!-- jQuery Toast-->
+    <link href="~/Areas/OrgAdmins/Plugins/toast/jquery.toast.min.css" rel="stylesheet" />
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- Date Range Picker -->
+    <link href="~/Areas/OrgAdmins/Plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+
+    <!-- Org Admin Custom Styles -->
+    @*<link href="~/Areas/OrgAdmins/Content/OrgAdminStyles.css" rel="stylesheet" />*@
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        @Html.Partial("_NavBar")
+
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_SidebarContainer")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <!-- /.content-header -->
+            <section class="content">
+                @RenderBody()
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        @Html.Partial("_ControlSidebar")
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        @Html.Partial("_Footer")
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/Areas/OrgAdmins/Plugins/jquery/jquery.min.js"></script>
+
+    <!-- jQuery UI-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Validation Scripts -->
+    <script src="~/Areas/OrgAdmins/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Areas/OrgAdmins/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Areas/OrgAdmins/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- Bootstrap 4 -->
+    <script src="~/Areas/OrgAdmins/Plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="~/Areas/OrgAdmins/Plugins/datatables/jquery.dataTables.js"></script>
+    <script src="~/Areas/OrgAdmins/Plugins/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- SlimScroll -->
+    <script src="~/Areas/OrgAdmins/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="~/Areas/OrgAdmins/Plugins/fastclick/fastclick.min.js"></script>
+
+    <!-- jQuery Time Picker -->
+    <script src="~/Areas/OrgAdmins/Plugins/datetimepicker/jquery.datetimepicker.js"></script>
+
+    <!-- iCheck -->
+    <script src="~/Areas/OrgAdmins/Plugins/iCheck/icheck.min.js"></script>
+
+    <!-- jQuery Toast -->
+    <script src="~/Areas/OrgAdmins/Plugins/toast/jquery.toast.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="~/Areas/OrgAdmins/Scripts/adminlte.min.js"></script>
+
+    <!-- Date Range Picker -->
+    <script src="~/Areas/OrgAdmins/Plugins/daterangepicker/moment.min.js"></script>
+    <script src="~/Areas/OrgAdmins/Plugins/daterangepicker/daterangepicker.js"></script>
+
+    <script type="text/javascript">
+
+        $('#trans-by-date-range').click(function () {
+            var dateRange = $("#TransactionDateRange").val();
+            var url = '@Url.Action("TransactionsByDateRangeExcel", "Reports")';
+
+            if (DateRangeBlank(dateRange)) {
+                return;
+            }
+
+            window.open(url + '?dateRange=' + dateRange);
+        });
+
+        $('#vol-punches-by-date-range').click(function () {
+            var dateRange = $("#CreditDateRange").val();
+            var url = '@Url.Action("CreditsByDateRangeExcel", "Reports")';
+
+            if (DateRangeBlank(dateRange)) {
+                return;
+            }
+
+            window.open(url + '?dateRange=' + dateRange);
+        });
+
+        function DateRangeBlank(dateRange) {
+
+            if (dateRange === '') {
+                alert("You must fill in a date range.");
+                return true;
+            }
+
+            return false;
+        };
+
+        $(document).ready(function () {
+
+            $(".time-date-field").datetimepicker({
+                controlType: 'select',
+                oneLine: true,
+                timeFormat: 'hh:mm:ss tt'
+            });
+
+            if ($(".time-date-field").val() === "1/1/0001 12:00:00 AM") {
+                $(".time-date-field").val('');
+            }
+
+            $('#TransactionDateRange').daterangepicker();
+            $('#CreditDateRange').daterangepicker();
+            $('#VolSummaryDateRange').daterangepicker();
+
+            $("#TransactionTypes").DataTable({
+                paging: false
+            });
+
+            $('#VolunteerOpportunities').DataTable({
+                paging: false,
+                responsive: true,
+                order: [[1, "asc"]]
+            });
+
+            $("#VolunteerDetails").DataTable({
+                paging: true,
+                responsive: true,
+                order: [[0, "asc"]]
+            });
+
+            $(".punches-transactions").DataTable({
+                pageing: true,
+                responsive: true,
+                order: [[1, "desc"]]
+            });
+
+            $("#AdministratorsList").DataTable({
+                paging: true,
+                order: [[0, "asc"]]
+            });
+
+            $('.edit-admin-punch').click(function () {
+                var url = '@Url.Action("EditPunch", "Administrators", new{Area = "OrgAdmins"})'; // the url to the controller
+                var punchId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?punchId=' + punchId, function (data) {
+
+                    $('#edit-punch-container').html(data);
+
+                    $(".time-date-field").datetimepicker({
+                        controlType: 'select',
+                        oneLine: true,
+                        timeFormat: 'hh:mm:ss tt'
+                    });
+
+                    $('#edit-admin-punch').modal('show');
+                });
+            });
+
+            $('.edit-punch').click(function () {
+                var url = '@Url.Action("EditPunch", "VolMgmt", new{Area = "OrgAdmins"})'; // the url to the controller
+                var punchId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?punchId=' + punchId, function (data) {
+
+                    $('#edit-punch-container').html(data);
+
+                    $(".time-date-field").datetimepicker({
+                        controlType: 'select',
+                        oneLine: true,
+                        timeFormat: 'hh:mm:ss tt'
+                    });
+
+                    $('#edit-punch').modal('show');
+                });
+            });
+
+            $('.edit-transaction').click(function () {
+                var url = '@Url.Action("EditTransaction", "VolMgmt", new{Area = "OrgAdmins"})'; // the url to the controller
+                var punchId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?transactionId=' + punchId, function (data) {
+
+                    $('#edit-transaction-container').html(data);
+                    $('#edit-transaction').modal('show');
+                });
+            });
+
+            $('.edit-admin-transaction').click(function () {
+                var url = '@Url.Action("EditAdminTransaction", "Administrators", new{Area = "OrgAdmins"})'; // the url to the controller
+                var punchId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?transactionId=' + punchId, function (data) {
+
+                    $('#edit-admin-transaction-container').html(data);
+                    $('#edit-admin-transaction').modal('show');
+                });
+            });
+
+            $('.edit-transaction-type').click(function () {
+                var url = '@Url.Action("EditTransactionType", "TransactionTypes", new{Area = "OrgAdmins"})'; // the url to the controller
+                var transTypeId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?transactionTypeId=' + transTypeId, function (data) {
+
+                    $('#edit-transaction-type-container').html(data);
+                    $('#edit-transaction-type').modal('show');
+                });
+            });
+
+            
+        });
+    </script>
+
+    @if (Session["CurrentMessage"] != null)
+    {
+        Model.UserMessage = (TimeTracker.UI.Models.UserMessage)Session["CurrentMessage"];
+        @Html.Partial("_ToastMessage", Model.UserMessage)
+    }
+
+
+</body>
+</html>

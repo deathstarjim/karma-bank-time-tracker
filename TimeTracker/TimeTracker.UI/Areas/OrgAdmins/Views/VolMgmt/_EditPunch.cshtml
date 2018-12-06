@@ -1,0 +1,73 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+@using (Html.BeginForm("UpdatePunch", "VolMgmt", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <!-- The Modal -->
+    
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Time Punch</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.CurrentVolPunch.Id)
+                        @Html.HiddenFor(model => model.CurrentVolPunch.VolunteerId)
+                        @Html.HiddenFor(model => model.CurrentVolPunch.VolunteerOpportunityId)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentVolPunch.VolunteerOpportunityId, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.SelectedVolunteerOpportunity,  
+                                    new SelectList(Model.VolunteerOpportunities, "Id", "Name"), "", new { @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.CurrentVolPunch.VolunteerOpportunityId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentVolPunch.PunchInDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.CurrentVolPunch.PunchInDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                                @Html.ValidationMessageFor(model => model.CurrentVolPunch.PunchInDateTime, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentVolPunch.PunchOutDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.CurrentVolPunch.PunchOutDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                                @Html.ValidationMessageFor(model => model.CurrentVolPunch.PunchOutDateTime, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CurrentVolPunch.CreditsEarned, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.CurrentVolPunch.CreditsEarned, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.CurrentVolPunch.CreditsEarned, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+}

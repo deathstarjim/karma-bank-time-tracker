@@ -1,0 +1,63 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+@{
+    ViewBag.Title = "Volunteer Details";
+    Layout = "~/Areas/OrgAdmins/Views/Shared/_OrgAdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Volunteer Details for @Model.CurrentVolunteer.FullName</h1>
+            </div><!-- /.col -->
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "Administrators", new { Area = "OrgAdmins" })'>Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "VolMgmt", new { Area = "OrgAdmins" })'>
+                            Volunteer Management
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        Volunteer Details
+                    </li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- col-md-4 -->
+            <div class="col-md-4">
+                @Html.Partial("_VolunteerDetails", Model)
+
+                @Html.Partial("_CreditTransaction", Model)
+            </div>
+
+            <div class="col-md-8">
+                @Html.Partial("_VolunteerTimePunches", Model)
+                @Html.Partial("_TransactionHistory", Model)
+
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-header">Create Time Punch</h3>
+                        </div>
+                        <div class="card-body box-profile">
+                            @Html.Partial("_CreateTimePunch", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

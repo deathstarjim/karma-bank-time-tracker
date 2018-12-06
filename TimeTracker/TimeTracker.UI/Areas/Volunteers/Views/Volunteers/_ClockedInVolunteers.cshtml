@@ -1,0 +1,35 @@
+﻿@model TimeTracker.UI.Areas.Volunteers.ViewModels.VolunteerViewModel
+
+@if(Model.OpenTimePunches != null && Model.OpenTimePunches.Count > 0)
+{
+    <div class="row margin-top">
+        <div class="col-md-12">
+            <h2>Clocked In Volunteers</h2>
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Volunteer Name</th>
+                        <th>Currently Clocked in To</th>
+                        <th>Clocked In Time / Date</th>
+                        <th>Clock Out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var punch in Model.OpenTimePunches)
+                    {
+                        <tr>
+                            <td>@punch.VolunteerFullName</td>
+                            <td>@punch.VolunteerOpportunityName</td>
+                            <td>@punch.PunchInDateTime</td>
+                            <td>
+                                <a class="btn btn-primary" 
+                                   href='@Url.Action("ClockVolunteerOut", "Volunteers", 
+                                        new { timePunchId = punch.Id })'>Clock Me Out</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

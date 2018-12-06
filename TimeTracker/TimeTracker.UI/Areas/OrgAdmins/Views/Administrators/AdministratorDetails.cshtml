@@ -1,0 +1,48 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.AdministratorsViewModel
+
+@{
+    ViewBag.Title = "Administrator Details";
+    Layout = "~/Areas/OrgAdmins/Views/Shared/_OrgAdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Administrator Details for @Model.SelectedAdministrator.FullName</h1>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "Administrators", new { Area = "OrgAdmins" })'>Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">Administrator Details</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <!-- Credit Balance Box -->
+                @Html.Partial("_AdminCreditBalance", Model)
+
+                <!-- Add a Credit Transaction Box -->
+                @Html.Partial("_CreateTransactionBox", Model)
+            </div>
+            <div class="col-md-8">
+                <!-- Administrator Time Punches -->
+                @Html.Partial("_AdministratorTimePunches", Model)
+
+                <!-- Transaction History List -->
+                @Html.Partial("_AdminTransactionHistory", Model)
+
+            </div>
+        </div>
+    </div>
+</section>

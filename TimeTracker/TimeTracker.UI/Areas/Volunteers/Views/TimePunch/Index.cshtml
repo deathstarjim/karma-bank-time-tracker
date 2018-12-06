@@ -1,0 +1,16 @@
+﻿@model TimeTracker.UI.Areas.Volunteers.ViewModels.VolunteerViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row margin-top">
+    <div class="col-md-12">
+        <h2>Search for your name to see how many credits you've earned!</h2>
+    </div>
+</div>
+<div class="col-md-12">
+    @Html.Partial("_NameSearchForm", Model)
+    @Html.Partial("_VolunteerNameSearch", Model)
+</div>

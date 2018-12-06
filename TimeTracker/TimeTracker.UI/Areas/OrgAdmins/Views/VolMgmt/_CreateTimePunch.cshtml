@@ -1,0 +1,47 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+@using (Html.BeginForm("CreateTimePunch", "VolMgmt", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => Model.CurrentVolunteer.Id)
+    
+    <div class="form-horizontal">
+        <h4>Time Punch</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentVolPunch.VolunteerOpportunityId, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CurrentVolPunch.VolunteerOpportunityId, new SelectList(Model.VolunteerOpportunities, "Id", "Name"), "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CurrentVolPunch.VolunteerOpportunityId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentVolPunch.PunchInDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CurrentVolPunch.PunchInDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                @Html.ValidationMessageFor(model => model.CurrentVolPunch.PunchInDateTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentVolPunch.PunchOutDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CurrentVolPunch.PunchOutDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                @Html.ValidationMessageFor(model => model.CurrentVolPunch.PunchOutDateTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

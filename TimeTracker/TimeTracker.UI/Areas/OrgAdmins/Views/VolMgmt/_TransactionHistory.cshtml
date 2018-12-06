@@ -1,0 +1,47 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-header">Transactions</h3>
+        </div>
+        <div class="card-body box-profile">
+            <table class="table table-striped table-responsive table-hover punches-transactions" id="VolunteerTransactions">
+                <thead>
+                    <tr>
+                        <th>Transaction Type</th>
+                        <th>Transaction Date / Time</th>
+                        <th>Credit Amount</th>
+                        <th>Notes</th>
+                        <th>Edit Transaction</th>
+                        <th>Delete Transaction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var trans in Model.CreditTransactions)
+                    {
+                        <tr>
+                            <td>@trans.TransactionType.Name</td>
+                            <td>@trans.CreateDateTime</td>
+                            <td>@trans.CreditAmount</td>
+                            <td>@trans.Notes</td>
+                            <td>
+                                <button class="btn btn-primary edit-transaction" data-toggle="modal" data-target="#edit-transaction" data-id="@trans.Id">Edit</button>
+                            </td>
+                            <td>
+                                <a href='@Url.Action("DeleteTransaction", "VolMgmt", new { Area = "OrgAdmins", transactionId = trans.Id, volunteerId = trans.VolunteerId })' class="btn btn-danger">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- modal placeholder-->
+<div id='edit-transaction' class="modal" role="dialog">
+    <div id='edit-transaction-container'></div>
+</div>

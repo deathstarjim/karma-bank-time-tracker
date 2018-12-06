@@ -1,0 +1,48 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.AdministratorsViewModel
+
+<div class="col-lg-8">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Organization Administrators</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive table-striped table-hover" id="AdministratorsList">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Credit Balance</th>
+                        <th>Clock In</th>
+                        <th>Edit Administrator</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var admin in Model.Administrators)
+                    {
+                        <tr>
+                            <td>@admin.FirstName @admin.LastName</td>
+                            <td>
+                                <a href="mailto:@admin.EmailAddress">
+                                    @admin.EmailAddress
+                                </a>
+                            </td>
+                            <td>@admin.PhoneNumber</td>
+                            <td class="text-center">
+                                @admin.CreditBalance
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href='@Url.Action("ClockAdminIn", "Administrators", new { Area = "OrgAdmins", administratorId = admin.Id })'>Clock Me In!</a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-primary" href='@Url.Action("AdministratorDetails", "Administrators", new { Area = "OrgAdmins", administratorId = admin.Id })'>
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

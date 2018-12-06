@@ -1,0 +1,21 @@
+﻿@model TimeTracker.UI.Models.UserMessage
+
+<script type="text/javascript">
+    $.toast({
+        text: '@Model.Message',
+        heading: '@Model.Heading',
+        icon: '@Model.Icon',
+        showHideTransition: 'fade',
+        allowToastClose: true,
+        hideAfter: @Model.HideAfter,
+        position: 'mid-center',
+        textAlign: 'left',
+        loader: false,
+        loaderBg: '#E5F2EB'
+    });
+</script>
+
+@{
+    Session["CurrentMessage"] = null;
+}
+

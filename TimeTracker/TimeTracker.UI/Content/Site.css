@@ -1,0 +1,55 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.margin-top {
+    margin-top: 3em;
+}
+
+.vol-opp-content {
+    padding-top: 1em;
+}
+
+.vol-opp-box {
+    border: 1px solid #000;
+    border-radius: 10px;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    padding: .75em;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:visited {
+    background-color: #1b6254;
+    border-color: #1b6254;
+    color: #FFF;
+}
+
+.HomePageBlock {
+    background-color: #196eb8;
+    text-align: center;
+    color: #FFF;
+    border-radius: 15px;
+    padding: 1em;
+}
+
+/* Overriding the bg-dark navigation colors */
+.bg-dark {
+    background-color: #1b6254 !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 1.5)
+}
+
+

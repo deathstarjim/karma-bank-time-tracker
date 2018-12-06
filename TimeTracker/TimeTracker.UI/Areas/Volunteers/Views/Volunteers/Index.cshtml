@@ -1,0 +1,21 @@
+﻿@model TimeTracker.UI.Areas.Volunteers.ViewModels.VolunteerViewModel
+
+@{
+    ViewBag.Title = "Volunteer List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Session["CurrentMessage"] != null)
+{
+    Model.UserMessage = (TimeTracker.UI.Models.UserMessage)Session["CurrentMessage"];
+    @Html.Partial("_ToastMessage", Model.UserMessage)
+}
+
+<div class="row margin-top">
+    <div class="col-md-12">
+        <h2>Search for Your Name to Clock In!</h2>
+    </div>
+</div>
+@Html.Partial("_NameSearchForm", Model)
+
+@Html.Partial("_ClockedInVolunteers", Model)

@@ -1,0 +1,46 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolunteerOpportunityViewModel
+
+@{
+    ViewBag.Title = "EditVolunteerOpportunity";
+    Layout = "~/Areas/OrgAdmins/Views/Shared/_OrgAdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Edit Volunteer Opportunity</h1>
+            </div><!-- /.col -->
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "Administrators", new { Area = "OrgAdmins" })'>Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "VolunteerOpportunities", new { Area = "OrgAdmins" })'>Volunteer Opportunities</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        Edit Volunteer Opportunity
+                    </li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-body">
+                    @using (Html.BeginForm("EditVolunteerOpportunity", "VolunteerOpportunities", FormMethod.Post, new { autocomplete = "off" }))
+                    {
+                        @Html.EditorFor(model => Model.CurrentOpportunity)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

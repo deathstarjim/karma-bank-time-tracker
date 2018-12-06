@@ -1,0 +1,67 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+@using (Html.BeginForm("UpdateTransaction", "VolMgmt", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Edit Time Punch</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.CreditTransaction.Id)
+                @Html.HiddenFor(model => Model.CreditTransaction.VolunteerId)
+                @Html.HiddenFor(model => Model.CreditTransaction.TransactionType.MakeNegative.IsChecked)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreditTransaction.TransactionType.Id, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.SelectedTransactionType, new SelectList(Model.TransactionTypes, "Id", "Name"), "", new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.CreditTransaction.TransactionType.Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreditTransaction.Notes, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreditTransaction.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreditTransaction.Notes, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreditTransaction.CreditAmount, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreditTransaction.CreditAmount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreditTransaction.CreditAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+            }
+
+

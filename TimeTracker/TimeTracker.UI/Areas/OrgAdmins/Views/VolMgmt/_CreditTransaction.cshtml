@@ -1,0 +1,45 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-header">Add a Transaction</h3>
+        </div>
+        @using (Html.BeginForm("CreditTransaction", "VolMgmt", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-body box-profile">
+                <p class="card-text">
+                    Use this form to add credits for this volunteer.
+                </p>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => Model.CreditTransaction.CreditAmount, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => Model.CreditTransaction.CreditAmount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => Model.CreditTransaction.CreditAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => Model.CreditTransaction.TransactionType.Id, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => Model.CreditTransaction.TransactionType.Id, new SelectList(Model.TransactionTypes, "Id", "Name"), "", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => Model.CreditTransaction.TransactionType.Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => Model.CreditTransaction.Notes, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => Model.CreditTransaction.Notes, new { rows = "5", cols = "55", @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Add Transaction</button>
+            </div>
+
+            @Html.HiddenFor(model => Model.CurrentVolunteer.Id)
+        }
+    </div>
+</div>

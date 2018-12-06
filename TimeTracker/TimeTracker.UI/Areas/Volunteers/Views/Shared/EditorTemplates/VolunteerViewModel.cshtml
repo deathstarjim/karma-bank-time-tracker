@@ -1,0 +1,76 @@
+﻿@model TimeTracker.UI.Areas.Volunteers.ViewModels.VolunteerViewModel
+
+
+@using (Html.BeginForm("VolunteerRegistration", "Volunteers", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentVolunteer.Email, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CurrentVolunteer.Email, new { htmlAttributes = new { @class = "form-control", @tabindex = "3" } })
+                    @Html.ValidationMessageFor(model => model.CurrentVolunteer.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentVolunteer.FirstName, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CurrentVolunteer.FirstName, new { htmlAttributes = new { @class = "form-control", @tabindex = "5" } })
+                    @Html.ValidationMessageFor(model => model.CurrentVolunteer.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentVolunteer.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CurrentVolunteer.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @tabindex = "7" } })
+                    @Html.ValidationMessageFor(model => model.CurrentVolunteer.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentVolunteer.EmergencyContactPhone, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CurrentVolunteer.EmergencyContactPhone, new { htmlAttributes = new { @class = "form-control", @tabindex = "4" } })
+                    @Html.ValidationMessageFor(model => model.CurrentVolunteer.EmergencyContactPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentVolunteer.LastName, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CurrentVolunteer.LastName, new { htmlAttributes = new { @class = "form-control", @tabindex = "6" } })
+                    @Html.ValidationMessageFor(model => model.CurrentVolunteer.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CurrentVolunteer.SecurityPhrase, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CurrentVolunteer.SecurityPhrase, new { htmlAttributes = new { @class = "form-control", @tabindex = "8" } })
+                    @Html.ValidationMessageFor(model => model.CurrentVolunteer.SecurityPhrase, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>    
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" tabindex="8" />
+        </div>
+    </div>
+</div>
+}
+

@@ -1,0 +1,21 @@
+﻿@model TimeTracker.UI.Areas.Volunteers.ViewModels.VolunteerViewModel
+
+@using (Ajax.BeginForm("VolunteerNameSearch", "Volunteers", new { Area = "Volunteers" }, new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "results"
+}, new { autocomplete = "off" }))
+{
+    @Html.HiddenFor(model => Model.ControllerName)
+    <div class="row">
+        <div class="col-md-8">
+            @Html.TextBoxFor(model => Model.SearchTerm, htmlAttributes: new { @class = "form-control", @Id = "volunteerName", @placeholder = "Type your name" })
+        </div>
+        <div class="col-md-4 text-left">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+
+    <div id="results"></div>
+}

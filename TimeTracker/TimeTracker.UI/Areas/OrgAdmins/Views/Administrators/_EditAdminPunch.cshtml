@@ -1,0 +1,63 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.AdministratorsViewModel
+
+@using (Html.BeginForm("UpdatePunch", "Administrators", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <!-- The Modal -->
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Time Punch</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.CurrentTimePunch.Id)
+                    @Html.HiddenFor(model => model.CurrentTimePunch.AdministratorId)
+                    @Html.HiddenFor(model => model.SelectedAdministrator.Id)
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentTimePunch.PunchInDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CurrentTimePunch.PunchInDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                            @Html.ValidationMessageFor(model => model.CurrentTimePunch.PunchInDateTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentTimePunch.PunchOutDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CurrentTimePunch.PunchOutDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                            @Html.ValidationMessageFor(model => model.CurrentTimePunch.PunchOutDateTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CurrentTimePunch.CreditsEarned, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CurrentTimePunch.CreditsEarned, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                            @Html.ValidationMessageFor(model => model.CurrentTimePunch.CreditsEarned, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

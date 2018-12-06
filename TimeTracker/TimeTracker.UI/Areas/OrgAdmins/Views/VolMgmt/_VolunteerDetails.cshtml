@@ -1,0 +1,29 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-header">@Model.CurrentVolunteer.FullName</h3>
+        </div>
+        <div class="card-body box-profile">
+            <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                    <b>Email:</b> <span class="float-right">@Model.CurrentVolunteer.Email</span>
+                </li>
+                <li class="list-group-item">
+                    <b>Emergency Contact:</b> <span class="float-right">@Model.CurrentVolunteer.EmergencyContactPhone</span>
+                </li>
+                <li class="list-group-item">
+                    <b>Nickname / Phrase:</b> <span class="float-right">@Model.CurrentVolunteer.SecurityPhrase</span>
+                </li>
+                <li class="list-group-item">
+                    <b>Total Credits</b> <a class="float-right">@Model.CurrentVolunteer.CreditBalance</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary">Edit Volunteer Info</button>
+        </div>
+    </div>
+</div>

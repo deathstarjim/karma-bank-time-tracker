@@ -1,0 +1,21 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.TransactionTypesViewModel
+
+@using (Html.BeginForm("CreateTransactionType", "TransactionTypes", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Create Transaction Type</h3>
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => Model.CurrentTransactionType)
+        </div>
+        <div class="card-footer">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

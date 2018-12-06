@@ -1,0 +1,30 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.TransactionTypesViewModel
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Transaction Types</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive table-striped table-hover" id="TransactionTypes">
+            <thead>
+                <tr>
+                    <th>Transaction Type</th>
+                    <th>Make Negative</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var type in Model.TransactionTypes)
+                {
+                    <tr>
+                        <td>@type.Name</td>
+                        <td>@type.MakeNegative.IsChecked</td>
+                        <td>
+                            <button class="btn btn-primary edit-transaction-type" data-toggle="modal" data-target="#edit-transaction-type" data-id="@type.Id">Edit</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

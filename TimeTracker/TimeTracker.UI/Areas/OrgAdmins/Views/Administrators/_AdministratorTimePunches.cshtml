@@ -1,0 +1,45 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.AdministratorsViewModel
+
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-header">Time Punches</h3>
+        </div>
+        <div class="card-body box-profile">
+            <table class="table table-striped table-responsive table-hover punches-transactions" id="AdminPunches">
+                <thead>
+                    <tr>
+                        <th>Punch In Date / Time</th>
+                        <th>Punch Out Date / Time</th>
+                        <th>Credits Earned</th>
+                        <th>Edit Punch</th>
+                        <th>Delete Punch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var punch in Model.AdminTimePunches)
+                    {
+                        <tr>
+                            <td>@punch.PunchInDateTime.ToShortDateString() @punch.PunchInDateTime.ToShortTimeString()</td>
+                            <td>@punch.PunchOutDateTime.ToShortDateString() @punch.PunchOutDateTime.ToShortTimeString()</td>
+                            <td>@punch.CreditsEarned</td>
+                            <td>
+                                <button class="btn btn-primary edit-admin-punch" data-toggle="modal" data-target="#edit-admin-punch" data-id="@punch.Id">Edit Punch</button>
+                            </td>
+                            <td>
+                                <a href='@Url.Action("DeleteAdminTimePunch", "Administrators", new { Area = "OrgAdmins", timePunchId = punch.Id, administratorId = punch.AdministratorId })' class="btn btn-danger">
+                                    Delete Punch
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- modal placeholder-->
+<div id='edit-admin-punch' class="modal" role="dialog">
+    <div id='edit-punch-container'></div>
+</div>

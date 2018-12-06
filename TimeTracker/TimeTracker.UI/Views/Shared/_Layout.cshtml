@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Karma Bank</title>
+
+    <!-- jQuery Stuff -->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- Bootstrap Stuff -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <!-- Plug-in Javascript References -->
+    <script src="~/Scripts/jquery.toast.min.js"></script>
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Plug-in Style References -->
+    <link href="~/Content/jquery.toast.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" />
+
+    <!-- Custom Style Sheets -->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+</head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand" href='@Url.Action("Index", "Home", new { Area = "" })'>
+                <img src="~/Images/ocbc_logo_time_tracker_transparent.png" class="img-fluid" alt="Ohio City Bicycle Co-op" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bikeMenu" aria-controls="bikeMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="bikeMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="volunteers" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Volunteers
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="volunteers">
+                            <a class="dropdown-item" href='@Url.Action("VolunteerRegistration", "Volunteers", new { Area = "Volunteers" })'>Register</a>
+                            <a class="dropdown-item" href='@Url.Action("Index", "Volunteers", new { Area = "Volunteers" })'>Record Volunteer Time</a>
+                            <a class="dropdown-item" href='@Url.Action("Index", "TimePunch", new { Area = "Volunteers" })'>Volunteer Profile</a>
+                        </div>
+                    </li>
+                    @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href='@Url.Action("Index", "Login", new { Area = "OrgAdmins" })'>Administrator Login</a>
+                        </li>
+                    }
+
+                    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href='@Url.Action("Index", "Administrators", new { Area = "OrgAdmins" })'>
+                                Administrator Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href='@Url.Action("LogOut", "Login", new { Area = "OrgAdmins" })'>Log Out</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+        <hr />
+        <div class="container margin-top">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Karma Bank</p>
+            </footer>
+        </div>
+    </body>
+</html>

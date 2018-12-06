@@ -1,0 +1,29 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.TransactionTypesViewModel
+
+@using (Html.BeginForm("DeleteTransactionType", "TransactionTypes", FormMethod.Post, new { autocomplete = "off" }))
+{
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Delete Transaction Type</h3>
+        </div>
+        <div class="card-body">
+
+            <div class="form-group">
+                @Html.LabelFor(model => Model.CurrentTransactionType, htmlAttributes: new { @class = "control-label col-md-8" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => Model.SelectedTransactionType, new SelectList(Model.TransactionTypes, "Id", "Name"), "", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => Model.ReplacementTransactionTypes, htmlAttributes: new { @class = "control-label col-md-10" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => Model.ReplacementTransactionType, new SelectList(Model.ReplacementTransactionTypes, "Id", "Name"), "", new { @class = "form-control" })
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Delete Transaction Type</button>
+        </div>
+    </div>
+}

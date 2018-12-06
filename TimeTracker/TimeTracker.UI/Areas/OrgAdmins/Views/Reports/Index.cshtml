@@ -1,0 +1,54 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.ReportsViewModel
+
+@{
+    ViewBag.Title = "Org Admin Reports";
+    Layout = "~/Areas/OrgAdmins/Views/Shared/_OrgAdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Organization Adminstrator's Reports</h1>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "Administrators", new { Area = "OrgAdmins" })'>Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">Reports</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-md-4">
+            @Html.Partial("_TransactionsDateRangeForm", Model)
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("_VolPunchesDateRangeForm", Model)
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("_VolSummaryForm", Model)
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Report Results</h3>
+                </div>
+                <div class="card-body">
+                    <div id="results"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

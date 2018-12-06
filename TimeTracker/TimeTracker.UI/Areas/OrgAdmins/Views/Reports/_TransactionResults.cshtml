@@ -1,0 +1,31 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.ReportsViewModel
+
+@if(Model.TransactionResults.Count > 0)
+{
+    <table class="table table-responsive table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Transaction Date / Time</th>
+                <th>Credit Amount</th>
+                <th>Transaction Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in Model.TransactionResults)
+            {
+                <tr>
+                    <td>@result.VolunteerName</td>
+                    <td>@result.TransactionDateTime.ToShortDateString() @result.TransactionDateTime.ToShortTimeString()</td>
+                    <td>@result.CreditsEarned</td>
+                    <td>@result.TransactionType</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if(Model.TransactionResults.Count == 0)
+{
+    <h3>No results were found.</h3>
+}

@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.UI", "TimeTracker.UI\TimeTracker.UI.csproj", "{A2A80028-8D8B-4860-B3DC-E99C79591A57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.IOC", "TimeTracker.IOC\TimeTracker.IOC.csproj", "{F691934F-B7FE-4E75-B6F6-A42760074A2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.DAL", "TimeTracker.DAL\TimeTracker.DAL.csproj", "{CEB777C9-030C-44CC-B10A-18ED775363FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Core", "TimeTracker.Core\TimeTracker.Core.csproj", "{04DA0423-787E-4BD5-A614-C8C538DBA709}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		TimeTrackerProd|Any CPU = TimeTrackerProd|Any CPU
+		TimeTrackerStaging|Any CPU = TimeTrackerStaging|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.TimeTrackerProd|Any CPU.ActiveCfg = TimeTrackerProd|Any CPU
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.TimeTrackerProd|Any CPU.Build.0 = TimeTrackerProd|Any CPU
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.TimeTrackerStaging|Any CPU.ActiveCfg = TimeTrackerStaging|Any CPU
+		{A2A80028-8D8B-4860-B3DC-E99C79591A57}.TimeTrackerStaging|Any CPU.Build.0 = TimeTrackerStaging|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.TimeTrackerProd|Any CPU.ActiveCfg = TimeTrackerProd|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.TimeTrackerProd|Any CPU.Build.0 = TimeTrackerProd|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.TimeTrackerStaging|Any CPU.ActiveCfg = TimeTrackerStaging|Any CPU
+		{F691934F-B7FE-4E75-B6F6-A42760074A2B}.TimeTrackerStaging|Any CPU.Build.0 = TimeTrackerStaging|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.TimeTrackerProd|Any CPU.ActiveCfg = TimeTrackerProd|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.TimeTrackerProd|Any CPU.Build.0 = TimeTrackerProd|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.TimeTrackerStaging|Any CPU.ActiveCfg = TimeTrackerStaging|Any CPU
+		{CEB777C9-030C-44CC-B10A-18ED775363FB}.TimeTrackerStaging|Any CPU.Build.0 = TimeTrackerStaging|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.TimeTrackerProd|Any CPU.ActiveCfg = TimeTrackerProd|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.TimeTrackerProd|Any CPU.Build.0 = TimeTrackerProd|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.TimeTrackerStaging|Any CPU.ActiveCfg = TimeTrackerStaging|Any CPU
+		{04DA0423-787E-4BD5-A614-C8C538DBA709}.TimeTrackerStaging|Any CPU.Build.0 = TimeTrackerStaging|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {613757F8-DFA3-4FD4-ACFD-4E8D1C4A3CFD}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,71 @@
+﻿@model TimeTracker.UI.Areas.Volunteers.ViewModels.VolunteerViewModel
+
+@{
+    ViewBag.Title = "Opportunities List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row margin-top">
+    <div class="col-md-12">
+        <h2>Clock in to a Volunteer Opportunity!</h2>
+        @using (Html.BeginForm("ClockVolunteerIn", "Volunteers", FormMethod.Post))
+        {
+            for (int i = 0; i < Model.VolunteerOpportunities.Count; i++)
+            {
+
+                var startDateTime = Model.VolunteerOpportunities[i].StartDateTime;
+                var endDateTime = Model.VolunteerOpportunities[i].EndDateTime;
+
+                <div class="vol-opp-box">
+                    <div class="row margin-top">
+                        <div class="col-md-3">
+                            <img src="~/Images/man_stars.jpg" alt="stock photo" style="max-width: 200px;" />
+                        </div>
+                        <div class="col-md-9">
+                            <h3>@Model.VolunteerOpportunities[i].Name</h3>
+                            @if(startDateTime != null && startDateTime != DateTime.MinValue)
+                            {
+                                <h5>Start Date: @startDateTime</h5>
+                                <h5>End Date: @endDateTime</h5>
+                            }
+                            <div class="vol-opp-content">
+                                <p>
+                                    @Model.VolunteerOpportunities[i].Description
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="vol-opp-content">
+                                <p>
+                                    Credits Earned / Hour: @Model.VolunteerOpportunities[i].CreditValue
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-9" style="padding: .5em;">
+                            @if (startDateTime != null && startDateTime != DateTime.MinValue)
+                            {
+                                if (startDateTime <= DateTime.Now && endDateTime >= DateTime.Now)
+                                {
+                                    <a href='@Url.Action("ClockVolunteerIn", "Volunteers", new { volunteerId = Model.CurrentVolunteer.Id, volOppId = Model.VolunteerOpportunities[i].Id })'
+                                       class="btn btn-primary">Clock me in!</a>
+                                }
+                                else
+                                {
+                                    <a href='#' class="disabled btn btn-primary">Clock me in!</a>
+                                }
+                            }
+                            else
+                            {
+                                <a href='@Url.Action("ClockVolunteerIn", "Volunteers", new { volunteerId = Model.CurrentVolunteer.Id, volOppId = Model.VolunteerOpportunities[i].Id })'
+                                   class="btn btn-primary">Clock me in!</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+

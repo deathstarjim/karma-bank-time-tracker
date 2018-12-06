@@ -1,0 +1,95 @@
+﻿@model TimeTracker.Core.Models.VolunteerOpportunity
+
+@using (Html.BeginForm("Index", "VolunteerOpportunities", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => Model.Id)
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Opportunity Name" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreditValue, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreditValue, new { htmlAttributes = new { @class = "form-control", @placeholder = "Credit Value" } })
+                        @Html.ValidationMessageFor(model => model.CreditValue, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.StartDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.StartDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                        @Html.ValidationMessageFor(model => model.StartDateTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EndDateTime, new { htmlAttributes = new { @class = "form-control time-date-field" } })
+                        @Html.ValidationMessageFor(model => model.EndDateTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => model.IsOffsite, htmlAttributes: new { @class = "control-label" })
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsOffsite.IsChecked)
+                            @Html.ValidationMessageFor(model => model.IsOffsite, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => model.IsVisibleToVolunteer, htmlAttributes: new { @class = "control-label" })
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsVisibleToVolunteer.IsChecked, new { @class = "flat-red" })
+                            @Html.ValidationMessageFor(model => model.IsVisibleToVolunteer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => Model.Description, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => Model.Description, new { @class = "form-control", rows = "10" })
+                            @Html.ValidationMessageFor(model => Model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save Opportunity" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+

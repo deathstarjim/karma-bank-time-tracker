@@ -1,0 +1,69 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolMgmtViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/OrgAdmins/Views/Shared/_OrgAdminLayout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Volunteer Management</h1>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href='@Url.Action("Index", "Administrators", new { Area = "OrgAdmins" })'>Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">Volunteer Management</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-7">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-header">
+                        Volunteers List
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive table-striped table-hover" id="VolunteerDetails">
+                        <thead>
+                            <tr>
+                                <th>Volunteer Name</th>
+                                <th>Emergency Contact Number</th>
+                                <th>Nickname / Phrase</th>
+                                <th>Current Balance</th>
+                                <th>View Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var volunteer in Model.Volunteers)
+                            {
+                                <tr>
+                                    <td>@volunteer.FullName</td>
+                                    <td>@volunteer.EmergencyContactPhone</td>
+                                    <td>@volunteer.SecurityPhrase</td>
+                                    <td>@volunteer.CreditBalance</td>
+                                    <td>
+                                        <a href='@Url.Action("VolunteerDetails", "VolMgmt", new { Area = "OrgAdmins", volunteerId = volunteer.Id })' class="btn btn-primary">
+                                            Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

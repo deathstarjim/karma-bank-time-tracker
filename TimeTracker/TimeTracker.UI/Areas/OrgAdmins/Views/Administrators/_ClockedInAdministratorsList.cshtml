@@ -1,0 +1,34 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.AdministratorsViewModel
+
+<div class="col-lg-4">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Clocked In Administrators</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Clock In Date / Time</th>
+                        <th>Clock Out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var punch in Model.OpenPunches)
+                    {
+                        <tr>
+                            <td>@punch.FullName</td>
+                            <td>@punch.PunchInDateTime</td>
+                            <td>
+                                <a href='@Url.Action("ClockAdminOut", "Administrators", new { Area = "OrgAdmins", punchId = punch.Id })' class="btn btn-primary">
+                                    Clock Out
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
