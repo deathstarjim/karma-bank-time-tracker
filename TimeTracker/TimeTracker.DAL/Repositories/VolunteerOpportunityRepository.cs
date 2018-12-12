@@ -24,6 +24,7 @@ namespace TimeTracker.DAL.Repositories
                                 ,volopps.[OpportunityDescription]
                                 ,volopps.[OpportunityStartDateTime]
                                 ,volopps.[OpportunityEndDateTime]
+                                ,volopps.[VolunteerLimit]
                             FROM [VolunteerOpportunities] volopps";
 
         public Guid CreateVolunteerOpportunity(VolunteerOpportunity newOpportunity)
@@ -38,6 +39,7 @@ namespace TimeTracker.DAL.Repositories
                                     ,[OpportunityDescription]
                                     ,[OpportunityStartDateTime]
                                     ,[OpportunityEndDateTime]
+                                    ,[VolunteerLimit]
                                 )
                             OUTPUT inserted.VolunteerOpportunityId
                             VALUES
@@ -49,6 +51,7 @@ namespace TimeTracker.DAL.Repositories
                                     ,@Description
                                     ,@StartDateTime
                                     ,@EndDateTime
+                                    ,@VolunteerLimit
                                 )";
 
             var parameters = new[]
@@ -59,7 +62,8 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@CreditValue", newOpportunity.CreditValue),
                 new SqlParameter("@Description", newOpportunity.Description ?? ""),
                 new SqlParameter("@StartDateTime", newOpportunity.StartDateTime ?? (object)DBNull.Value),
-                new SqlParameter("@EndDateTime", newOpportunity.EndDateTime ?? (object)DBNull.Value)
+                new SqlParameter("@EndDateTime", newOpportunity.EndDateTime ?? (object)DBNull.Value),
+                new SqlParameter("@VolunteerLimit", newOpportunity.VolunteerLimit)
             };
 
             var result = (Guid)_helper.ExecScalarSqlPullObject(sql, parameters);
@@ -74,19 +78,7 @@ namespace TimeTracker.DAL.Repositories
         {
             List<VolunteerOpportunity> opps = new List<VolunteerOpportunity>();
 
-
-            string sql = @"
-                            SELECT 
-                                volopps.[VolunteerOpportunityId]
-                                ,volopps.[OpportunityName]
-                                ,volopps.[IsOffsiteEvent]
-                                ,volopps.[IsVisible]
-                                ,volopps.[CreditValue]
-                                ,volopps.[OpportunityDescription]
-                                ,volopps.[OpportunityStartDateTime]
-                                ,volopps.[OpportunityEndDateTime]
-                            FROM [VolunteerOpportunities] volopps
-                            WHERE volopps.IsVisible = '1'
+            string sql = _baseQuery + @" WHERE volopps.IsVisible = '1'
 	                            AND (OpportunityStartDateTime >= GETDATE() AND OpportunityEndDateTime >= GETDATE()
 		                             OR OpportunityStartDateTime IS NULL AND OpportunityEndDateTime IS NULL
                                      OR GETDATE() BETWEEN OpportunityStartDateTime AND OpportunityEndDateTime)";
@@ -122,6 +114,7 @@ namespace TimeTracker.DAL.Repositories
                                 ,[OpportunityDescription] = @Description
                                 ,[OpportunityStartDateTime] = @StartDateTime
                                 ,[OpportunityEndDateTime] = @EndDateTime
+                                ,[VolunteerLimit] = @VolunteerLimit
                             WHERE VolunteerOpportunityId = @OpportunityId";
 
             var parameters = new[]
@@ -133,6 +126,7 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@Description", opportunity.Description),
                 new SqlParameter("@StartDateTime", opportunity.StartDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@EndDateTime", opportunity.EndDateTime ?? (object)DBNull.Value),
+                new SqlParameter("@VolunteerLimit", opportunity.VolunteerLimit),
                 new SqlParameter("@OpportunityId", opportunity.Id)
             };
 
@@ -156,6 +150,35 @@ namespace TimeTracker.DAL.Repositories
                 volOpp = (from DataRow row in result.Rows select Maps.VolunteerOpportunityMaps.MapVolunteerOpportunity(row)).FirstOrDefault();
 
             return volOpp;
+        }
+
+        public int GetClockedInVolunteerCount(Guid volOppId)
+        {
+            int clockedInCount = 0;
+            int? count = 0;
+
+            string sql = @"
+                            SELECT
+	                            COUNT(*) as VolunteerCount
+                            FROM TimePunches punches
+                            WHERE punches.VolunteerOpportunityId = @VolOppId
+	                            AND punches.PunchInDateTime IS NOT NULL
+	                            AND punches.PunchOutDateTime IS NULL";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@VolOppId", volOppId)
+            };
+
+            var result = _helper.ExecSqlPullDataTable(sql, parameters);
+
+            if (Tools.DataTableHasRows(result))
+                count = result.Rows[0].Field<int>("VolunteerCount");
+
+            if (count != null && count > 0)
+                clockedInCount = Convert.ToInt32(count);
+
+            return clockedInCount;
         }
     }
 }

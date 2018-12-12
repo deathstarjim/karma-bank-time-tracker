@@ -35,5 +35,8 @@ namespace TimeTracker.Core.Models
         [DisplayName("Opportunity End Date / Time:")]
         public DateTime? EndDateTime { get; set; }
 
+        [DisplayName("Max Number of Volunteers (0 = unlimited):")]
+        public int VolunteerLimit { get; set; }
+
     }
 }

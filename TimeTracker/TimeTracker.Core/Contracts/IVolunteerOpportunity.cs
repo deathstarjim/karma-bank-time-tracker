@@ -15,5 +15,7 @@ namespace TimeTracker.Core.Contracts
         VolunteerOpportunity GetVolunteerOpportunityById(Guid volOppId);
 
         void UpdateVolunteerOpportunity(VolunteerOpportunity opportunity);
+
+        int GetClockedInVolunteerCount(Guid volOppId);
     }
 }

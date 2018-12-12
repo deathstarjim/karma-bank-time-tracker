@@ -105,14 +105,25 @@ namespace TimeTracker.UI.Areas.Volunteers.Controllers
             return View(model);
         }
 
-        public ActionResult ClockVolunteerIn(Guid volunteerId, Guid volOppId)
+        public ActionResult ClockVolunteerIn(Guid volunteerId, Guid volOppId, int volOppLimit)
         {
-            _timePunches.CreateTimePunchIn(new VolTimePunch
+            //Get the number of volunteers currently logged into this opportunity
+            int clockedInCount = _volunteerOpportunity.GetClockedInVolunteerCount(volOppId);
+
+            if (volOppLimit == 0)
             {
-                VolunteerId = volunteerId,
-                PunchInDateTime = DateTime.Now,
-                VolunteerOpportunityId = volOppId
-            });
+                CreateTimePunchRecord(volunteerId, volOppId);
+                GetClockedInSuccessMessage();
+            }
+
+            if (volOppLimit > 0 && clockedInCount < volOppLimit)
+            {
+                CreateTimePunchRecord(volunteerId, volOppId);
+                GetClockedInSuccessMessage();
+            }
+
+            if (volOppLimit > 0 && clockedInCount == volOppLimit)
+                GetClockedInLimitMessage();
 
             return RedirectToAction("Index", "Volunteers");
         }
@@ -157,5 +168,29 @@ namespace TimeTracker.UI.Areas.Volunteers.Controllers
                 Models.MessageConstants.Error, 6000);
         }
 
+        private void GetClockedInLimitMessage()
+        {
+            Session["CurrentMessage"] = Tools.Messages.CreateMessage("Volunteer Limit Reached!",
+                "The limit for this opportunity has been reached. Please wait for someone to clock out before clocking in.",
+                Models.MessageConstants.Error, 6000);
+        }
+
+        private void GetClockedInSuccessMessage()
+        {
+            Session["CurrentMessage"] = Tools.Messages.CreateMessage("Clocked In!",
+                "You have successfully clocked into the volunteer opportunity.",
+                Models.MessageConstants.Success, 3000);
+        }
+
+        private void CreateTimePunchRecord(Guid volunteerId, Guid volOppId)
+        {
+            _timePunches.CreateTimePunchIn(new VolTimePunch
+            {
+                VolunteerId = volunteerId,
+                PunchInDateTime = DateTime.Now,
+                VolunteerOpportunityId = volOppId
+            });
+
+        }
     }
 }
