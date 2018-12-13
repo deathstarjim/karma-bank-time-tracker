@@ -20,6 +20,7 @@ namespace TimeTracker.DAL.Maps
                 opportunity.Description = DataFieldHelper.GetString(row, "OpportunityDescription");
                 opportunity.StartDateTime = DataFieldHelper.GetDateTime(row, "OpportunityStartDateTime");
                 opportunity.EndDateTime = DataFieldHelper.GetDateTime(row, "OpportunityEndDateTime");
+                opportunity.VolunteerLimit = DataFieldHelper.GetInt(row, "VolunteerLimit");
             }
 
             return opportunity;
