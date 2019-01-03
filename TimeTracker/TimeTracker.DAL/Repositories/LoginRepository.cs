@@ -28,7 +28,7 @@ namespace TimeTracker.DAL.Repositories
 	                            ,admins.[PhoneNumber]
 	                            ,admins.[Active]
                                 ,admins.[CreditBalance]
-                            FROM [TimeTracker].[dbo].[Administrators] admins
+                            FROM [Administrators] admins
                             WHERE UserName = @UserName";
 
             var parameters = new[]

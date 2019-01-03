@@ -19,5 +19,7 @@ namespace TimeTracker.Core.Contracts
         void UpdateTimePunch(AdminTimePunch punch);
 
         void DeleteTimePunch(Guid timePunchId, Guid administratorId);
+
+        bool CheckAdminClockedIn(Guid adminId);
     }
 }
