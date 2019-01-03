@@ -31,33 +31,37 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             var administrator = _admins.GetAdministratorByUserName(model.CurrentAdmin.UserName);
             string hashedPassword = "";
 
-            if (administrator != null)
+            if (administrator.Id != Guid.Empty)
+            {
                 hashedPassword = _security.HashPassword(model.CurrentAdmin.Password, administrator.PasswordSalt);
 
-            var userIsValid = _security.PasswordIsValid(model.CurrentAdmin.Password, hashedPassword);
+                var userIsValid = _security.PasswordIsValid(model.CurrentAdmin.Password, hashedPassword);
 
-            if (userIsValid)
-            {
-                var currentEmployee = _login.LogAdminIn(model.CurrentAdmin.UserName, hashedPassword);
+                if (userIsValid)
+                {
+                    var currentEmployee = _login.LogAdminIn(model.CurrentAdmin.UserName, hashedPassword);
 
-                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, model.CurrentAdmin.UserName, DateTime.Now, DateTime.Now.AddMinutes(2880),
-                    false, "", FormsAuthentication.FormsCookiePath);
+                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, model.CurrentAdmin.UserName, DateTime.Now, DateTime.Now.AddMinutes(2880),
+                        false, "", FormsAuthentication.FormsCookiePath);
 
-                string hash = FormsAuthentication.Encrypt(ticket);
+                    string hash = FormsAuthentication.Encrypt(ticket);
 
-                HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
 
-                FormsAuthentication.SetAuthCookie(model.CurrentAdmin.UserName, false);
+                    FormsAuthentication.SetAuthCookie(model.CurrentAdmin.UserName, false);
 
-                Session["CurrentUserId"] = currentEmployee.Id;
+                    Session["CurrentUserId"] = currentEmployee.Id;
 
-                return RedirectToAction("Index", "Administrators", new { Area = "OrgAdmins" });
+                    return RedirectToAction("Index", "Administrators", new { Area = "OrgAdmins" });
 
+                }
             }
 
-            ViewBag.LoginError = "Your user name or password were incorrect.  Please try again.";
+            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Login Failed!", "The user name or password you entered was incorrect. Please try again.",
+                Models.MessageConstants.Error, 6000);
 
-            return View("Index", "Administrators", model);
+
+            return RedirectToAction("Index", "Login", model);
         }
 
         public ActionResult LogOut()

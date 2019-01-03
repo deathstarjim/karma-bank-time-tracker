@@ -160,5 +160,33 @@ namespace TimeTracker.DAL.Repositories
 
             var result = _helper.ExecNonQuery(sql, parameters);
         }
+
+        public bool CheckAdminClockedIn(Guid adminId)
+        {
+            bool userClockedIn = false;
+            int? clockedInCount = 0;
+
+            string sql = @"
+                            SELECT 
+	                            COUNT(*) as ClockedInCount
+                            FROM [OrgAdminTimePunches] punches
+                            WHERE punches.PunchOutDateTime IS NULL
+	                            AND punches.AdministratorId = @AdminId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@AdminId", adminId)
+            };
+
+            var result = _helper.ExecSqlPullDataTable(sql, parameters);
+
+            clockedInCount = result.Rows[0].Field<int>("ClockedInCount");
+
+            if (clockedInCount != null && clockedInCount > 0)
+                userClockedIn = true;
+
+            return userClockedIn;
+
+        }
     }
 }

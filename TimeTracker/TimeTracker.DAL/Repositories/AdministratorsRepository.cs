@@ -27,7 +27,7 @@ namespace TimeTracker.DAL.Repositories
 	                            ,admins.[PhoneNumber]
 	                            ,admins.[Active]
                                 ,admins.[CreditBalance]
-                            FROM [TimeTracker].[dbo].[Administrators] admins";
+                            FROM [Administrators] admins";
         #endregion
 
         public Administrator CreateAdministrator(Administrator newAdministrator)

@@ -164,14 +164,23 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
         public ActionResult ClockAdminIn(Guid administratorId)
         {
-            _adminTimePunch.PunchAdminIn(new AdminTimePunch
-            {
-                AdministratorId = administratorId,
-                PunchInDateTime = DateTime.Now
-            });
+            bool adminClockedIn = _adminTimePunch.CheckAdminClockedIn(administratorId);
 
-            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Clocked In!", "You are now clocked in!",
-                Models.MessageConstants.Success);
+            if(adminClockedIn)
+                Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Whoops!", "You are already clocked in!",
+                                    Models.MessageConstants.Error);
+
+            if (!adminClockedIn)
+            {
+                _adminTimePunch.PunchAdminIn(new AdminTimePunch
+                {
+                    AdministratorId = administratorId,
+                    PunchInDateTime = DateTime.Now
+                });
+
+                Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Clocked In!", "You are now clocked in!",
+                    Models.MessageConstants.Success);
+            }
 
             return RedirectToAction("Index", "Administrators", new { Area = "OrgAdmins" });
         }
