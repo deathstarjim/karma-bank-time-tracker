@@ -23,6 +23,7 @@ namespace TimeTracker.DAL.Repositories
                                 ,admins.[FirstName] + ' ' + admins.[LastName] as FullName
 	                            ,admins.[EmailAddress]
 	                            ,admins.[Username]
+                                ,admins.[UserPassword]
 	                            ,admins.[PasswordSalt]
 	                            ,admins.[PhoneNumber]
 	                            ,admins.[Active]
