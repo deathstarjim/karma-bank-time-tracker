@@ -33,7 +33,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
             if (administrator.Id != Guid.Empty)
             {
-                hashedPassword = _security.HashPassword(model.CurrentAdmin.Password, administrator.PasswordSalt);
+                hashedPassword = administrator.Password;
 
                 var userIsValid = _security.PasswordIsValid(model.CurrentAdmin.Password, hashedPassword);
 

@@ -168,7 +168,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
             if(adminClockedIn)
                 Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Whoops!", "You are already clocked in!",
-                                    Models.MessageConstants.Error);
+                    Models.MessageConstants.Error);
 
             if (!adminClockedIn)
             {
