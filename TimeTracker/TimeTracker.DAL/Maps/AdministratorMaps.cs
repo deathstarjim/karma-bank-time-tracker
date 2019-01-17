@@ -18,6 +18,7 @@ namespace TimeTracker.DAL.Maps
                 admin.FullName = DataFieldHelper.GetString(row, "FullName");
                 admin.EmailAddress = DataFieldHelper.GetString(row, "EmailAddress");
                 admin.UserName = DataFieldHelper.GetString(row, "UserName");
+                admin.Password = DataFieldHelper.GetString(row, "UserPassword");
                 admin.PasswordSalt = DataFieldHelper.GetString(row, "PasswordSalt");
                 admin.PhoneNumber = DataFieldHelper.GetString(row, "PhoneNumber");
                 admin.Active = DataFieldHelper.GetBit(row, "Active");
