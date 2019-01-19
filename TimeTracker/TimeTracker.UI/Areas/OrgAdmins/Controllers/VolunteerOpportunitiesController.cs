@@ -4,6 +4,10 @@ using System.Linq;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Web;
 
 namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 {
@@ -40,6 +44,9 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         [HttpPost]
         public ActionResult Index(VolunteerOpportunityViewModel model)
         {
+
+            model.CurrentOpportunity.Image = ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+
             _volunteerOpportunity.CreateVolunteerOpportunity(model.CurrentOpportunity);
 
             model.VolunteerOpportunities = _volunteerOpportunity.GetVolunteerOpportunities();
@@ -71,6 +78,8 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
+                model.CurrentOpportunity.Image = ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+
                 _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);
 
                 Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Opportunity Updated!", "You have successfully updated the Volunteer Opportunity.", 
@@ -83,6 +92,19 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             {
                 return View();
             }
+        }
+
+        private byte[] ConvertImageToBytes(HttpPostedFileBase postedFile)
+        {
+            if (postedFile != null)
+            {
+                byte[] imageBuffer = new byte[postedFile.ContentLength];
+                Stream imageStream = postedFile.InputStream;
+                imageStream.Read(imageBuffer, 0, imageBuffer.Length);
+                return imageBuffer;
+            }
+
+            return null;
         }
     }
 }

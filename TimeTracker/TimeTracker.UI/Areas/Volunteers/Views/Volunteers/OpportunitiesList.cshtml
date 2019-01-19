@@ -19,7 +19,15 @@
                 <div class="vol-opp-box">
                     <div class="row margin-top">
                         <div class="col-md-3">
-                            <img src="~/Images/man_stars.jpg" alt="stock photo" style="max-width: 200px;" />
+                            @{
+                                var imageSource = "data: image/png; base64," + Convert.ToBase64String(Model.VolunteerOpportunities[i].Image, 0, 
+                                    Model.VolunteerOpportunities[i].Image.Length);
+                            }
+
+                            @if (imageSource != "data: image/png; base64,AAAAAA==")
+                            {
+                                <img src="@imageSource" style="max-width: 200px;" />
+                            }
                         </div>
                         <div class="col-md-9">
                             <h3>@Model.VolunteerOpportunities[i].Name</h3>

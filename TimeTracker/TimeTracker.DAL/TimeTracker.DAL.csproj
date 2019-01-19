@@ -51,7 +51,8 @@
     <Reference Include="BCrypt.Net-Next, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.Net-Next.3.1.0\lib\net47\BCrypt.Net-Next.dll</HintPath>
     </Reference>
-    <Reference Include="FDCommonTools">
+    <Reference Include="FDCommonTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\LIB\FDCommonTools.dll</HintPath>
     </Reference>
     <Reference Include="System" />
