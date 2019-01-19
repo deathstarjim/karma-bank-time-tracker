@@ -121,6 +121,7 @@ namespace TimeTracker.DAL.Repositories
                                 ,[OpportunityStartDateTime] = @StartDateTime
                                 ,[OpportunityEndDateTime] = @EndDateTime
                                 ,[VolunteerLimit] = @VolunteerLimit
+                                ,[Image] = @Image
                             WHERE VolunteerOpportunityId = @OpportunityId";
 
             var parameters = new[]
@@ -133,6 +134,7 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@StartDateTime", opportunity.StartDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@EndDateTime", opportunity.EndDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@VolunteerLimit", opportunity.VolunteerLimit),
+                new SqlParameter("@Image", opportunity.Image),
                 new SqlParameter("@OpportunityId", opportunity.Id)
             };
 

@@ -11,6 +11,7 @@ namespace TimeTracker.Core.Models
         {
             IsOffsite = new CheckBoxItem();
             IsVisibleToVolunteer = new CheckBoxItem();
+            Image = new byte[] { };
         }
 
         public Guid Id { get; set; }
