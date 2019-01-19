@@ -26,6 +26,7 @@ namespace TimeTracker.DAL.Repositories
                                 ,volopps.[OpportunityStartDateTime]
                                 ,volopps.[OpportunityEndDateTime]
                                 ,volopps.[VolunteerLimit]
+                                ,ISNULL(volopps.[Image], 0) as Image
                             FROM [VolunteerOpportunities] volopps";
         #endregion
 

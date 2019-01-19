@@ -21,6 +21,7 @@ namespace TimeTracker.DAL.Maps
                 opportunity.StartDateTime = DataFieldHelper.GetDateTime(row, "OpportunityStartDateTime");
                 opportunity.EndDateTime = DataFieldHelper.GetDateTime(row, "OpportunityEndDateTime");
                 opportunity.VolunteerLimit = DataFieldHelper.GetInt(row, "VolunteerLimit");
+                opportunity.Image = DataFieldHelper.GetBinaryData(row, "Image");
             }
 
             return opportunity;
