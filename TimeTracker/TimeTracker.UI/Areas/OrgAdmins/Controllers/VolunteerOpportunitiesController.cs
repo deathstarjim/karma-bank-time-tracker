@@ -5,6 +5,8 @@ using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 {
@@ -44,9 +46,11 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
             if (model.CurrentOpportunity.PostedFile != null)
             {
-                string fileName = Path.GetFileName(model.CurrentOpportunity.PostedFile.FileName);
-                model.CurrentOpportunity.PostedFile.SaveAs("C:\\Temp\\" + model.CurrentOpportunity.PostedFile.FileName);
-                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+                byte[] imageBuffer = new byte[model.CurrentOpportunity.PostedFile.ContentLength];
+                Stream imageStream = model.CurrentOpportunity.PostedFile.InputStream;
+                imageStream.Read(imageBuffer, 0, imageBuffer.Length);
+
+                model.CurrentOpportunity.Image = imageBuffer;
             }
 
             _volunteerOpportunity.CreateVolunteerOpportunity(model.CurrentOpportunity);

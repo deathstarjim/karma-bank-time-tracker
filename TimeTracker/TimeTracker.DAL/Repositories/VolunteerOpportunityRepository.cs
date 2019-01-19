@@ -42,6 +42,7 @@ namespace TimeTracker.DAL.Repositories
                                     ,[OpportunityStartDateTime]
                                     ,[OpportunityEndDateTime]
                                     ,[VolunteerLimit]
+                                    ,[Image]
                                 )
                             OUTPUT inserted.VolunteerOpportunityId
                             VALUES
@@ -54,6 +55,7 @@ namespace TimeTracker.DAL.Repositories
                                     ,@StartDateTime
                                     ,@EndDateTime
                                     ,@VolunteerLimit
+                                    ,@Image
                                 )";
 
             var parameters = new[]
@@ -65,7 +67,8 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@Description", newOpportunity.Description ?? ""),
                 new SqlParameter("@StartDateTime", newOpportunity.StartDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@EndDateTime", newOpportunity.EndDateTime ?? (object)DBNull.Value),
-                new SqlParameter("@VolunteerLimit", newOpportunity.VolunteerLimit)
+                new SqlParameter("@VolunteerLimit", newOpportunity.VolunteerLimit),
+                new SqlParameter("@Image", newOpportunity.Image)
             };
 
             var result = (Guid)_helper.ExecScalarSqlPullObject(sql, parameters);
