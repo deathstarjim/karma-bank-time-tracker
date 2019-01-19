@@ -1,6 +1,6 @@
 ﻿@model TimeTracker.Core.Models.VolunteerOpportunity
 
-@using (Html.BeginForm("Index", "VolunteerOpportunities", FormMethod.Post, new { autocomplete = "off" }))
+@using (Html.BeginForm("Index", "VolunteerOpportunities", FormMethod.Post, new { autocomplete = "off", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => Model.Id)
@@ -78,6 +78,18 @@
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.VolunteerLimit, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.VolunteerLimit, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.LabelFor(model => Model.PostedFile, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => Model.PostedFile, new { type = "file" })
+                        </div>
                     </div>
                 </div>
             </div>

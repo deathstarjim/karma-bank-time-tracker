@@ -4,6 +4,7 @@ using System.Linq;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
+using System.IO;
 
 namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 {
@@ -40,6 +41,14 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         [HttpPost]
         public ActionResult Index(VolunteerOpportunityViewModel model)
         {
+
+            if (model.CurrentOpportunity.PostedFile != null)
+            {
+                string fileName = Path.GetFileName(model.CurrentOpportunity.PostedFile.FileName);
+                model.CurrentOpportunity.PostedFile.SaveAs("C:\\Temp\\" + model.CurrentOpportunity.PostedFile.FileName);
+                ViewBag.Message += string.Format("<b>{0}</b> uploaded.<br />", fileName);
+            }
+
             _volunteerOpportunity.CreateVolunteerOpportunity(model.CurrentOpportunity);
 
             model.VolunteerOpportunities = _volunteerOpportunity.GetVolunteerOpportunities();
