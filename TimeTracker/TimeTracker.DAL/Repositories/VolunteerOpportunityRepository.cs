@@ -14,6 +14,7 @@ namespace TimeTracker.DAL.Repositories
     {
         private DataLoadHelper _helper = new DataLoadHelper(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
+        #region "Base Query"
         private const string _baseQuery = @"
                             SELECT 
                                 volopps.[VolunteerOpportunityId]
@@ -26,6 +27,7 @@ namespace TimeTracker.DAL.Repositories
                                 ,volopps.[OpportunityEndDateTime]
                                 ,volopps.[VolunteerLimit]
                             FROM [VolunteerOpportunities] volopps";
+        #endregion
 
         public Guid CreateVolunteerOpportunity(VolunteerOpportunity newOpportunity)
         {
