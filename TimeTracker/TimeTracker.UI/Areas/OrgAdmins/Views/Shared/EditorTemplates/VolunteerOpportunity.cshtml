@@ -83,13 +83,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.LabelFor(model => Model.PostedFile, htmlAttributes: new { @class = "control-label col-md-6" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => Model.PostedFile, new { type = "file" })
-                        </div>
+                    @Html.LabelFor(model => Model.PostedFile, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => Model.PostedFile, new { type = "file" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @if(Model.Image != null)
+                        {
+                            var imageSource = "data: image/png; base64," + Convert.ToBase64String(Model.Image, 0, Model.Image.Length);
+
+                            if (imageSource != "data: image/png; base64,AAAAAA==")
+                            {
+                                <img src="@imageSource" style="max-width: 200px;" />
+                            }
+                        }
                     </div>
                 </div>
             </div>
