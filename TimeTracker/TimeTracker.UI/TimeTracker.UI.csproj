@@ -207,6 +207,8 @@
     <Compile Include="Areas\OrgAdmins\ViewModels\TransactionTypesViewModel.cs" />
     <Compile Include="Areas\OrgAdmins\ViewModels\VolMgmtViewModel.cs" />
     <Compile Include="Areas\OrgAdmins\ViewModels\VolunteerOpportunityViewModel.cs" />
+    <Compile Include="Areas\OrgRegistration\Controllers\RegistrationController.cs" />
+    <Compile Include="Areas\OrgRegistration\OrgRegistrationAreaRegistration.cs" />
     <Compile Include="Areas\Volunteers\ViewModels\TimePunchViewModel.cs" />
     <Compile Include="Areas\Volunteers\ViewModels\VolunteerViewModel.cs" />
     <Compile Include="Areas\Volunteers\VolunteersAreaRegistration.cs" />
@@ -1854,6 +1856,7 @@
     <Content Include="Areas\OrgAdmins\Views\TransactionTypes\_DeleteTransactionType.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Reports\_VolSummaryForm.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Reports\_ExportToExcelButton.cshtml" />
+    <Content Include="Areas\OrgRegistration\Views\web.config" />
     <None Include="Properties\PublishProfiles\localhost-Prod.pubxml" />
     <None Include="Properties\PublishProfiles\localhost-Staging.pubxml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
@@ -1928,6 +1931,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\OrgRegistration\Models\" />
+    <Folder Include="Areas\OrgRegistration\Views\Registration\" />
+    <Folder Include="Areas\OrgRegistration\Views\Shared\" />
     <Folder Include="Areas\Volunteers\Models\" />
   </ItemGroup>
   <ItemGroup>
