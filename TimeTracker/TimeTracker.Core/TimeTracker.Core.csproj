@@ -81,6 +81,7 @@
     <Compile Include="Models\AdminTimePunch.cs" />
     <Compile Include="Models\CheckBoxItem.cs" />
     <Compile Include="Models\CreditReportItem.cs" />
+    <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\TransactionReportItem.cs" />
     <Compile Include="Models\VolCreditTransaction.cs" />
     <Compile Include="Models\SystemRole.cs" />
