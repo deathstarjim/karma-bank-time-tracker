@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TimeTracker.UI.Areas.OrgRegistration.ViewModels;
 
 namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
 {
@@ -11,7 +12,9 @@ namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
         // GET: OrgRegistration/Registration
         public ActionResult Index()
         {
-            return View();
+            RegistrationViewModel model = new RegistrationViewModel();
+
+            return View(model);
         }
     }
 }
