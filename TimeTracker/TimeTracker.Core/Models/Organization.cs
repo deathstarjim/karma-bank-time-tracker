@@ -21,6 +21,9 @@ namespace TimeTracker.Core.Models
         [DisplayName("What is your organziation's website?")]
         public string WebsiteUrl { get; set; }
 
+        [DisplayName("Tell us about your organization:")]
+        public string Description { get; set; }
+
         [DisplayName("Upload your 1023c file:")]
         public HttpPostedFileBase PostedFile { get; set; }
 
