@@ -56,28 +56,26 @@
                             @Html.AntiForgeryToken()
 
                             <section>
-                                <form method="post" action="#">
-                                    <div class="row gtr-uniform">
-                                        <div class="col-6 col-12-xsmall">
-                                            @Html.EditorFor(model => model.CurrentOrg.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Organization Name", @required = "required" } })
-                                            @Html.ValidationMessageFor(model => model.CurrentOrg.Name, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-6 col-12-xsmall">
-                                            @Html.EditorFor(model => model.CurrentOrg.WebsiteUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Website URL", @required = "required" } })
-                                            @Html.ValidationMessageFor(model => model.CurrentOrg.WebsiteUrl, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-12">
-                                            @Html.TextAreaFor(model => Model.CurrentOrg.Description, new { rows = "6", cols = "55", @class = "form-control",
-                                                placeholder = "What is your organizations mission?" })
-                                        </div>
-
-                                        <div class="col-12">
-                                            <ul class="actions">
-                                                <li><input type="submit" value="Save Information" class="primary" /></li>
-                                            </ul>
-                                        </div>
+                                <div class="row gtr-uniform">
+                                    <div class="col-6 col-12-xsmall">
+                                        @Html.EditorFor(model => model.CurrentOrg.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Organization Name", @required = "required" } })
+                                        @Html.ValidationMessageFor(model => model.CurrentOrg.Name, "", new { @class = "text-danger" })
                                     </div>
-                                </form>
+                                    <div class="col-6 col-12-xsmall">
+                                        @Html.EditorFor(model => model.CurrentOrg.WebsiteUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Website URL", @required = "required" } })
+                                        @Html.ValidationMessageFor(model => model.CurrentOrg.WebsiteUrl, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-12">
+                                        @Html.TextAreaFor(model => Model.CurrentOrg.Description, new { rows = "6", cols = "55", @class = "form-control",
+                                            placeholder = "What is your organizations' mission?" })
+                                    </div>
+
+                                    <div class="col-12">
+                                        <ul class="actions">
+                                            <li><input type="submit" value="Save Information" class="primary" /></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </section>
                         }
                         <ul class="actions">
@@ -91,42 +89,49 @@
         <!-- Two -->
         <section id="two" class="wrapper style3 fade-up">
             <div class="inner">
-                <h2>What we do</h2>
-                <p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
-                <div class="features">
+                <h2>Tell us about yourself</h2>
+                <p>
+                    Fill out the form below to create the administrator account for your organization. This account can be used to create other administrators, 
+                    edit volunteer information and enter credit purchases.
+                </p>
+                @using(Html.BeginForm("CreateAdmin", "Registration", FormMethod.Post, new { autocomplete = "off" }))
+                {
                     <section>
-                        <span class="icon major fa-code"></span>
-                        <h3>Lorem ipsum amet</h3>
-                        <p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
+                        <div class="row gtr-uniform">
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(Model => Model.CurrentAdmin.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name", @required = "required" } })
+                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => Model.CurrentAdmin.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name", @required = "required" } })
+                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => Model.CurrentAdmin.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email address", @required = "required" } })
+                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => Model.CurrentAdmin.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone number", @required = "required" } })
+                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => Model.CurrentAdmin.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "User Name", @required = "required" } })
+                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.UserName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => Model.CurrentAdmin.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password", @required = "required" } })
+                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-12">
+                                <ul class="actions">
+                                    <li><input type="submit" value="Save Information" class="primary" /></li>
+                                </ul>
+                            </div>
+                        </div>
                     </section>
-                    <section>
-                        <span class="icon major fa-lock"></span>
-                        <h3>Aliquam sed nullam</h3>
-                        <p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-                    </section>
-                    <section>
-                        <span class="icon major fa-cog"></span>
-                        <h3>Sed erat ullam corper</h3>
-                        <p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-                    </section>
-                    <section>
-                        <span class="icon major fa-desktop"></span>
-                        <h3>Veroeros quis lorem</h3>
-                        <p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-                    </section>
-                    <section>
-                        <span class="icon major fa-chain"></span>
-                        <h3>Urna quis bibendum</h3>
-                        <p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-                    </section>
-                    <section>
-                        <span class="icon major fa-diamond"></span>
-                        <h3>Aliquam urna dapibus</h3>
-                        <p>Phasellus convallis elit id ullam corper amet et pulvinar. Duis aliquam turpis mauris, sed ultricies erat dapibus.</p>
-                    </section>
-                </div>
+                }
                 <ul class="actions">
-                    <li><a href="generic.html" class="button">Learn more</a></li>
+                    <li><a href="#three" class="button scrolly">One more step...</a></li>
                 </ul>
             </div>
         </section>
