@@ -68,6 +68,7 @@
     <Compile Include="Contracts\IAdminTimePunch.cs" />
     <Compile Include="Contracts\IAdminTransaction.cs" />
     <Compile Include="Contracts\ILogin.cs" />
+    <Compile Include="Contracts\IOrganization.cs" />
     <Compile Include="Contracts\IReports.cs" />
     <Compile Include="Contracts\ISecurity.cs" />
     <Compile Include="Contracts\ISystemRole.cs" />

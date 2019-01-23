@@ -20,6 +20,7 @@ namespace TimeTracker.IOC
             Bind<IAdminTransaction>().To<AdministratorTransactionRepository>();
             Bind<IReports>().To<ReportsRepository>();
             Bind<ITransactionType>().To<TransactionTypesRepository>();
+            Bind<IOrganization>().To<OrganizationRepository>();
         }
     }
 }
