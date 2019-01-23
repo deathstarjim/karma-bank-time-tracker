@@ -29,9 +29,9 @@ namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
         [HttpPost]
         public ActionResult CreateOrg(RegistrationViewModel model)
         {
+            model.CurrentOrg = _org.CreateOrganization(model.CurrentOrg);
 
-
-            return View();
+            return View(model);
         }
     }
 }

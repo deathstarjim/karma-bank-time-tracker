@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Maps\AdministratorMaps.cs" />
+    <Compile Include="Maps\OrgMaps.cs" />
     <Compile Include="Maps\ReportsMaps.cs" />
     <Compile Include="Maps\SystemRoleMaps.cs" />
     <Compile Include="Maps\TransactionMaps.cs" />
