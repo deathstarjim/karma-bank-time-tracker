@@ -13,11 +13,15 @@ namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
     {
         private IOrganization _org;
         private IAdministrator _admin;
+        private ISecurity _security;
+        private ISystemRole _roles;
 
-        public RegistrationController(IOrganization org, IAdministrator admin)
+        public RegistrationController(IOrganization org, IAdministrator admin, ISecurity security, ISystemRole roles)
         {
             _org = org;
             _admin = admin;
+            _security = security;
+            _roles = roles;
         }
         
         public ActionResult Index()
@@ -41,6 +45,28 @@ namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
             model.CurrentOrg = _org.CreateOrganization(model.CurrentOrg);
 
             Session["CurrentOrg"] = model.CurrentOrg;
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CreateAdmin(RegistrationViewModel model)
+        {
+            string salt = _security.GenerateSalt();
+            string securedPassword = _security.HashPassword(model.CurrentAdmin.Password);
+            var roles = _roles.GetSystemRoles();
+
+            model.CurrentAdmin.Password = securedPassword;
+            model.CurrentAdmin.PasswordSalt = salt;
+
+            model.CurrentAdmin.Role = roles.Where(r => r.Name == "Organizational Administrator").FirstOrDefault();
+
+            if (Session["CurrentOrg"] != null)
+                model.CurrentOrg = (Organization)Session["CurrentOrg"];
+
+            model.CurrentAdmin.OrganizationId = model.CurrentOrg.Id;
+
+            _admin.CreateAdministrator(model.CurrentAdmin);
 
             return RedirectToAction("Index");
         }

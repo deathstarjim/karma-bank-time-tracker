@@ -13,6 +13,7 @@ namespace TimeTracker.DAL.Maps
             if(row != null)
             {
                 admin.Id = DataFieldHelper.GetUniqueIdentifier(row, "AdministratorId");
+                admin.OrganizationId = DataFieldHelper.GetUniqueIdentifier(row, "OrganizationId");
                 admin.FirstName = DataFieldHelper.GetString(row, "FirstName");
                 admin.LastName = DataFieldHelper.GetString(row, "LastName");
                 admin.FullName = DataFieldHelper.GetString(row, "FullName");

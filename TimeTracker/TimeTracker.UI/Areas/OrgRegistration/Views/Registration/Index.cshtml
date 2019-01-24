@@ -19,8 +19,13 @@
                 <ul>
                     <li><a href="#intro">Welcome</a></li>
                     <li><a href="#one">Your Organization</a></li>
-                    <li><a href="#two">About You</a></li>
-                    <li><a href="#three">Confirm Information</a></li>
+
+                    @if(Model.CurrentOrg.Id != Guid.Empty)
+                    {
+                        <li><a href="#two">About You</a></li>
+                        <li><a href="#three">Confirm Information</a></li>
+                    }
+
                     <li><a href="#four">Having Trouble?</a></li>
                 </ul>
             </nav>
@@ -83,9 +88,13 @@
                                 </div>
                             </section>
                         }
-                        <ul class="actions">
-                            <li><a href="#two" class="button scrolly">Continue...</a></li>
-                        </ul>
+
+                        @if(Model.CurrentOrg.Id != Guid.Empty)
+                        {
+                            <ul class="actions">
+                                <li><a href="#two" class="button scrolly">Continue...</a></li>
+                            </ul>
+                        }
                     </div>
                 </div>
             </section>

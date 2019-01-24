@@ -18,6 +18,7 @@ namespace TimeTracker.DAL.Repositories
         private readonly string _baseQuery = @"
                             SELECT 
 	                            admins.[AdministratorId]
+                                ,admins.[OrganizationId]
 	                            ,admins.[FirstName]
 	                            ,admins.[LastName]
                                 ,admins.[FirstName] + ' ' + admins.[LastName] as FullName
@@ -37,6 +38,7 @@ namespace TimeTracker.DAL.Repositories
                             INSERT INTO [dbo].[Administrators]
 		                            (
 			                            [SystemRoleId]
+                                        ,[OrganizationId]
 			                            ,[FirstName]
 			                            ,[LastName]
                                         ,[FullName]
@@ -50,6 +52,7 @@ namespace TimeTracker.DAL.Repositories
                             VALUES
 		                            (
 			                            @SystemRoleId
+                                        ,@OrganizationId
 			                            ,@FirstName
 			                            ,@LastName
                                         ,@FullName
@@ -63,6 +66,7 @@ namespace TimeTracker.DAL.Repositories
             var parameters = new[]
             {
                 new SqlParameter("@SystemRoleId", newAdministrator.Role.Id),
+                new SqlParameter("@OrganizationId", newAdministrator.OrganizationId),
                 new SqlParameter("@FirstName", newAdministrator.FirstName),
                 new SqlParameter("@LastName", newAdministrator.LastName),
                 new SqlParameter("@FullName", newAdministrator.FirstName + ' ' + newAdministrator.LastName),

@@ -14,6 +14,8 @@ namespace TimeTracker.Core.BaseModels
 
         public Guid Id { get; set; }
 
+        public Guid OrganizationId { get; set; }
+
         public SystemRole Role { get; set; }
 
         [DisplayName("Email Address:")]
