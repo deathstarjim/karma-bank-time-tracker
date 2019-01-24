@@ -1939,6 +1939,10 @@
     <Content Include="Areas\OrgRegistration\fonts\FontAwesome.otf" />
     <Content Include="Areas\OrgRegistration\Views\Registration\Index.cshtml" />
     <Content Include="Areas\OrgRegistration\Views\Shared\EditorTemplates\Organization.cshtml" />
+    <Content Include="Areas\OrgRegistration\Views\Registration\_OrgRegistrationForm.cshtml" />
+    <Content Include="Areas\OrgRegistration\Views\Registration\_OrgAdminForm.cshtml" />
+    <Content Include="Areas\OrgRegistration\Views\Registration\_ContactForm.cshtml" />
+    <Content Include="Areas\OrgRegistration\Views\Registration\_RegistrationSummary.cshtml" />
     <None Include="Properties\PublishProfiles\localhost-Prod.pubxml" />
     <None Include="Properties\PublishProfiles\localhost-Staging.pubxml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />

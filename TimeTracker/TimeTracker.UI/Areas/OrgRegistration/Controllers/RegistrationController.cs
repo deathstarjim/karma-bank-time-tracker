@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
@@ -66,7 +63,9 @@ namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
 
             model.CurrentAdmin.OrganizationId = model.CurrentOrg.Id;
 
-            _admin.CreateAdministrator(model.CurrentAdmin);
+            model.CurrentAdmin = _admin.CreateAdministrator(model.CurrentAdmin);
+
+            Session["CurrentAdmin"] = model.CurrentAdmin;
 
             return RedirectToAction("Index");
         }

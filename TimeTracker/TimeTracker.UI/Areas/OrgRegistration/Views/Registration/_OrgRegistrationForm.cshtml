@@ -1,0 +1,50 @@
+﻿@model TimeTracker.UI.Areas.OrgRegistration.ViewModels.RegistrationViewModel
+
+<section id="one" class="wrapper style2 spotlights fade-up">
+    <section>
+        <div class="content">
+            <div class="inner">
+                <h2>Your Organziation</h2>
+                <p>Tell us who your organization is what its' all about!</p>
+                @using (Html.BeginForm("CreateOrg", "Registration", FormMethod.Post, new { autocomplete = "off", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <section>
+                        <div class="row gtr-uniform">
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => model.CurrentOrg.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Organization Name*", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.CurrentOrg.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => model.CurrentOrg.WebsiteUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Website URL*", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.CurrentOrg.WebsiteUrl, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-12">
+                                @Html.LabelFor(model => Model.CurrentOrg.PostedFile, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextBoxFor(model => Model.CurrentOrg.PostedFile, new { type = "file", @required = "required" })
+                            </div>
+                            <div class="col-12">
+                                @Html.TextAreaFor(model => Model.CurrentOrg.Description, new { rows = "6", cols = "55", @class = "form-control",
+                                    placeholder = "What is your organizations' mission?" })
+                            </div>
+
+                            <div class="col-12">
+                                <ul class="actions">
+                                    <li><input type="submit" value="Save Information" class="primary" /></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                }
+
+                @if (Model.CurrentOrg.Id != Guid.Empty)
+                {
+                    <ul class="actions">
+                        <li><a href="#two" class="button scrolly">Continue...</a></li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </section>
+</section>

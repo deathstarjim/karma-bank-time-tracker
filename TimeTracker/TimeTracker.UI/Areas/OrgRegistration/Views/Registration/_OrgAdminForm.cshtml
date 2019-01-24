@@ -1,0 +1,50 @@
+﻿@model TimeTracker.UI.Areas.OrgRegistration.ViewModels.RegistrationViewModel
+
+<section id="two" class="wrapper style3 fade-up">
+    <div class="inner">
+        <h2>Tell us about yourself</h2>
+        <p>
+            Fill out the form below to create the administrator account for your organization. This account can be used to create other administrators,
+            edit volunteer information and enter credit purchases.
+        </p>
+        @using (Html.BeginForm("CreateAdmin", "Registration", FormMethod.Post, new { autocomplete = "off" }))
+        {
+            <section>
+                <div class="row gtr-uniform">
+                    <div class="col-6 col-12-xsmall">
+                        @Html.EditorFor(Model => Model.CurrentAdmin.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name*", @required = "required" } })
+                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        @Html.EditorFor(model => Model.CurrentAdmin.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name*", @required = "required" } })
+                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.LastName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        @Html.EditorFor(model => Model.CurrentAdmin.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email address*", @required = "required" } })
+                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        @Html.EditorFor(model => Model.CurrentAdmin.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone number*", @required = "required" } })
+                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        @Html.EditorFor(model => Model.CurrentAdmin.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "User Name*", @required = "required" } })
+                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.UserName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-6 col-12-xsmall">
+                        @Html.EditorFor(model => Model.CurrentAdmin.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password*", @required = "required" } })
+                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-12">
+                        <ul class="actions">
+                            <li><input type="submit" value="Save Information" class="primary" /></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        }
+        <ul class="actions">
+            <li><a href="#three" class="button scrolly">One more step...</a></li>
+        </ul>
+    </div>
+</section>
