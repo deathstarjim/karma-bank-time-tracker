@@ -21,6 +21,7 @@ namespace TimeTracker.DAL.Repositories
 		                            [OrganizationName]
 		                            ,[WebsiteUrl]
 		                            ,[OrgDescription]
+                                    ,[TaxExemptionFile]
 	                            )
                             OUTPUT inserted.OrganizationId
                             VALUES
@@ -28,13 +29,15 @@ namespace TimeTracker.DAL.Repositories
 		                            @OrganizationName
 		                            ,@WebsiteUrl
 		                            ,@OrgDescription
+                                    ,@TaxExemptionFile
 	                            )";
 
             var parameters = new[]
             {
                 new SqlParameter("@OrganizationName", newOrg.Name),
                 new SqlParameter("@WebsiteUrl", newOrg.WebsiteUrl),
-                new SqlParameter("@OrgDescription", newOrg.Description)
+                new SqlParameter("@OrgDescription", newOrg.Description ?? ""),
+                new SqlParameter("@TaxExemptionFile", newOrg.TaxExemptionFile)
             };
 
             var result = (Guid)_helper.ExecScalarSqlPullObject(sql, parameters);

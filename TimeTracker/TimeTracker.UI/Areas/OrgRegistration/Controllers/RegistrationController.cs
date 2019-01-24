@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
+using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.OrgRegistration.ViewModels;
 
 namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
@@ -23,15 +24,25 @@ namespace TimeTracker.UI.Areas.OrgRegistration.Controllers
         {
             RegistrationViewModel model = new RegistrationViewModel();
 
+            if (Session["CurrentOrg"] != null)
+                model.CurrentOrg = (Organization)Session["CurrentOrg"];
+
+            if (Session["CurrentAdmin"] != null)
+                model.CurrentAdmin = (Administrator)Session["CurrentAdmin"];
+
             return View(model);
         }
 
         [HttpPost]
         public ActionResult CreateOrg(RegistrationViewModel model)
         {
+            model.CurrentOrg.TaxExemptionFile = Tools.FileTools.ConvertImageToBytes(model.CurrentOrg.PostedFile);
+
             model.CurrentOrg = _org.CreateOrganization(model.CurrentOrg);
 
-            return View(model);
+            Session["CurrentOrg"] = model.CurrentOrg;
+
+            return RedirectToAction("Index");
         }
     }
 }
