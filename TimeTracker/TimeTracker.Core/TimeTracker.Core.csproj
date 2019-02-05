@@ -68,6 +68,7 @@
     <Compile Include="Contracts\IAdminTimePunch.cs" />
     <Compile Include="Contracts\IAdminTransaction.cs" />
     <Compile Include="Contracts\ILogin.cs" />
+    <Compile Include="Contracts\IOrganization.cs" />
     <Compile Include="Contracts\IReports.cs" />
     <Compile Include="Contracts\ISecurity.cs" />
     <Compile Include="Contracts\ISystemRole.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Models\AdminTimePunch.cs" />
     <Compile Include="Models\CheckBoxItem.cs" />
     <Compile Include="Models\CreditReportItem.cs" />
+    <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\TransactionReportItem.cs" />
     <Compile Include="Models\VolCreditTransaction.cs" />
     <Compile Include="Models\SystemRole.cs" />

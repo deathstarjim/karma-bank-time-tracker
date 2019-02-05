@@ -77,6 +77,7 @@
     <Compile Include="Repositories\AdministratorsRepository.cs" />
     <Compile Include="Repositories\AdministratorTransactionRepository.cs" />
     <Compile Include="Repositories\AdminTimePunchRepository.cs" />
+    <Compile Include="Repositories\OrganizationRepository.cs" />
     <Compile Include="Repositories\ReportsRepository.cs" />
     <Compile Include="Repositories\TransactionTypesRepository.cs" />
     <Compile Include="Repositories\VolunteerTransactionRepository.cs" />
