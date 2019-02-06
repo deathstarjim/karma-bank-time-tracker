@@ -58,6 +58,25 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             return View(model);
         }
 
+        public ActionResult EditAdminInfo(Guid administratorId)
+        {
+            if (Tools.OrgAdminTools.CheckAdminLoggedOut())
+                return RedirectToAction("Index", "Login", new { Area = "OrgAdmins" });
+
+            AdministratorsViewModel model = new AdministratorsViewModel();
+            model.CurrentAdministrator = Tools.OrgAdminTools.GetCurrentAdmin(_admins.GetAdministrators());
+            model.SelectedAdministrator = _admins.GetAdministratorById(administratorId);
+
+            return PartialView("_EditAdminInfo", model);
+        }
+
+        [HttpPost]
+        public ActionResult EditAdminInfo(AdministratorsViewModel model)
+        {
+
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult CreditTransaction(AdministratorsViewModel model)
         {

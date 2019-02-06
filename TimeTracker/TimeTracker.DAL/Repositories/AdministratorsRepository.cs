@@ -149,5 +149,24 @@ namespace TimeTracker.DAL.Repositories
 
             var result = _helper.ExecNonQuery(sql, parameters);
         }
+
+        public Administrator GetAdministratorById(Guid administratorId)
+        {
+            Administrator admin = new Administrator();
+
+            string sql = _baseQuery + @" WHERE admins.AdministratorId = @AdminId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@AdminId", administratorId)
+            };
+
+            var result = _helper.ExecSqlPullDataTable(sql, parameters);
+
+            if (Tools.DataTableHasRows(result))
+                admin = (from DataRow row in result.Rows select Maps.AdministratorMaps.MapAdministrator(row)).FirstOrDefault();
+
+            return admin;
+        }
     }
 }

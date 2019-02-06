@@ -21,6 +21,13 @@ namespace TimeTracker.Core.Contracts
         Administrator GetAdministratorByUserName(string userName);
 
         /// <summary>
+        /// Gets the administrator record by the Id
+        /// </summary>
+        /// <param name="administratorId"></param>
+        /// <returns></returns>
+        Administrator GetAdministratorById(Guid administratorId);
+
+        /// <summary>
         /// Gets a list of all administrators in the system
         /// </summary>
         /// <returns></returns>
