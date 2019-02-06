@@ -73,6 +73,16 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         [HttpPost]
         public ActionResult EditAdminInfo(AdministratorsViewModel model)
         {
+            string salt = _security.GenerateSalt();
+            string securedPassword = _security.HashPassword(model.SelectedAdministrator.Password, salt);
+
+            model.SelectedAdministrator.Password = securedPassword;
+            model.SelectedAdministrator.PasswordSalt = salt;
+
+            _admins.UpdateAdministratorInformation(model.SelectedAdministrator);
+
+            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Administrator Updated!", 
+                model.SelectedAdministrator.FullName + " has been updated.", Models.MessageConstants.Success);
 
             return RedirectToAction("Index");
         }

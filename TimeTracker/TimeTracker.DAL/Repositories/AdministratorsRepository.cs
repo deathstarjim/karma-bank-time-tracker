@@ -168,5 +168,38 @@ namespace TimeTracker.DAL.Repositories
 
             return admin;
         }
+
+        public void UpdateAdministratorInformation(Administrator admin)
+        {
+            string sql = @"
+                            UPDATE [dbo].[Administrators]
+                            SET [FirstName] = @FirstName
+	                            ,[LastName] = @LastName
+                                ,[FullName] = @FirstName + ' ' + @LastName
+	                            ,[EmailAddress] = @EmailAddress
+	                            ,[Username] = @Username
+	                            ,[UserPassword] = @UserPassword
+                                ,[PasswordSalt] = @Salt
+	                            ,[PhoneNumber] = @PhoneNumber
+	                            ,[Active] = @Active
+	                            ,[CreditBalance] = @CreditBalance
+                            WHERE AdministratorId = @AdminId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@FirstName", admin.FirstName),
+                new SqlParameter("@LastName", admin.LastName),
+                new SqlParameter("@EmailAddress", admin.EmailAddress),
+                new SqlParameter("@Username", admin.UserName),
+                new SqlParameter("@UserPassword", admin.Password),
+                new SqlParameter("@Salt", admin.PasswordSalt),
+                new SqlParameter("@PhoneNumber", admin.PhoneNumber),
+                new SqlParameter("@Active", admin.Active),
+                new SqlParameter("CreditBalance", admin.CreditBalance),
+                new SqlParameter("@AdminId", admin.Id)
+            };
+
+            var result = _helper.ExecNonQuery(sql, parameters);
+        }
     }
 }

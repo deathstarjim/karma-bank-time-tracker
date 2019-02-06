@@ -33,6 +33,12 @@ namespace TimeTracker.Core.Contracts
         /// <returns></returns>
         List<Administrator> GetAdministrators();
 
+        /// <summary>
+        /// Updates the administrator information record including the password.
+        /// </summary>
+        /// <param name="admin"></param>
+        void UpdateAdministratorInformation(Administrator admin);
+
         void UpdateCreditBalance(Guid administratorId);
     }
 }
