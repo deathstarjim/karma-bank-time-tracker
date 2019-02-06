@@ -70,14 +70,6 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.SelectedAdministrator.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.SelectedAdministrator.Password, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.SelectedAdministrator.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         @Html.LabelFor(model => model.SelectedAdministrator.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.SelectedAdministrator.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })

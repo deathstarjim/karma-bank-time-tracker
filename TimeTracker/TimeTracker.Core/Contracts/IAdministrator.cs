@@ -39,6 +39,12 @@ namespace TimeTracker.Core.Contracts
         /// <param name="admin"></param>
         void UpdateAdministratorInformation(Administrator admin);
 
+        /// <summary>
+        /// Updates the Administrator objects password and password salt
+        /// </summary>
+        /// <param name="admin"></param>
+        void UpdateAdministratorPassword(Administrator admin);
+
         void UpdateCreditBalance(Guid administratorId);
     }
 }

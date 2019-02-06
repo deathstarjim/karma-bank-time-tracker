@@ -25,6 +25,9 @@
                 <li class="list-group-item">
                     <button class="btn btn-primary edit-admin-info" data-toggle="modal" data-target="#edit-admin-info" data-id="@Model.SelectedAdministrator.Id">Edit Information</button>
                 </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary edit-admin-password" data-toggle="modal" data-target="#edit-admin-password" data-id="@Model.SelectedAdministrator.Id">Edit Password</button>
+                </li>
             </ul>
         </div>
     </div>
@@ -34,3 +37,8 @@
 <div id='edit-admin-info' class="modal" role="dialog">
     <div id='edit-admin-container'></div>
 </div>
+
+<div id='edit-admin-password' class="modal" role="dialog">
+    <div id='edit-admin-password-container'></div>
+</div>
+

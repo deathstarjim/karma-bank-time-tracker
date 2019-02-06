@@ -1939,6 +1939,7 @@
     <Content Include="Areas\OrgRegistration\Views\Registration\Index.cshtml" />
     <Content Include="Areas\OrgRegistration\Views\Shared\EditorTemplates\Organization.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Administrators\_EditAdminInfo.cshtml" />
+    <Content Include="Areas\OrgAdmins\Views\Administrators\_UpdateAdminPassword.cshtml" />
     <None Include="Properties\PublishProfiles\localhost-Prod.pubxml" />
     <None Include="Properties\PublishProfiles\localhost-Staging.pubxml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />

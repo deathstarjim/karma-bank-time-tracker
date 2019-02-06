@@ -73,16 +73,39 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         [HttpPost]
         public ActionResult EditAdminInfo(AdministratorsViewModel model)
         {
+            _admins.UpdateAdministratorInformation(model.SelectedAdministrator);
+
+            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Administrator Updated!", 
+                model.SelectedAdministrator.FullName + " has been updated.", Models.MessageConstants.Success);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UpdateAdminPassword(Guid administratorId)
+        {
+            if (Tools.OrgAdminTools.CheckAdminLoggedOut())
+                return RedirectToAction("Index", "Login", new { Area = "OrgAdmins" });
+
+            AdministratorsViewModel model = new AdministratorsViewModel();
+            model.CurrentAdministrator = Tools.OrgAdminTools.GetCurrentAdmin(_admins.GetAdministrators());
+            model.SelectedAdministrator = _admins.GetAdministratorById(administratorId);
+
+            return PartialView("_UpdateAdminPassword", model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAdminPassword(AdministratorsViewModel model)
+        {
             string salt = _security.GenerateSalt();
             string securedPassword = _security.HashPassword(model.SelectedAdministrator.Password, salt);
 
             model.SelectedAdministrator.Password = securedPassword;
             model.SelectedAdministrator.PasswordSalt = salt;
 
-            _admins.UpdateAdministratorInformation(model.SelectedAdministrator);
+            _admins.UpdateAdministratorPassword(model.SelectedAdministrator);
 
-            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Administrator Updated!", 
-                model.SelectedAdministrator.FullName + " has been updated.", Models.MessageConstants.Success);
+            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Administrator Updated!",
+                model.SelectedAdministrator.FullName + "'s password has been updated.", Models.MessageConstants.Success);
 
             return RedirectToAction("Index");
         }

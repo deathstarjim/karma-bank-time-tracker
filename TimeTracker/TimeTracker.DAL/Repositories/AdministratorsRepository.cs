@@ -178,8 +178,6 @@ namespace TimeTracker.DAL.Repositories
                                 ,[FullName] = @FirstName + ' ' + @LastName
 	                            ,[EmailAddress] = @EmailAddress
 	                            ,[Username] = @Username
-	                            ,[UserPassword] = @UserPassword
-                                ,[PasswordSalt] = @Salt
 	                            ,[PhoneNumber] = @PhoneNumber
 	                            ,[Active] = @Active
 	                            ,[CreditBalance] = @CreditBalance
@@ -191,11 +189,27 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@LastName", admin.LastName),
                 new SqlParameter("@EmailAddress", admin.EmailAddress),
                 new SqlParameter("@Username", admin.UserName),
-                new SqlParameter("@UserPassword", admin.Password),
-                new SqlParameter("@Salt", admin.PasswordSalt),
                 new SqlParameter("@PhoneNumber", admin.PhoneNumber),
                 new SqlParameter("@Active", admin.Active),
                 new SqlParameter("CreditBalance", admin.CreditBalance),
+                new SqlParameter("@AdminId", admin.Id)
+            };
+
+            var result = _helper.ExecNonQuery(sql, parameters);
+        }
+
+        public void UpdateAdministratorPassword(Administrator admin)
+        {
+            string sql = @"
+                            UPDATE [dbo].[Administrators]
+                            SET [UserPassword] = @Password
+	                            ,[PasswordSalt] = @Salt
+                            WHERE AdministratorId = @AdminId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@Password", admin.Password),
+                new SqlParameter("@Salt", admin.PasswordSalt),
                 new SqlParameter("@AdminId", admin.Id)
             };
 
