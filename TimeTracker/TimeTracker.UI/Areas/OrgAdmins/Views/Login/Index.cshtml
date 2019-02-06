@@ -15,18 +15,18 @@
 
             @Html.HiddenFor(model => model.CurrentAdmin.Id)
 
-        <div class="input-group mb-3">
-            @Html.EditorFor(model => model.CurrentAdmin.UserName, new { htmlAttributes = new { @class = "form-control", @required = "required", @placeholder = "User Name" } })
-            <div class="input-group-append">
-                <span class="fa fa-envelope input-group-text"></span>
+            <div class="input-group mb-3">
+                @Html.EditorFor(model => model.CurrentAdmin.UserName, new { htmlAttributes = new { @class = "form-control", @required = "required", @placeholder = "User Name" } })
+                <div class="input-group-append">
+                    <span class="fa fa-envelope input-group-text"></span>
+                </div>
             </div>
-        </div>
-        <div class="input-group mb-3">
-            @Html.PasswordFor(model => model.CurrentAdmin.Password, new { @class = "form-control", @required = "required", @placeholder = "Password" })
-            <div class="input-group-append">
-                <span class="fa fa-lock input-group-text"></span>
+            <div class="input-group mb-3">
+                @Html.PasswordFor(model => model.CurrentAdmin.Password, new { @class = "form-control", @required = "required", @placeholder = "Password" })
+                <div class="input-group-append">
+                    <span class="fa fa-lock input-group-text"></span>
+                </div>
             </div>
-        </div>
             <div class="row">
                 <div class="col-8">
                     <div class="checkbox icheck">
@@ -45,9 +45,6 @@
 
         <p class="mb-1">
             <a href="#">I forgot my password</a>
-        </p>
-        <p class="mb-0">
-            <a href="register.html" class="text-center">Register a new membership</a>
         </p>
     </div>
     <!-- /.login-card-body -->

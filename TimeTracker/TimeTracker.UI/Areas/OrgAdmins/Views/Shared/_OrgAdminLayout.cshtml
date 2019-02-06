@@ -205,6 +205,28 @@
                 });
             });
 
+            $('.edit-admin-info').click(function () {
+                var url = '@Url.Action("EditAdminInfo", "Administrators", new{Area = "OrgAdmins"})'; // the url to the controller
+                var adminId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?administratorId=' + adminId, function (data) {
+
+                    $('#edit-admin-container').html(data);
+
+                    $('#edit-admin-info').modal('show');
+                });
+            });
+
+            $('.edit-admin-password').click(function () {
+                var url = '@Url.Action("UpdateAdminPassword", "Administrators", new{Area = "OrgAdmins"})'; // the url to the controller
+                var adminId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?administratorId=' + adminId, function (data) {
+
+                    $('#edit-admin-password-container').html(data);
+
+                    $('#edit-admin-password').modal('show');
+                });
+            });
+
             $('.edit-punch').click(function () {
                 var url = '@Url.Action("EditPunch", "VolMgmt", new{Area = "OrgAdmins"})'; // the url to the controller
                 var punchId = $(this).attr('data-id'); // the id that's given to each button in the list

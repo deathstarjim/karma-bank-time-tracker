@@ -149,5 +149,71 @@ namespace TimeTracker.DAL.Repositories
 
             var result = _helper.ExecNonQuery(sql, parameters);
         }
+
+        public Administrator GetAdministratorById(Guid administratorId)
+        {
+            Administrator admin = new Administrator();
+
+            string sql = _baseQuery + @" WHERE admins.AdministratorId = @AdminId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@AdminId", administratorId)
+            };
+
+            var result = _helper.ExecSqlPullDataTable(sql, parameters);
+
+            if (Tools.DataTableHasRows(result))
+                admin = (from DataRow row in result.Rows select Maps.AdministratorMaps.MapAdministrator(row)).FirstOrDefault();
+
+            return admin;
+        }
+
+        public void UpdateAdministratorInformation(Administrator admin)
+        {
+            string sql = @"
+                            UPDATE [dbo].[Administrators]
+                            SET [FirstName] = @FirstName
+	                            ,[LastName] = @LastName
+                                ,[FullName] = @FirstName + ' ' + @LastName
+	                            ,[EmailAddress] = @EmailAddress
+	                            ,[Username] = @Username
+	                            ,[PhoneNumber] = @PhoneNumber
+	                            ,[Active] = @Active
+	                            ,[CreditBalance] = @CreditBalance
+                            WHERE AdministratorId = @AdminId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@FirstName", admin.FirstName),
+                new SqlParameter("@LastName", admin.LastName),
+                new SqlParameter("@EmailAddress", admin.EmailAddress),
+                new SqlParameter("@Username", admin.UserName),
+                new SqlParameter("@PhoneNumber", admin.PhoneNumber),
+                new SqlParameter("@Active", admin.Active),
+                new SqlParameter("CreditBalance", admin.CreditBalance),
+                new SqlParameter("@AdminId", admin.Id)
+            };
+
+            var result = _helper.ExecNonQuery(sql, parameters);
+        }
+
+        public void UpdateAdministratorPassword(Administrator admin)
+        {
+            string sql = @"
+                            UPDATE [dbo].[Administrators]
+                            SET [UserPassword] = @Password
+	                            ,[PasswordSalt] = @Salt
+                            WHERE AdministratorId = @AdminId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@Password", admin.Password),
+                new SqlParameter("@Salt", admin.PasswordSalt),
+                new SqlParameter("@AdminId", admin.Id)
+            };
+
+            var result = _helper.ExecNonQuery(sql, parameters);
+        }
     }
 }
