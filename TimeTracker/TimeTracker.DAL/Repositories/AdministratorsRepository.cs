@@ -180,7 +180,6 @@ namespace TimeTracker.DAL.Repositories
 	                            ,[Username] = @Username
 	                            ,[PhoneNumber] = @PhoneNumber
 	                            ,[Active] = @Active
-	                            ,[CreditBalance] = @CreditBalance
                             WHERE AdministratorId = @AdminId";
 
             var parameters = new[]
@@ -191,7 +190,6 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@Username", admin.UserName),
                 new SqlParameter("@PhoneNumber", admin.PhoneNumber),
                 new SqlParameter("@Active", admin.Active),
-                new SqlParameter("CreditBalance", admin.CreditBalance),
                 new SqlParameter("@AdminId", admin.Id)
             };
 
