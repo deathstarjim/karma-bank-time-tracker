@@ -57,7 +57,7 @@ namespace TimeTracker.DAL.Repositories
             {
                 new SqlParameter("@TransactionTypeId", transaction.TransactionType.Id),
                 new SqlParameter("@VolunteerId", transaction.VolunteerId),
-                new SqlParameter("@TransactionNotes", transaction.Notes),
+                new SqlParameter("@TransactionNotes", transaction.Notes ?? ""),
                 new SqlParameter("@CreditAmount", transaction.CreditAmount)
             };
 

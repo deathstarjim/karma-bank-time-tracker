@@ -214,6 +214,7 @@
     <Compile Include="Areas\Volunteers\ViewModels\VolunteerViewModel.cs" />
     <Compile Include="Areas\Volunteers\VolunteersAreaRegistration.cs" />
     <Compile Include="Areas\OrgAdmins\Controllers\AdministratorsController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Areas\Volunteers\Controllers\VolunteersController.cs" />
     <Compile Include="Areas\Volunteers\Controllers\TimePunchController.cs" />
@@ -1939,6 +1940,8 @@
     <Content Include="Areas\OrgRegistration\fonts\FontAwesome.otf" />
     <Content Include="Areas\OrgRegistration\Views\Registration\Index.cshtml" />
     <Content Include="Areas\OrgRegistration\Views\Shared\EditorTemplates\Organization.cshtml" />
+    <Content Include="Areas\OrgAdmins\Views\Administrators\_EditAdminInfo.cshtml" />
+    <Content Include="Areas\OrgAdmins\Views\Administrators\_UpdateAdminPassword.cshtml" />
     <Content Include="Areas\OrgRegistration\Views\Registration\_OrgRegistrationForm.cshtml" />
     <Content Include="Areas\OrgRegistration\Views\Registration\_OrgAdminForm.cshtml" />
     <Content Include="Areas\OrgRegistration\Views\Registration\_ContactForm.cshtml" />
@@ -2008,6 +2011,7 @@
     <Content Include="Areas\OrgAdmins\Views\Shared\EditorTemplates\AdministratorsViewModel.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Administrators\AdministratorRegistration.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\VolunteerOpportunities\EditVolunteerOpportunity.cshtml" />
+    <Content Include="Views\Errors\PageNotFound.cshtml" />
     <None Include="Web.TimeTrackerProd.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

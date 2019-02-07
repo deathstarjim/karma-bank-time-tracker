@@ -69,7 +69,7 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@StartDateTime", newOpportunity.StartDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@EndDateTime", newOpportunity.EndDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@VolunteerLimit", newOpportunity.VolunteerLimit),
-                new SqlParameter("@Image", newOpportunity.Image)
+                new SqlParameter("@Image", newOpportunity.Image ?? (object)DBNull.Value)
             };
 
             var result = (Guid)_helper.ExecScalarSqlPullObject(sql, parameters);
