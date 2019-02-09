@@ -28,5 +28,8 @@ namespace TimeTracker.Core.Models
         public HttpPostedFileBase PostedFile { get; set; }
 
         public byte[] TaxExemptionFile { get; set; }
+
+        [DisplayName("Enter a sub-domain for your organziation: (i.e. yourorg.biketimetracker.com)")]
+        public string Subdomain { get; set; }
     }
 }

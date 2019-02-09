@@ -16,6 +16,7 @@ namespace TimeTracker.DAL.Maps
                 org.Name = DataFieldHelper.GetString(row, "OrganizationName");
                 org.Description = DataFieldHelper.GetString(row, "OrgDescription");
                 org.WebsiteUrl = DataFieldHelper.GetString(row, "WebsiteUrl");
+                org.Subdomain = DataFieldHelper.GetString(row, "Subdomain");
             }
 
             return org;

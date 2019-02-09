@@ -22,6 +22,7 @@ namespace TimeTracker.DAL.Repositories
 		                            ,[WebsiteUrl]
 		                            ,[OrgDescription]
                                     ,[TaxExemptionFile]
+                                    ,[Subdomain]
 	                            )
                             OUTPUT inserted.OrganizationId
                             VALUES
@@ -30,6 +31,7 @@ namespace TimeTracker.DAL.Repositories
 		                            ,@WebsiteUrl
 		                            ,@OrgDescription
                                     ,@TaxExemptionFile
+                                    ,@Subdomain
 	                            )";
 
             var parameters = new[]
@@ -37,6 +39,7 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@OrganizationName", newOrg.Name),
                 new SqlParameter("@WebsiteUrl", newOrg.WebsiteUrl),
                 new SqlParameter("@OrgDescription", newOrg.Description ?? ""),
+                new SqlParameter("@Subdomain", newOrg.Subdomain),
                 new SqlParameter("@TaxExemptionFile", newOrg.TaxExemptionFile)
             };
 
@@ -58,7 +61,7 @@ namespace TimeTracker.DAL.Repositories
                                 ,[OrganizationName]
                                 ,[WebsiteUrl]
                                 ,[OrgDescription]
-                                ,[CreateDateTime]
+                                ,[Subdomain]
                             FROM [dbo].[Organizations] orgs
                             WHERE orgs.OrganizationId = @OrgId";
 
