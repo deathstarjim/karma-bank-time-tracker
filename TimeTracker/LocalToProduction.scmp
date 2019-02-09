@@ -8,7 +8,7 @@
   </SourceModelProvider>
   <TargetModelProvider>
     <ConnectionBasedModelProvider>
-      <ConnectionString>Data Source=biketimetrackerdb.database.windows.net,1433;Initial Catalog=TimeTracker;Persist Security Info=True;User ID=timetrackeradmin;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</ConnectionString>
+      <ConnectionString>Data Source=104.168.203.84,1433;Initial Catalog=TimeTracker;Persist Security Info=True;User ID=timetrackerdb;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</ConnectionString>
     </ConnectionBasedModelProvider>
   </TargetModelProvider>
   <SchemaCompareSettingsService>
