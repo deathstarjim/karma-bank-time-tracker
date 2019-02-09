@@ -1873,7 +1873,7 @@
     <Content Include="Areas\OrgAdmins\Views\Administrators\_AdministratorsList.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Administrators\_ClockedInAdministratorsList.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Administrators\AdministratorDetails.cshtml" />
-    <Content Include="Areas\OrgAdmins\Views\Administrators\_AdminCreditBalance.cshtml" />
+    <Content Include="Areas\OrgAdmins\Views\Administrators\_AdminBasicInfo.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Administrators\_CreateTransactionBox.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Administrators\_AdminTransactionHistory.cshtml" />
     <Content Include="Areas\Volunteers\Views\Shared\_NameSearchForm.cshtml" />

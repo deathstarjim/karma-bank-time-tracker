@@ -50,7 +50,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             AdministratorsViewModel model = new AdministratorsViewModel();
 
             model.CurrentAdministrator = Tools.OrgAdminTools.GetCurrentAdmin(_admins.GetAdministrators());
-            model.SelectedAdministrator = _admins.GetAdministrators().Where(a => a.Id == administratorId).FirstOrDefault();
+            model.SelectedAdministrator = _admins.GetAdministratorById(administratorId);
             model.AdminTimePunches = _adminTimePunch.GetTimePunchesByAdminId(model.SelectedAdministrator.Id);
             model.TransactionTypes = _transTypes.GetTransactionTypes();
             model.Transactions = _adminTransactions.GetTransactionsByAdminId(model.SelectedAdministrator.Id);

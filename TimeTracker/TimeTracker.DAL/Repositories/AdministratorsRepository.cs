@@ -70,7 +70,7 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@FirstName", newAdministrator.FirstName),
                 new SqlParameter("@LastName", newAdministrator.LastName),
                 new SqlParameter("@FullName", newAdministrator.FirstName + ' ' + newAdministrator.LastName),
-                new SqlParameter("@EmailAddress", newAdministrator.Email),
+                new SqlParameter("@EmailAddress", newAdministrator.EmailAddress),
                 new SqlParameter("@UserName", newAdministrator.UserName),
                 new SqlParameter("@UserPassword", newAdministrator.Password),
                 new SqlParameter("@PasswordSalt", newAdministrator.PasswordSalt),

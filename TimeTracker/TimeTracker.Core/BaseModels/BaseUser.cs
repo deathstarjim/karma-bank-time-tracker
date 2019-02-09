@@ -18,8 +18,13 @@ namespace TimeTracker.Core.BaseModels
 
         public SystemRole Role { get; set; }
 
-        [DisplayName("Email Address:")]
-        public string Email { get; set; }
+        [DisplayName("First Name:*")]
+        [Required(AllowEmptyStrings = true, ErrorMessage = "First name is required.")]
+        public string FirstName { get; set; }
+
+        [DisplayName("Last Name:*")]
+        [Required(AllowEmptyStrings = true, ErrorMessage = "Last name is required.")]
+        public string LastName { get; set; }
 
         [DisplayName("Primary Phone Number:")]
         public string PhoneNumber { get; set; }
