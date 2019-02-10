@@ -78,9 +78,15 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+                if(model.CurrentOpportunity.PostedFile != null && model.CurrentOpportunity.PostedFile.ContentLength > 0)
+                {
+                    model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+                    _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+                }
 
                 _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);
+
+                model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(model.CurrentOpportunity.Id);
 
                 Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Opportunity Updated!", "You have successfully updated the Volunteer Opportunity.", 
                     Models.MessageConstants.Success);
