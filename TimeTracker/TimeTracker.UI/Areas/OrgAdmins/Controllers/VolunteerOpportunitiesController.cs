@@ -78,7 +78,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                if(model.CurrentOpportunity.PostedFile != null && model.CurrentOpportunity.PostedFile.ContentLength > 0)
+                if(model.CurrentOpportunity.PostedFile != null)
                 {
                     model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
                     _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
