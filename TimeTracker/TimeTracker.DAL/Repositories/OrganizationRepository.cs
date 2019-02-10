@@ -1,12 +1,11 @@
 ﻿using FDCommonTools.SqlTools;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
+using System.Linq;
 
 namespace TimeTracker.DAL.Repositories
 {
@@ -16,17 +15,87 @@ namespace TimeTracker.DAL.Repositories
 
         public Organization CreateOrganization(Organization newOrg)
         {
-            throw new NotImplementedException();
+            string sql = @"
+                            INSERT INTO [dbo].[Organizations]
+	                            (
+		                            [OrganizationName]
+		                            ,[WebsiteUrl]
+		                            ,[OrgDescription]
+                                    ,[TaxExemptionFile]
+                                    ,[Subdomain]
+	                            )
+                            OUTPUT inserted.OrganizationId
+                            VALUES
+	                            (
+		                            @OrganizationName
+		                            ,@WebsiteUrl
+		                            ,@OrgDescription
+                                    ,@TaxExemptionFile
+                                    ,@Subdomain
+	                            )";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@OrganizationName", newOrg.Name),
+                new SqlParameter("@WebsiteUrl", newOrg.WebsiteUrl),
+                new SqlParameter("@OrgDescription", newOrg.Description ?? ""),
+                new SqlParameter("@Subdomain", newOrg.Subdomain),
+                new SqlParameter("@TaxExemptionFile", newOrg.TaxExemptionFile)
+            };
+
+            var result = (Guid)_helper.ExecScalarSqlPullObject(sql, parameters);
+
+            if (result != Guid.Empty)
+                newOrg.Id = result;
+
+            return newOrg;
         }
 
         public Organization GetOrgById(Guid orgId)
         {
-            throw new NotImplementedException();
+            Organization org = new Organization();
+
+            string sql = @"
+                            SELECT 
+	                            [OrganizationId]
+                                ,[OrganizationName]
+                                ,[WebsiteUrl]
+                                ,[OrgDescription]
+                                ,[Subdomain]
+                            FROM [dbo].[Organizations] orgs
+                            WHERE orgs.OrganizationId = @OrgId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@OrgId", orgId)
+            };
+
+            var result = _helper.ExecSqlPullDataTable(sql, parameters);
+
+            if (Tools.DataTableHasRows(result))
+                org = (from DataRow row in result.Rows select Maps.OrgMaps.MapOrg(row)).FirstOrDefault();
+
+            return org;
         }
 
         public void UpdateOrganization(Organization org)
         {
-            throw new NotImplementedException();
+            string sql = @"
+                            UPDATE [dbo].[Organizations]
+                            SET [OrganizationName] = @OrganizationName
+                                ,[WebsiteUrl] = @WebsiteUrl
+                                ,[OrgDescription] = @OrgDescription
+                            WHERE OrganizationId = @OrgId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@OrganizationName", org.Name),
+                new SqlParameter("OrgDescription", org.Description),
+                new SqlParameter("@WebsiteUrl", org.WebsiteUrl),
+                new SqlParameter("@OrgId", org.Id)
+            };
+
+            var result = _helper.ExecNonQuery(sql, parameters);
         }
     }
 }

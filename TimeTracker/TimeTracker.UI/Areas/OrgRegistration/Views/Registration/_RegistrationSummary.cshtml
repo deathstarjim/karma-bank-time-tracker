@@ -1,0 +1,72 @@
+﻿@model TimeTracker.UI.Areas.OrgRegistration.ViewModels.RegistrationViewModel
+
+<section id="three" class="wrapper style2 fade-up">
+    <div class="inner">
+        <h2>Thank You!</h2>
+        <p>
+            Thank you for registering with the Bike Time Tracker program. You should recieve an email with your information and a login link
+            shortly.
+        </p>
+        <h3>Organization Information</h3>
+        <div class="table-wrapper">
+            <table class="alt">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Information Entered</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>@Model.CurrentOrg.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Website</td>
+                        <td>@Model.CurrentOrg.WebsiteUrl</td>
+                    </tr>
+                    <tr>
+                        <td>Mission</td>
+                        <td>@Model.CurrentOrg.Description</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Administrator Information</h3>
+        <div class="table-wrapper">
+            <table class="alt">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Information Entered</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First Name</td>
+                        <td>@Model.CurrentAdmin.FirstName</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td>@Model.CurrentAdmin.LastName</td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td>@Model.CurrentAdmin.Email</td>
+                    </tr>
+                    <tr>
+                        <td>Phone Number</td>
+                        <td>@Model.CurrentAdmin.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td>User Name</td>
+                        <td>@Model.CurrentAdmin.UserName</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</section>

@@ -19,6 +19,7 @@ namespace TimeTracker.DAL.Repositories
             string sql = @"
                             SELECT 
 	                            admins.[AdministratorId]
+                                ,admins.[OrganizationId]
 	                            ,admins.[FirstName]
 	                            ,admins.[LastName]
                                 ,admins.[FirstName] + ' ' + admins.[LastName] as FullName

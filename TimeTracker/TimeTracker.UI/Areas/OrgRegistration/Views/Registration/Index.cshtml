@@ -19,8 +19,13 @@
                 <ul>
                     <li><a href="#intro">Welcome</a></li>
                     <li><a href="#one">Your Organization</a></li>
-                    <li><a href="#two">About You</a></li>
-                    <li><a href="#three">Confirm Information</a></li>
+
+                    @if(Model.CurrentOrg.Id != Guid.Empty)
+                    {
+                        <li><a href="#two">About You</a></li>
+                        <li><a href="#three">Confirm Information</a></li>
+                    }
+
                     <li><a href="#four">Having Trouble?</a></li>
                 </ul>
             </nav>
@@ -46,223 +51,22 @@
         </section>
 
         <!-- One -->
-        <section id="one" class="wrapper style2 spotlights fade-up">
-            <section>
-                <div class="content">
-                    <div class="inner">
-                        <h2>Your Organziation</h2>
-                        <p>Tell us who your organization is what its' all about!</p>
-                        @using (Html.BeginForm("CreateOrg", "Registration", FormMethod.Post, new { autocomplete = "off" }))
-                        {
-                            @Html.AntiForgeryToken()
-
-                            <section>
-                                <div class="row gtr-uniform">
-                                    <div class="col-6 col-12-xsmall">
-                                        @Html.EditorFor(model => model.CurrentOrg.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Organization Name", @required = "required" } })
-                                        @Html.ValidationMessageFor(model => model.CurrentOrg.Name, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-6 col-12-xsmall">
-                                        @Html.EditorFor(model => model.CurrentOrg.WebsiteUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Website URL", @required = "required" } })
-                                        @Html.ValidationMessageFor(model => model.CurrentOrg.WebsiteUrl, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-12">
-                                        @Html.LabelFor(model => Model.CurrentOrg.PostedFile, htmlAttributes: new { @class = "control-label" })
-                                        @Html.TextBoxFor(model => Model.CurrentOrg.PostedFile, new { type = "file" })
-                                    </div>
-                                    <div class="col-12">
-                                        @Html.TextAreaFor(model => Model.CurrentOrg.Description, new { rows = "6", cols = "55", @class = "form-control",
-                                            placeholder = "What is your organizations' mission?" })
-                                    </div>
-
-                                    <div class="col-12">
-                                        <ul class="actions">
-                                            <li><input type="submit" value="Save Information" class="primary" /></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </section>
-                        }
-                        <ul class="actions">
-                            <li><a href="#two" class="button scrolly">Continue...</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </section>
+        @Html.Partial("_OrgRegistrationForm", Model)
 
         <!-- Two -->
-        <section id="two" class="wrapper style3 fade-up">
-            <div class="inner">
-                <h2>Tell us about yourself</h2>
-                <p>
-                    Fill out the form below to create the administrator account for your organization. This account can be used to create other administrators, 
-                    edit volunteer information and enter credit purchases.
-                </p>
-                @using(Html.BeginForm("CreateAdmin", "Registration", FormMethod.Post, new { autocomplete = "off" }))
-                {
-                    <section>
-                        <div class="row gtr-uniform">
-                            <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(Model => Model.CurrentAdmin.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name", @required = "required" } })
-                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.FirstName, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(model => Model.CurrentAdmin.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name", @required = "required" } })
-                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.LastName, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(model => Model.CurrentAdmin.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email address", @required = "required" } })
-                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.Email, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(model => Model.CurrentAdmin.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone number", @required = "required" } })
-                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.PhoneNumber, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(model => Model.CurrentAdmin.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "User Name", @required = "required" } })
-                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.UserName, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(model => Model.CurrentAdmin.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password", @required = "required" } })
-                                @Html.ValidationMessageFor(model => Model.CurrentAdmin.Password, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-12">
-                                <ul class="actions">
-                                    <li><input type="submit" value="Save Information" class="primary" /></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                }
-                <ul class="actions">
-                    <li><a href="#three" class="button scrolly">One more step...</a></li>
-                </ul>
-            </div>
-        </section>
+        @if(Model.CurrentOrg.Id != Guid.Empty)
+        {
+            @Html.Partial("_OrgAdminForm", Model)
+        }
 
-        <section id="three" class="wrapper style2 fade-up">
-            <div class="inner">
-                <h2>Confirm Your Information</h2>
-                <p>
-                    Make sure everything is entered correctly. If something isn't right, you can change it by using the navigation on the left.
-                </p>
-                <h3>Organization Information</h3>
-                <div class="table-wrapper">
-                    <table class="alt">
-                        <thead>
-                            <tr>
-                                <th>Field</th>
-                                <th>Information Entered</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <td>@Model.CurrentOrg.Name</td>
-                            </tr>
-                            <tr>
-                                <td>Website</td>
-                                <td>@Model.CurrentOrg.WebsiteUrl</td>
-                            </tr>
-                            <tr>
-                                <td>Mission</td>
-                                <td>@Model.CurrentOrg.Description</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>Administrator Information</h3>
-                <div class="table-wrapper">
-                    <table class="alt">
-                        <thead>
-                            <tr>
-                                <th>Field</th>
-                                <th>Information Entered</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>First Name</td>
-                                <td>@Model.CurrentAdmin.FirstName</td>
-                            </tr>
-                            <tr>
-                                <td>Last Name</td>
-                                <td>@Model.CurrentAdmin.LastName</td>
-                            </tr>
-                            <tr>
-                                <td>Email Address</td>
-                                <td>@Model.CurrentAdmin.Email</td>
-                            </tr>
-                            <tr>
-                                <td>Phone Number</td>
-                                <td>@Model.CurrentAdmin.PhoneNumber</td>
-                            </tr>
-                            <tr>
-                                <td>User Name</td>
-                                <td>@Model.CurrentAdmin.UserName</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-        </section>
+        <!-- Three -->
+        @if(Model.CurrentOrg.Id != Guid.Empty && Model.CurrentAdmin.Id != Guid.Empty)
+        {
+            @Html.Partial("_RegistrationSummary", Model)
+        }
 
         <!-- Four -->
-        <section id="four" class="wrapper style1 fade-up">
-            <div class="inner">
-                <h2>Having trouble?</h2>
-                <p>
-                    If you're having trouble registering for the beta, feel free to reach out and tell us what's going on so we can get it fixed as soon as possible!
-                </p>
-                <div class="split style1">
-                    <section>
-                        <form method="post" action="#">
-                            <div class="fields">
-                                <div class="field half">
-                                    <label for="name">Name*</label>
-                                    <input type="text" name="name" id="name" required />
-                                </div>
-                                <div class="field half">
-                                    <label for="email">Email*</label>
-                                    <input type="text" name="email" id="email" required />
-                                </div>
-                                <div class="field">
-                                    <label for="message">Message*</label>
-                                    <textarea name="message" id="message" rows="5" required></textarea>
-                                </div>
-                            </div>
-                            <ul class="actions">
-                                <li><input type="submit" value="Send Message" class="primary" /></li>
-                            </ul>
-                        </form>
-                    </section>
-                    <section>
-                        <ul class="contact">
-                            <li>
-                                <h3>Karma First</h3>
-                                <span>
-                                    7960 Richard Road, FH<br />
-                                    Broadview Heights, OH 44147<br />
-                                    USA
-                                </span>
-                            </li>
-                            <li>
-                                <h3>Email</h3>
-                                <a href="#">info@karmafirst.com</a>
-                            </li>
-                            <li>
-                                <h3>Phone</h3>
-                                <span>(216) 255-8074</span>
-                            </li>
-                        </ul>
-                    </section>
-                </div>
-            </div>
-        </section>
+        @Html.Partial("_ContactForm", Model)
 
     </div>
 

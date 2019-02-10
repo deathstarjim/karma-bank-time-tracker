@@ -45,7 +45,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         public ActionResult Index(VolunteerOpportunityViewModel model)
         {
 
-            model.CurrentOpportunity.Image = ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+            model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
 
             _volunteerOpportunity.CreateVolunteerOpportunity(model.CurrentOpportunity);
 
@@ -78,7 +78,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                model.CurrentOpportunity.Image = ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+                model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
 
                 _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);
 
@@ -90,21 +90,8 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return View();
+                return View(model);
             }
-        }
-
-        private byte[] ConvertImageToBytes(HttpPostedFileBase postedFile)
-        {
-            if (postedFile != null)
-            {
-                byte[] imageBuffer = new byte[postedFile.ContentLength];
-                Stream imageStream = postedFile.InputStream;
-                imageStream.Read(imageBuffer, 0, imageBuffer.Length);
-                return imageBuffer;
-            }
-
-            return null;
         }
     }
 }
