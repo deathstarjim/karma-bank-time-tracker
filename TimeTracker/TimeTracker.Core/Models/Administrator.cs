@@ -11,14 +11,7 @@ namespace TimeTracker.Core.Models
             Role = new SystemRole();
         }
 
-        [DisplayName("First Name:*")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "First name is required.")]
-        public string FirstName { get; set; }
-
-        [DisplayName("Last Name:*")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Last name is required.")]
-        public string LastName { get; set; }
-
+        [DisplayName("Administrator Name:")]
         public string FullName { get; set; }
 
         [DisplayName("User Name:*")]

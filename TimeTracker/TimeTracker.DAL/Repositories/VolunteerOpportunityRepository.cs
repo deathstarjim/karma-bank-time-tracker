@@ -69,7 +69,7 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@StartDateTime", newOpportunity.StartDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@EndDateTime", newOpportunity.EndDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@VolunteerLimit", newOpportunity.VolunteerLimit),
-                new SqlParameter("@Image", newOpportunity.Image ?? (object)DBNull.Value)
+                new SqlParameter("@Image", newOpportunity.Image ?? System.Data.SqlTypes.SqlBinary.Null)
             };
 
             var result = (Guid)_helper.ExecScalarSqlPullObject(sql, parameters);
@@ -130,11 +130,11 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@CreditValue", opportunity.CreditValue),
                 new SqlParameter("@IsOffsiteEvent", opportunity.IsOffsite.IsChecked),
                 new SqlParameter("@IsVisible", opportunity.IsVisibleToVolunteer.IsChecked),
-                new SqlParameter("@Description", opportunity.Description),
+                new SqlParameter("@Description", opportunity.Description ?? ""),
                 new SqlParameter("@StartDateTime", opportunity.StartDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@EndDateTime", opportunity.EndDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@VolunteerLimit", opportunity.VolunteerLimit),
-                new SqlParameter("@Image", opportunity.Image),
+                new SqlParameter("@Image", opportunity.Image ?? System.Data.SqlTypes.SqlBinary.Null),
                 new SqlParameter("@OpportunityId", opportunity.Id)
             };
 

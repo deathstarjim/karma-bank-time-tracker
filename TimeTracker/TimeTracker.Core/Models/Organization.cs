@@ -24,9 +24,12 @@ namespace TimeTracker.Core.Models
         [DisplayName("Tell us about your organization:")]
         public string Description { get; set; }
 
-        [DisplayName("Upload your 1023c file:")]
+        [DisplayName("Upload your 1023c file:*")]
         public HttpPostedFileBase PostedFile { get; set; }
 
         public byte[] TaxExemptionFile { get; set; }
+
+        [DisplayName("Enter a sub-domain for your organziation: (i.e. yourorg.biketimetracker.com)")]
+        public string Subdomain { get; set; }
     }
 }
