@@ -90,7 +90,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return View();
+                return View(model);
             }
         }
     }
