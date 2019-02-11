@@ -68,7 +68,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
             VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
 
-            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunities().Where(v => v.Id == volunteerOpportunityId).FirstOrDefault();
+            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volunteerOpportunityId);
 
             return View(model);
         }
@@ -98,6 +98,19 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             {
                 return View(model);
             }
+        }
+
+        public ActionResult RemoveVolOppImage(Guid volOppId)
+        {
+            VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
+
+            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volOppId);
+
+            model.CurrentOpportunity.Image = null;
+
+            _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+
+            return RedirectToAction("EditVolunteerOpportunity", new { volunteerOpportunityId = model.CurrentOpportunity.Id });
         }
     }
 }

@@ -205,6 +205,14 @@
                 });
             });
 
+            $('#DeleteImage').click(function () {
+                var url = '@Url.Action("RemoveVolOppImage", "VolunteerOpportunities", new { Area = "OrgAdmins" })';
+                var volOppId = $(this).attr('data-id');
+                $.get(url + "?volOppId=" + volOppId, function (data) {
+                    alert("Your image has been deleted.");
+                })
+            });
+
             $('.edit-admin-info').click(function () {
                 var url = '@Url.Action("EditAdminInfo", "Administrators", new{Area = "OrgAdmins"})'; // the url to the controller
                 var adminId = $(this).attr('data-id'); // the id that's given to each button in the list
