@@ -224,6 +224,17 @@
                 });
             });
 
+            $('.edit-volunteer-info').click(function () {
+                var url = '@Url.Action("EditVolunteerDetails", "VolMgmt", new{Area = "OrgAdmins"})'; // the url to the controller
+                var volunteerId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?volunteerId=' + volunteerId, function (data) {
+
+                    $('#edit-volunteer-container').html(data);
+
+                    $('#edit-volunteer-info').modal('show');
+                });
+            });
+
             $('.edit-admin-password').click(function () {
                 var url = '@Url.Action("UpdateAdminPassword", "Administrators", new{Area = "OrgAdmins"})'; // the url to the controller
                 var adminId = $(this).attr('data-id'); // the id that's given to each button in the list
