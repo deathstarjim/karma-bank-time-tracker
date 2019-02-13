@@ -41,7 +41,7 @@ namespace TimeTracker.Core.Models
         public int VolunteerLimit { get; set; }
 
         [DisplayName("Select Image:")]
-        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$", ErrorMessage = "Only Image files allowed.")]
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif|.PNG|.JPG|.GIF)$", ErrorMessage = "Only Image files allowed.")]
         public HttpPostedFileBase PostedFile { get; set; }
 
         public byte[] Image { get; set; }

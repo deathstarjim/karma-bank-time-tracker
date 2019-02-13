@@ -121,7 +121,6 @@ namespace TimeTracker.DAL.Repositories
                                 ,[OpportunityStartDateTime] = @StartDateTime
                                 ,[OpportunityEndDateTime] = @EndDateTime
                                 ,[VolunteerLimit] = @VolunteerLimit
-                                ,[Image] = @Image
                             WHERE VolunteerOpportunityId = @OpportunityId";
 
             var parameters = new[]
@@ -134,7 +133,6 @@ namespace TimeTracker.DAL.Repositories
                 new SqlParameter("@StartDateTime", opportunity.StartDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@EndDateTime", opportunity.EndDateTime ?? (object)DBNull.Value),
                 new SqlParameter("@VolunteerLimit", opportunity.VolunteerLimit),
-                new SqlParameter("@Image", opportunity.Image ?? System.Data.SqlTypes.SqlBinary.Null),
                 new SqlParameter("@OpportunityId", opportunity.Id)
             };
 
@@ -187,6 +185,22 @@ namespace TimeTracker.DAL.Repositories
                 clockedInCount = Convert.ToInt32(count);
 
             return clockedInCount;
+        }
+
+        public void UpdateVolunteerOpportunityImage(VolunteerOpportunity opportunity)
+        {
+            string sql = @"
+                            UPDATE [dbo].[VolunteerOpportunities]
+                            SET [Image] = @Image
+                            WHERE VolunteerOpportunityId = @OpportunityId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@Image", opportunity.Image ?? System.Data.SqlTypes.SqlBinary.Null),
+                new SqlParameter("@OpportunityId", opportunity.Id)
+            };
+
+            var result = _helper.ExecScalarSqlPullObject(sql, parameters);
         }
     }
 }

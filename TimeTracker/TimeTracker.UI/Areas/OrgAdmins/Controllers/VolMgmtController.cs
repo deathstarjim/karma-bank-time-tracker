@@ -195,5 +195,27 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
             return RedirectToAction("VolunteerDetails", "VolMgmt", new { Area = "OrgAdmins", volunteerId = model.CurrentVolPunch.VolunteerId });
         }
+
+        public ActionResult EditVolunteerDetails(Guid volunteerId)
+        {
+            VolMgmtViewModel model = new VolMgmtViewModel();
+
+            model.CurrentVolunteer = _vols.GetVolunteerById(volunteerId);
+
+            return PartialView("_EditVolunteerDetails", model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateVolunteerDetails(VolMgmtViewModel model)
+        {
+            _vols.UpdateVolunteerDetails(model.CurrentVolunteer);
+
+            model.CurrentVolunteer = _vols.GetVolunteerById(model.CurrentVolunteer.Id);
+
+            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Info Updated!", model.CurrentVolunteer.FullName + "'s information has been updated successfully.",
+                Models.MessageConstants.Success);
+
+            return RedirectToAction("VolunteerDetails", new { volunteerId = model.CurrentVolunteer.Id });
+        }
     }
 }

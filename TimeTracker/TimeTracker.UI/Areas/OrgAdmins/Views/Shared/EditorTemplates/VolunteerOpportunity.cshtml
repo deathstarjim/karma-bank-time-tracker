@@ -4,6 +4,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => Model.Id)
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -87,7 +88,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => Model.PostedFile, htmlAttributes: new { @class = "control-label col-md-6" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => Model.PostedFile, new { type = "file" })
+                        @Html.TextBoxFor(model => Model.PostedFile, new { type = "file", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => Model.PostedFile, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -99,6 +101,9 @@
                             if (imageSource != "data: image/png; base64,AAAAAA==")
                             {
                                 <img src="@imageSource" style="max-width: 200px;" />
+                                <span>
+                                    <i class="far fa-times-circle fa-2x" id="DeleteImage" data-id="@Model.Id"></i>
+                                </span>
                             }
                         }
                     </div>

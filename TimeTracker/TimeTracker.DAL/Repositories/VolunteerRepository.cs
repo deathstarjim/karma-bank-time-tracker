@@ -161,5 +161,35 @@ namespace TimeTracker.DAL.Repositories
 
             var result = _helper.ExecNonQuery(sql, parameters);
         }
+
+        public void UpdateVolunteerDetails(Volunteer volunteer)
+        {
+            string sql = @"
+                            UPDATE [dbo].[Volunteers]
+                            SET [FirstName] = @FirstName
+                                ,[LastName] = @LastName
+                                ,[FullName] = @FullName
+                                ,[EmailAddress] = @EmailAddress
+                                ,[PhoneNumber] = @PhoneNumber
+                                ,[EmergencyContactNumber] = @EmergencyContactNumber
+                                ,[SecurityWordPhrase] = @SecurityWordPhrase
+                                ,[Active] = @Active
+                            WHERE VolunteerId = @VolId";
+
+            var parameters = new[]
+            {
+                new SqlParameter("@FirstName", volunteer.FirstName),
+                new SqlParameter("@LastName", volunteer.LastName),
+                new SqlParameter("@FullName", volunteer.FirstName + ' ' + volunteer.LastName),
+                new SqlParameter("@EmailAddress", volunteer.Email ?? ""),
+                new SqlParameter("@PhoneNumber", volunteer.PhoneNumber ?? ""),
+                new SqlParameter("@EmergencyContactNumber", volunteer.EmergencyContactPhone),
+                new SqlParameter("@SecurityWordPhrase", volunteer.SecurityPhrase ?? ""),
+                new SqlParameter("@Active", volunteer.Active ?? false),
+                new SqlParameter("@VolId", volunteer.Id)
+            };
+
+            var result = _helper.ExecNonQuery(sql, parameters);
+        }
     }
 }
