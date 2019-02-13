@@ -74,6 +74,8 @@ namespace TimeTracker.UI.Areas.Volunteers.Controllers
         {
             model.Volunteers = _volunteer.SearchVolunteersByName(model.SearchTerm);
 
+            model.ResultsMessage = model.Volunteers.Count.ToString() + " volunteers found.";
+
             return PartialView("_VolunteerNameSearch", model);
         }
 

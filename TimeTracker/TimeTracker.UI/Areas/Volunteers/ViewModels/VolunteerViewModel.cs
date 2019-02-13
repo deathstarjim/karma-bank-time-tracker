@@ -34,5 +34,7 @@ namespace TimeTracker.UI.Areas.Volunteers.ViewModels
         public List<VolCreditTransaction> VolunteerTransactions { get; set; }
 
         public string ControllerName { get; set; }
+
+        public string ResultsMessage { get; set; }
     }
 }

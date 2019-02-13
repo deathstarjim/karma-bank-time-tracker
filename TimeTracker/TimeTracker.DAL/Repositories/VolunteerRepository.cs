@@ -114,7 +114,7 @@ namespace TimeTracker.DAL.Repositories
         {
             List<Volunteer> volunteers = new List<Volunteer>();
 
-            string sql = _baseQuery + @" WHERE FullName LIKE '%{0}%' AND [Active] = '1'";
+            string sql = _baseQuery + @" WHERE FullName LIKE '%{0}%'";
 
             sql = string.Format(sql, name);
             
