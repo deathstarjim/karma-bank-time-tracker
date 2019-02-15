@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using TimeTracker.UI.Tools;
 
 namespace TimeTracker.UI.Controllers
 {
@@ -13,6 +11,11 @@ namespace TimeTracker.UI.Controllers
         {
             if (!string.IsNullOrEmpty(errorMessage))
                 ViewData.Add("ErrorMessage", errorMessage);
+
+            Helpers.CreateLogFolder();
+            Helpers.CreateLogFile();
+
+            Helpers.WriteLine("An error occurred: " + errorMessage + " on " + DateTime.Now.ToLongDateString() + ".");
 
             return View("Error");
         }
