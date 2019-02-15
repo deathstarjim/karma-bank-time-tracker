@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Web;
+using TimeTracker.UI.Models;
 
 namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 {
@@ -25,52 +22,106 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
         public ActionResult Index()
         {
-            VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
+            try
+            {
+                VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
 
-            model.VolunteerOpportunities = _volunteerOpportunity.GetVolunteerOpportunities();
-            Guid currentAdminId = new Guid();
+                model.VolunteerOpportunities = _volunteerOpportunity.GetVolunteerOpportunities();
+                Guid currentAdminId = new Guid();
 
-            if (Session["CurrentUserId"] == null)
-                return RedirectToAction("Index", "Login", new { Area = "OrgAdmins" });
+                if (Session["CurrentUserId"] == null)
+                    return RedirectToAction("Index", "Login", new { Area = "OrgAdmins" });
 
-            if (Session["CurrentUserId"] != null)
-                currentAdminId = (Guid)Session["CurrentUserId"];
+                if (Session["CurrentUserId"] != null)
+                    currentAdminId = (Guid)Session["CurrentUserId"];
 
-            model.CurrentAdministrator = _admins.GetAdministrators().Where(a => a.Id == currentAdminId).FirstOrDefault();
+                model.CurrentAdministrator = _admins.GetAdministrators().Where(a => a.Id == currentAdminId).FirstOrDefault();
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteer Opportunities",
+                    ActionName = "Index"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult Index(VolunteerOpportunityViewModel model)
         {
 
-            model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+            try
+            {
+                model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
 
-            _volunteerOpportunity.CreateVolunteerOpportunity(model.CurrentOpportunity);
+                _volunteerOpportunity.CreateVolunteerOpportunity(model.CurrentOpportunity);
 
-            model.VolunteerOpportunities = _volunteerOpportunity.GetVolunteerOpportunities();
+                model.VolunteerOpportunities = _volunteerOpportunity.GetVolunteerOpportunities();
 
-            model.CurrentOpportunity = new VolunteerOpportunity();
+                model.CurrentOpportunity = new VolunteerOpportunity();
 
-            ModelState.Clear();
+                ModelState.Clear();
 
-            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Opportunity Created!", "You have successfully created a new Volunteer Opportunity.", 
-                Models.MessageConstants.Success);
+                Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Opportunity Created!", "You have successfully created a new Volunteer Opportunity.",
+                    MessageConstants.Success);
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteer Opportunities",
+                    ActionName = "Index - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         public ActionResult EditVolunteerOpportunity(Guid volunteerOpportunityId)
         {
-            if (volunteerOpportunityId == Guid.Empty)
-                return RedirectToAction("Index");
+            try
+            {
+                if (volunteerOpportunityId == Guid.Empty)
+                    return RedirectToAction("Index");
 
-            VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
+                VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
 
-            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volunteerOpportunityId);
+                model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volunteerOpportunityId);
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteer Opportunities",
+                    ActionName = "EditVolunteerOpportunity"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
@@ -96,21 +147,49 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return View(model);
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteer Opportunities",
+                    ActionName = "EditVolunteerOpportunity - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
         public ActionResult RemoveVolOppImage(Guid volOppId)
         {
-            VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
+            try
+            {
+                VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
 
-            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volOppId);
+                model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volOppId);
 
-            model.CurrentOpportunity.Image = null;
+                model.CurrentOpportunity.Image = null;
 
-            _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+                _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
 
-            return RedirectToAction("EditVolunteerOpportunity", new { volunteerOpportunityId = model.CurrentOpportunity.Id });
+                return RedirectToAction("EditVolunteerOpportunity", new { volunteerOpportunityId = model.CurrentOpportunity.Id });
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteer Opportunities",
+                    ActionName = "RemoveVolOppImage"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
     }
 }
