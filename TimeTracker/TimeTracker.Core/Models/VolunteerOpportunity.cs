@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using TimeTracker.Core.Helpers;
 
 namespace TimeTracker.Core.Models
 {
@@ -41,6 +42,7 @@ namespace TimeTracker.Core.Models
         public int VolunteerLimit { get; set; }
 
         [DisplayName("Select Image:")]
+        [AllowFileSize(ErrorMessage = "Maximum file size allowed is 5 MB", FileSize = 4 * 1024 * 1024)]
         [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif|.PNG|.JPG|.GIF)$", ErrorMessage = "Only Image files allowed.")]
         public HttpPostedFileBase PostedFile { get; set; }
 

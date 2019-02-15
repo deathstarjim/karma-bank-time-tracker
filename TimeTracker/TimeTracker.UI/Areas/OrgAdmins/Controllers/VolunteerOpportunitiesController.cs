@@ -129,20 +129,31 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                if(model.CurrentOpportunity.PostedFile != null)
+                if (ModelState.IsValid)
                 {
-                    model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
-                    _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+                    if (model.CurrentOpportunity.PostedFile != null)
+                    {
+                        model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+                        _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+                    }
+
+                    _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);
+
+                    model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(model.CurrentOpportunity.Id);
+
+                    Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Opportunity Updated!", "You have successfully updated the Volunteer Opportunity.",
+                        MessageConstants.Success);
+
+                    return View(model); 
                 }
 
-                _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);
+                if (!ModelState.IsValid)
+                {
+                    model.Message = model.CurrentOpportunity.PostedFile.FileName + " exceeds the maximum file size of 4 MB.";
+                    model.IsValid = false;
+                }
 
-                model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(model.CurrentOpportunity.Id);
-
-                Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Opportunity Updated!", "You have successfully updated the Volunteer Opportunity.", 
-                    Models.MessageConstants.Success);
-
-                return View(model);
+                return this.View(model);
 
             }
             catch (Exception ex)

@@ -15,5 +15,12 @@ namespace TimeTracker.UI.Areas.OrgAdmins.ViewModels
 
         public VolunteerOpportunity CurrentOpportunity { get; set; }
 
+        public bool IsValid { get; set; }
+
+        /// <summary>
+        /// Validation message
+        /// </summary>
+        public string Message { get; set; }
+
     }
 }
