@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
+using TimeTracker.UI.Models;
 
 namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 {
@@ -46,7 +47,8 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error { Message = ex.Message, InnerException = ex.InnerException.Message, ControllerName = "Administrators", ActionName = "Index" };
+                return RedirectToAction("Index", "Errors", new { Area = "", error });
             }
         }
 

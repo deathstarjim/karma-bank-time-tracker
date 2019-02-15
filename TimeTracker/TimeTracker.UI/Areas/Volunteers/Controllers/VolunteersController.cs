@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.Volunteers.ViewModels;
+using TimeTracker.UI.Models;
 
 namespace TimeTracker.UI.Areas.Volunteers.Controllers
 {
@@ -24,13 +25,26 @@ namespace TimeTracker.UI.Areas.Volunteers.Controllers
 
         public ActionResult Index()
         {
-            VolunteerViewModel model = new VolunteerViewModel();
+            try
+            {
+                VolunteerViewModel model = new VolunteerViewModel();
 
-            model.Volunteers = _volunteer.GetVolunteers();
-            model.OpenTimePunches = _timePunches.GetOpenTimePunches();
-            model.ControllerName = "Volunteers";
+                model.Volunteers = _volunteer.GetVolunteers();
+                model.OpenTimePunches = _timePunches.GetOpenTimePunches();
+                model.ControllerName = "Volunteers";
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error { Message = ex.Message, InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers", ActionName = "Index" };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
