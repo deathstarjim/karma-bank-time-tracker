@@ -38,5 +38,11 @@ namespace TimeTracker.Core.Contracts
         /// </summary>
         /// <param name="volunteerId"></param>
         void UpdateCreditBalance(Guid volunteerId);
+
+        /// <summary>
+        /// Update a Volunteer's basic information in the database
+        /// </summary>
+        /// <param name="volunteer"></param>
+        void UpdateVolunteerDetails(Volunteer volunteer);
     }
 }

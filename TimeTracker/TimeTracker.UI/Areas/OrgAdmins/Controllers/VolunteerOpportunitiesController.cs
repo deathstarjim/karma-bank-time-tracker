@@ -68,7 +68,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
             VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
 
-            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunities().Where(v => v.Id == volunteerOpportunityId).FirstOrDefault();
+            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volunteerOpportunityId);
 
             return View(model);
         }
@@ -78,9 +78,15 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+                if(model.CurrentOpportunity.PostedFile != null)
+                {
+                    model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+                    _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+                }
 
                 _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);
+
+                model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(model.CurrentOpportunity.Id);
 
                 Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Volunteer Opportunity Updated!", "You have successfully updated the Volunteer Opportunity.", 
                     Models.MessageConstants.Success);
@@ -92,6 +98,19 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             {
                 return View(model);
             }
+        }
+
+        public ActionResult RemoveVolOppImage(Guid volOppId)
+        {
+            VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
+
+            model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volOppId);
+
+            model.CurrentOpportunity.Image = null;
+
+            _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+
+            return RedirectToAction("EditVolunteerOpportunity", new { volunteerOpportunityId = model.CurrentOpportunity.Id });
         }
     }
 }

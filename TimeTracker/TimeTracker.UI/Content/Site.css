@@ -12,7 +12,9 @@
 .margin-top {
     margin-top: 3em;
 }
-
+.margin-bottom {
+    margin-bottom: 20px;
+}
 .vol-opp-content {
     padding-top: 1em;
 }
