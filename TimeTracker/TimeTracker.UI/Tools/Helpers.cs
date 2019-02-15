@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
+using System.Web;
 
 namespace TimeTracker.UI.Tools
 {
@@ -8,7 +8,7 @@ namespace TimeTracker.UI.Tools
     {
         private static string _logFolder = "\\logs\\";
         private static string _currentDate = DateTime.Now.Date.ToString("MM_dd_yyyy");
-        private static string _basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + _logFolder + _currentDate + "\\";
+        private static string _basePath = HttpContext.Current.Server.MapPath("~/bin") + _logFolder + _currentDate + "\\";
         private static string _logFileName = "BikeTimeTracker_ErrorLog_" + _currentDate + ".txt";
 
         public static void CreateLogFolder()
@@ -29,6 +29,5 @@ namespace TimeTracker.UI.Tools
             sw.WriteLine(message);
             sw.Close();
         }
-
     }
 }
