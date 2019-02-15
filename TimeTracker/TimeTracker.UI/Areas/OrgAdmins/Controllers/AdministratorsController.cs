@@ -47,8 +47,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                Error error = new Error { Message = ex.Message, InnerException = ex.InnerException.Message, ControllerName = "Administrators", ActionName = "Index" };
-                return RedirectToAction("Index", "Errors", new { Area = "", error });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "Index"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -71,7 +80,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "AdministratorDetails"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -91,19 +110,47 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "EditAdminInfo"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
         [HttpPost]
         public ActionResult EditAdminInfo(AdministratorsViewModel model)
         {
-            _admins.UpdateAdministratorInformation(model.SelectedAdministrator);
+            try
+            {
+                _admins.UpdateAdministratorInformation(model.SelectedAdministrator);
 
-            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Administrator Updated!", 
-                model.SelectedAdministrator.FullName + " has been updated.", Models.MessageConstants.Success);
+                Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Administrator Updated!",
+                    model.SelectedAdministrator.FullName + " has been updated.", Models.MessageConstants.Success);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "EditAdminInfo - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         public ActionResult UpdateAdminPassword(Guid administratorId)
@@ -122,7 +169,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "UpdateAdminPassword"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -147,7 +204,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "UpdateAdminPassword - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -174,7 +241,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "CreditTransaction"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -195,7 +272,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "EditPunch"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -208,14 +295,24 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                 _admins.UpdateCreditBalance(model.CurrentTimePunch.AdministratorId);
 
                 Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Time Punch Updated!", "The time punch has been successfully updated.",
-                    Models.MessageConstants.Success);
+                    MessageConstants.Success);
 
                 return RedirectToAction("AdministratorDetails", "Administrators", new { administratorId = model.CurrentTimePunch.AdministratorId });
 
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "UpdatePunch"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -234,7 +331,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "EditAdminTransaction"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -262,14 +369,24 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                 }
 
                 Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Transaction Updated!", "The transaction has been successfully updated.",
-                    Models.MessageConstants.Success);
+                    MessageConstants.Success);
 
                 return RedirectToAction("AdministratorDetails", "Administrators", new { administratorId = model.CreditTransaction.AdministratorId });
 
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "UpdateAdminTransaction"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -288,7 +405,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "DeleteAdminTimePunch"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -300,14 +427,24 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                 _admins.UpdateCreditBalance(administratorId);
 
                 Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Transaction Deleted!", "The transaction has been successfully deleted.",
-                    Models.MessageConstants.Success);
+                    MessageConstants.Success);
 
                 return RedirectToAction("AdministratorDetails", "Administrators", new { administratorId });
 
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "DeleteAdminTransaction"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -319,7 +456,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
                 if (adminClockedIn)
                     Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Whoops!", "You are already clocked in!",
-                        Models.MessageConstants.Error);
+                        MessageConstants.Error);
 
                 if (!adminClockedIn)
                 {
@@ -330,7 +467,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                     });
 
                     Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Clocked In!", "You are now clocked in!",
-                        Models.MessageConstants.Success);
+                        MessageConstants.Success);
                 }
 
                 return RedirectToAction("Index", "Administrators", new { Area = "OrgAdmins" });
@@ -338,7 +475,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "ClockAdminIn"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -363,7 +510,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "ClockAdminOut"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -382,7 +539,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "AdministratorRegistration"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
 
@@ -414,7 +581,17 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", "Errors", new { Area = "", errorMessage = ex.Message + " - " + ex.InnerException });
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Administrators",
+                    ActionName = "AdministratorRegistration - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
         }
     }
