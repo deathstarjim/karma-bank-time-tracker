@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
@@ -125,6 +126,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditVolunteerOpportunity(VolunteerOpportunityViewModel model)
         {
             try
@@ -133,8 +135,19 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                 {
                     if (model.CurrentOpportunity.PostedFile != null)
                     {
-                        model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
-                        _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+                        if (CheckFileExtension(model.CurrentOpportunity.PostedFile))
+                        {
+                            model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
+                            _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
+                        }
+
+                        if (!CheckFileExtension(model.CurrentOpportunity.PostedFile))
+                        {
+                            model.Message = "File type is not supported. Please select one of the following: .jpg, .png, or .gif.";
+                            model.IsValid = false;
+
+                            return this.View(model);
+                        }
                     }
 
                     _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);
@@ -201,6 +214,13 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
                 return RedirectToAction("Index", "Errors", new { Area = "" });
             }
+        }
+
+        private bool CheckFileExtension(HttpPostedFileBase uploadedFile)
+        {
+            var supportedTypes = new[] { "jpg", "gif", "png", "jpeg"};
+            var fileExt = System.IO.Path.GetExtension(uploadedFile.FileName).Substring(1);
+            return supportedTypes.Contains(fileExt);
         }
     }
 }
