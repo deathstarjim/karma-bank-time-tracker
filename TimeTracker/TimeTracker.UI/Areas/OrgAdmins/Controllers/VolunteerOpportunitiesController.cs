@@ -135,18 +135,18 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                 {
                     if (model.CurrentOpportunity.PostedFile != null)
                     {
-                        if (CheckFileExtension(model.CurrentOpportunity.PostedFile))
+                        bool fileExtCheck = CheckFileExtension(model.CurrentOpportunity.PostedFile);
+
+                        if (fileExtCheck)
                         {
                             model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
                             _volunteerOpportunity.UpdateVolunteerOpportunityImage(model.CurrentOpportunity);
                         }
 
-                        if (!CheckFileExtension(model.CurrentOpportunity.PostedFile))
+                        if (!fileExtCheck)
                         {
-                            model.Message = "File type is not supported. Please select one of the following: .jpg, .png, or .gif.";
-                            model.IsValid = false;
-
-                            return this.View(model);
+                            ViewBag.FileExtError = "Please select a valid file: .png, .jpg or .gif.";
+                            return View(model);
                         }
                     }
 
@@ -166,7 +166,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                     model.IsValid = false;
                 }
 
-                return this.View(model);
+                return View(model);
 
             }
             catch (Exception ex)

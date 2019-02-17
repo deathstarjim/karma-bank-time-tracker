@@ -1951,6 +1951,7 @@
     <Content Include="Areas\OrgRegistration\Views\Registration\_RegistrationSummary.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\VolMgmt\_EditVolunteerDetails.cshtml" />
     <Content Include="Areas\OrgAdmins\Views\Shared\EditorTemplates\Volunteer.cshtml" />
+    <Content Include="Areas\OrgAdmins\Views\VolunteerOpportunities\_VolOppsListing.cshtml" />
     <None Include="Properties\PublishProfiles\localhost-Prod.pubxml" />
     <None Include="Properties\PublishProfiles\localhost-Staging.pubxml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
