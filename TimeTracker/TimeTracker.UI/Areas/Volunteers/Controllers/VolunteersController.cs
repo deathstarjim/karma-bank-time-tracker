@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.Volunteers.ViewModels;
+using TimeTracker.UI.Models;
 
 namespace TimeTracker.UI.Areas.Volunteers.Controllers
 {
@@ -24,141 +25,280 @@ namespace TimeTracker.UI.Areas.Volunteers.Controllers
 
         public ActionResult Index()
         {
-            VolunteerViewModel model = new VolunteerViewModel();
+            try
+            {
+                VolunteerViewModel model = new VolunteerViewModel();
 
-            model.Volunteers = _volunteer.GetVolunteers();
-            model.OpenTimePunches = _timePunches.GetOpenTimePunches();
-            model.ControllerName = "Volunteers";
+                model.Volunteers = _volunteer.GetVolunteers();
+                model.OpenTimePunches = _timePunches.GetOpenTimePunches();
+                model.ControllerName = "Volunteers";
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error { Message = ex.Message, InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers", ActionName = "Index" };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult Index(VolunteerViewModel model)
         {
-            model.CurrentVolunteer.Id = _volunteer.CreateVolunteer(model.CurrentVolunteer);
-            model.CurrentVolunteer = new Volunteer();
-            model.Volunteers = _volunteer.GetVolunteers();
+            try
+            {
+                model.CurrentVolunteer.Id = _volunteer.CreateVolunteer(model.CurrentVolunteer);
+                model.CurrentVolunteer = new Volunteer();
+                model.Volunteers = _volunteer.GetVolunteers();
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers",
+                    ActionName = "Index - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         public ActionResult VolunteerRegistration()
         {
-            VolunteerViewModel model = new VolunteerViewModel();
+            try
+            {
+                VolunteerViewModel model = new VolunteerViewModel();
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers",
+                    ActionName = "VolunteerRegistration"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult VolunteerRegistration(VolunteerViewModel model)
         {
-            var roles = _roles.GetSystemRoles();
+            try
+            {
+                var roles = _roles.GetSystemRoles();
 
-            model.CurrentVolunteer.Role = roles.Where(r => r.Name == "Volunteer").FirstOrDefault();
+                model.CurrentVolunteer.Role = roles.Where(r => r.Name == "Volunteer").FirstOrDefault();
 
-            _volunteer.CreateVolunteer(model.CurrentVolunteer);
+                _volunteer.CreateVolunteer(model.CurrentVolunteer);
 
-            Session["CurrentMessage"] = Tools.Messages.CreateMessage("Volunteer Registered!", model.CurrentVolunteer.FullName + " has been successfully registered.", 
-                Models.MessageConstants.Success);
+                Session["CurrentMessage"] = Tools.Messages.CreateMessage("Volunteer Registered!", model.CurrentVolunteer.FullName + " has been successfully registered.",
+                    MessageConstants.Success);
 
-            model.CurrentVolunteer = new Volunteer();
+                model.CurrentVolunteer = new Volunteer();
 
-            ModelState.Clear();
+                ModelState.Clear();
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers",
+                    ActionName = "VolunteerRegistration - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult VolunteerNameSearch(VolunteerViewModel model)
         {
-            model.Volunteers = _volunteer.SearchVolunteersByName(model.SearchTerm);
+            try
+            {
+                model.Volunteers = _volunteer.SearchVolunteersByName(model.SearchTerm);
 
-            model.ResultsMessage = model.Volunteers.Count.ToString() + " volunteers found.";
+                model.ResultsMessage = model.Volunteers.Count.ToString() + " volunteers found.";
 
-            return PartialView("_VolunteerNameSearch", model);
+                return PartialView("_VolunteerNameSearch", model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers",
+                    ActionName = "VolunteerNameSearch"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         public ActionResult OpportunitiesList(Guid volunteerId)
         {
-            if (volunteerId == Guid.Empty)
+            try
             {
-                Session["CurrentMessage"] = Tools.Messages.CreateMessage("Volunteer Not Found!", " There was an issue with the selected volunteer. Please try again.", 
-                    Models.MessageConstants.Error, 6000);
+                if (volunteerId == Guid.Empty)
+                {
+                    Session["CurrentMessage"] = Tools.Messages.CreateMessage("Volunteer Not Found!", " There was an issue with the selected volunteer. Please try again.",
+                        MessageConstants.Error, 6000);
 
-                return RedirectToAction("Index", "Volunteers");
+                    return RedirectToAction("Index", "Volunteers");
+                }
+
+                if (_timePunches.CheckVolunteerClockedIn(volunteerId))
+                {
+                    GetVolunteerClockedInMessage(volunteerId);
+
+                    return RedirectToAction("Index", "Volunteers");
+                }
+
+                VolunteerViewModel model = new VolunteerViewModel();
+
+                model.CurrentVolunteer = _volunteer.GetVolunteerById(volunteerId);
+
+                Session["CurrentVolunteer"] = model.CurrentVolunteer;
+
+                model.VolunteerOpportunities = _volunteerOpportunity.GetVisibleOpportunities();
+
+                return View(model);
+
             }
-
-            if (_timePunches.CheckVolunteerClockedIn(volunteerId))
+            catch (Exception ex)
             {
-                GetVolunteerClockedInMessage(volunteerId);
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers",
+                    ActionName = "OpportunitiesList"
+                };
 
-                return RedirectToAction("Index", "Volunteers");
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
-
-            VolunteerViewModel model = new VolunteerViewModel();
-
-            model.CurrentVolunteer = _volunteer.GetVolunteerById(volunteerId);
-
-            Session["CurrentVolunteer"] = model.CurrentVolunteer;
-
-            model.VolunteerOpportunities = _volunteerOpportunity.GetVisibleOpportunities();
-
-            return View(model);
         }
 
         public ActionResult ClockVolunteerIn(Guid volunteerId, Guid volOppId, int volOppLimit)
         {
-            //Get the number of volunteers currently logged into this opportunity
-            int clockedInCount = _volunteerOpportunity.GetClockedInVolunteerCount(volOppId);
-
-            if (volOppLimit == 0)
+            try
             {
-                CreateTimePunchRecord(volunteerId, volOppId);
-                GetClockedInSuccessMessage();
-            }
+                //Get the number of volunteers currently logged into this opportunity
+                int clockedInCount = _volunteerOpportunity.GetClockedInVolunteerCount(volOppId);
 
-            if (volOppLimit > 0 && clockedInCount < volOppLimit)
+                if (volOppLimit == 0)
+                {
+                    CreateTimePunchRecord(volunteerId, volOppId);
+                    GetClockedInSuccessMessage();
+                }
+
+                if (volOppLimit > 0 && clockedInCount < volOppLimit)
+                {
+                    CreateTimePunchRecord(volunteerId, volOppId);
+                    GetClockedInSuccessMessage();
+                }
+
+                if (volOppLimit > 0 && clockedInCount == volOppLimit)
+                    GetClockedInLimitMessage();
+
+                return RedirectToAction("Index", "Volunteers");
+
+            }
+            catch (Exception ex)
             {
-                CreateTimePunchRecord(volunteerId, volOppId);
-                GetClockedInSuccessMessage();
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers",
+                    ActionName = "ClockVolunteerIn"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
-
-            if (volOppLimit > 0 && clockedInCount == volOppLimit)
-                GetClockedInLimitMessage();
-
-            return RedirectToAction("Index", "Volunteers");
         }
 
         public ActionResult ClockVolunteerOut(Guid timePunchId)
         {
-            Volunteer currentVolunteer = new Volunteer();
-
-            var punch = _timePunches.GetTimePunchById(timePunchId);
-
-            if(punch != null)
+            try
             {
-                var volOpp = _volunteerOpportunity.GetVolunteerOpportunityById(punch.VolunteerOpportunityId);
-                currentVolunteer = _volunteer.GetVolunteerById(punch.VolunteerId);
+                Volunteer currentVolunteer = new Volunteer();
 
-                if (volOpp != null)
+                var punch = _timePunches.GetTimePunchById(timePunchId);
+
+                if (punch != null)
                 {
-                    punch.PunchOutDateTime = DateTime.Now;
-                    _timePunches.UpdateTimePunchOut(punch, volOpp.CreditValue);
+                    var volOpp = _volunteerOpportunity.GetVolunteerOpportunityById(punch.VolunteerOpportunityId);
+                    currentVolunteer = _volunteer.GetVolunteerById(punch.VolunteerId);
 
-                    if(currentVolunteer.Id != Guid.Empty)
+                    if (volOpp != null)
                     {
-                        _volunteer.UpdateCreditBalance(currentVolunteer.Id);
+                        punch.PunchOutDateTime = DateTime.Now;
+                        _timePunches.UpdateTimePunchOut(punch, volOpp.CreditValue);
 
-                        Session["CurrentMessage"] = Tools.Messages.CreateMessage("Clocked Out!", currentVolunteer.FullName + " has been successfully clocked out.", 
-                            Models.MessageConstants.Success);
+                        if (currentVolunteer.Id != Guid.Empty)
+                        {
+                            _volunteer.UpdateCreditBalance(currentVolunteer.Id);
+
+                            Session["CurrentMessage"] = Tools.Messages.CreateMessage("Clocked Out!", currentVolunteer.FullName + " has been successfully clocked out.",
+                                MessageConstants.Success);
+                        }
+
+                        Session["CurrentVolunteer"] = null;
                     }
-
-                    Session["CurrentVolunteer"] = null;
                 }
-            }
 
-            return RedirectToAction("Index", "Volunteers");
+                return RedirectToAction("Index", "Volunteers");
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Volunteers",
+                    ActionName = "ClockVolunteerOut"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         private void GetVolunteerClockedInMessage(Guid volunteerId)
@@ -167,21 +307,22 @@ namespace TimeTracker.UI.Areas.Volunteers.Controllers
 
             Session["CurrentMessage"] = Tools.Messages.CreateMessage("Volunteer Already Clocked In!",
                 volunteer.FullName + " is already clocked in. Please clock out and then try again.",
-                Models.MessageConstants.Error, 6000);
+                MessageConstants.Error, 6000);
+
         }
 
         private void GetClockedInLimitMessage()
         {
             Session["CurrentMessage"] = Tools.Messages.CreateMessage("Volunteer Limit Reached!",
                 "The limit for this opportunity has been reached. Please wait for someone to clock out before clocking in.",
-                Models.MessageConstants.Error, 6000);
+                MessageConstants.Error, 6000);
         }
 
         private void GetClockedInSuccessMessage()
         {
             Session["CurrentMessage"] = Tools.Messages.CreateMessage("Clocked In!",
                 "You have successfully clocked into the volunteer opportunity.",
-                Models.MessageConstants.Success, 3000);
+                MessageConstants.Success, 3000);
         }
 
         private void CreateTimePunchRecord(Guid volunteerId, Guid volOppId)

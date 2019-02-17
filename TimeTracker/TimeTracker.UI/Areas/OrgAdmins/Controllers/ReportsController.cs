@@ -2,16 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using TimeTracker.Core.Contracts;
-using TimeTracker.Core.Models;
 using TimeTracker.UI.Areas.OrgAdmins.Tools;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
+using TimeTracker.UI.Models;
 
 namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 {
@@ -29,92 +27,217 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
         public ActionResult Index()
         {
-            if (Tools.OrgAdminTools.CheckAdminLoggedOut())
-                return RedirectToAction("Index", "Login", new { Area = "OrgAdmins" });
+            try
+            {
+                if (OrgAdminTools.CheckAdminLoggedOut())
+                    return RedirectToAction("Index", "Login", new { Area = "OrgAdmins" });
 
-            ReportsViewModel model = new ReportsViewModel();
-            model.CurrentAdministrator = Tools.OrgAdminTools.GetCurrentAdmin(_admins.GetAdministrators());
+                ReportsViewModel model = new ReportsViewModel();
+                model.CurrentAdministrator = OrgAdminTools.GetCurrentAdmin(_admins.GetAdministrators());
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Reports",
+                    ActionName = "Index"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult TransactionsByDateRange(ReportsViewModel model)
         {
-            var dates = GetDateRange(model.TransactionDateRange);
+            try
+            {
+                var dates = GetDateRange(model.TransactionDateRange);
 
-            model.TransactionResults = _reports.GetTransactionsByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
+                model.TransactionResults = _reports.GetTransactionsByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
-            return PartialView("_TransactionResults", model);
+                return PartialView("_TransactionResults", model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Reports",
+                    ActionName = "TransactionsByDateRange"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         public ActionResult TransactionsByDateRangeExcel(string dateRange)
         {
-            var dates = GetDateRange(dateRange);
+            try
+            {
+                var dates = GetDateRange(dateRange);
 
-            var transResults = _reports.GetTransactionsByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
+                var transResults = _reports.GetTransactionsByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
-            DataTable results = ToDataTable(transResults);
+                DataTable results = ToDataTable(transResults);
 
-            SaveExcelExport(results, dates.FirstOrDefault(), dates.LastOrDefault());
+                SaveExcelExport(results, dates.FirstOrDefault(), dates.LastOrDefault());
 
-            return RedirectToAction("Index", "Reports");
+                return RedirectToAction("Index", "Reports");
 
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Reports",
+                    ActionName = "TransactionsByDateRangeExcel"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult CreditsByDateRange(ReportsViewModel model)
         {
-            var dates = GetDateRange(model.CreditDateRange);
+            try
+            {
+                var dates = GetDateRange(model.CreditDateRange);
 
-            model.CreditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
+                model.CreditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
-            return PartialView("_CreditResults", model);
+                return PartialView("_CreditResults", model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Reports",
+                    ActionName = "CreditsByDateRange"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         public ActionResult CreditsByDateRangeExcel(string dateRange)
         {
-            var dates = GetDateRange(dateRange);
+            try
+            {
+                var dates = GetDateRange(dateRange);
 
-            var creditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
+                var creditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
-            DataTable results = ToDataTable(creditResults);
+                DataTable results = ToDataTable(creditResults);
 
-            SaveExcelExport(results, dates.FirstOrDefault(), dates.LastOrDefault());
+                SaveExcelExport(results, dates.FirstOrDefault(), dates.LastOrDefault());
 
-            return RedirectToAction("Index", "Reports");
+                return RedirectToAction("Index", "Reports");
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Reports",
+                    ActionName = "CreditsByDateRangeExcel"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult CreditsByDateRangeExcel(ReportsViewModel model)
         {
-            var dates = GetDateRange(model.CreditDateRange);
-            DateTime startDate = dates.FirstOrDefault();
-            DateTime endDate = dates.LastOrDefault();
+            try
+            {
+                var dates = GetDateRange(model.CreditDateRange);
+                DateTime startDate = dates.FirstOrDefault();
+                DateTime endDate = dates.LastOrDefault();
 
-            model.CreditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
+                model.CreditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
-            DataTable results = new DataTable();
+                DataTable results = new DataTable();
 
-            if (model.CreditResults != null && model.CreditResults.Count > 0)
-                results = ToDataTable(model.CreditResults);
+                if (model.CreditResults != null && model.CreditResults.Count > 0)
+                    results = ToDataTable(model.CreditResults);
 
-            SaveExcelExport(results, startDate, endDate);
+                SaveExcelExport(results, startDate, endDate);
 
-            return RedirectToAction("Index", "Reports");
+                return RedirectToAction("Index", "Reports");
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Reports",
+                    ActionName = "CreditsByDateRangeExcel - Post"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         [HttpPost]
         public ActionResult VolSummaryByDateRange(ReportsViewModel model)
         {
-            var dates = GetDateRange(model.VolSummaryDateRange);
+            try
+            {
+                var dates = GetDateRange(model.VolSummaryDateRange);
 
-            var summaryResults = _reports.VolunteerSummaryByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
+                var summaryResults = _reports.VolunteerSummaryByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
-            if (summaryResults != null)
-                SaveExcelExport(summaryResults, dates.FirstOrDefault(), dates.LastOrDefault());
+                if (summaryResults != null)
+                    SaveExcelExport(summaryResults, dates.FirstOrDefault(), dates.LastOrDefault());
 
-            return RedirectToAction("Index", "Reports");
+                return RedirectToAction("Index", "Reports");
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Reports",
+                    ActionName = "VolSummaryByDateRange"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         private List<DateTime> GetDateRange(string dateRange)

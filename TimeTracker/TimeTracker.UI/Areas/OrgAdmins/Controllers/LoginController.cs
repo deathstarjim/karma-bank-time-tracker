@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TimeTracker.Core.Contracts;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
+using TimeTracker.UI.Models;
 
 namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 {
@@ -28,47 +29,84 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         [HttpPost]
         public ActionResult LogUserIn(LoginViewModel model)
         {
-            var administrator = _admins.GetAdministratorByUserName(model.CurrentAdmin.UserName);
-            string hashedPassword = "";
-
-            if (administrator.Id != Guid.Empty)
+            try
             {
-                hashedPassword = administrator.Password;
+                var administrator = _admins.GetAdministratorByUserName(model.CurrentAdmin.UserName);
+                string hashedPassword = "";
 
-                var userIsValid = _security.PasswordIsValid(model.CurrentAdmin.Password, hashedPassword);
-
-                if (userIsValid)
+                if (administrator.Id != Guid.Empty)
                 {
-                    var currentEmployee = _login.LogAdminIn(model.CurrentAdmin.UserName, hashedPassword);
+                    hashedPassword = administrator.Password;
 
-                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, model.CurrentAdmin.UserName, DateTime.Now, DateTime.Now.AddMinutes(2880),
-                        false, "", FormsAuthentication.FormsCookiePath);
+                    var userIsValid = _security.PasswordIsValid(model.CurrentAdmin.Password, hashedPassword);
 
-                    string hash = FormsAuthentication.Encrypt(ticket);
+                    if (userIsValid)
+                    {
+                        var currentEmployee = _login.LogAdminIn(model.CurrentAdmin.UserName, hashedPassword);
 
-                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, model.CurrentAdmin.UserName, DateTime.Now, DateTime.Now.AddMinutes(2880),
+                            false, "", FormsAuthentication.FormsCookiePath);
 
-                    FormsAuthentication.SetAuthCookie(model.CurrentAdmin.UserName, false);
+                        string hash = FormsAuthentication.Encrypt(ticket);
 
-                    Session["CurrentUserId"] = currentEmployee.Id;
+                        HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
 
-                    return RedirectToAction("Index", "Administrators", new { Area = "OrgAdmins" });
+                        FormsAuthentication.SetAuthCookie(model.CurrentAdmin.UserName, false);
 
+                        Session["CurrentUserId"] = currentEmployee.Id;
+
+                        return RedirectToAction("Index", "Administrators", new { Area = "OrgAdmins" });
+
+                    }
                 }
+
+                Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Login Failed!", "The user name or password you entered was incorrect. Please try again.",
+                    MessageConstants.Error, 6000);
+
+
+                return RedirectToAction("Index", "Login", model);
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Login",
+                    ActionName = "LogUserIn"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
             }
 
-            Session["CurrentMessage"] = UI.Tools.Messages.CreateMessage("Login Failed!", "The user name or password you entered was incorrect. Please try again.",
-                Models.MessageConstants.Error, 6000);
-
-
-            return RedirectToAction("Index", "Login", model);
         }
 
         public ActionResult LogOut()
         {
-            FormsAuthentication.SignOut();
+            try
+            {
+                FormsAuthentication.SignOut();
+                Session["CurrentUserId"] = null;
 
-            return RedirectToAction("Index", "Home", new { Area = "" });
+                return RedirectToAction("Index", "Home", new { Area = "" });
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Login",
+                    ActionName = "LogOut"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
     }
 }
