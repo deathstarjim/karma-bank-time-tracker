@@ -105,10 +105,12 @@
 
                             if (imageSource != "data: image/png; base64,AAAAAA==")
                             {
-                                <img src="@imageSource" style="max-width: 200px;" />
-                                <span>
-                                    <i class="far fa-times-circle fa-2x" id="DeleteImage" data-id="@Model.Id"></i>
-                                </span>
+                                <div id="VolOppImage">
+                                    <img src="@imageSource" style="max-width: 200px;" />
+                                    <span title="Delete Image" class="DeleteImage">
+                                        <i class="far fa-times-circle fa-2x" id="DeleteImage" data-id="@Model.Id"></i>
+                                    </span>
+                                </div>
                             }
                         }
                     </div>
