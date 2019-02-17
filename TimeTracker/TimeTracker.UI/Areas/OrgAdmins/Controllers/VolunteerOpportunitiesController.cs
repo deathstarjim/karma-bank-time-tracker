@@ -145,7 +145,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
                         if (!fileExtCheck)
                         {
-                            ViewBag.FileExtError = "Please select a valid file: .png, .jpg or .gif.";
+                            ViewBag.FileExtError = "Please select a valid file: .png, .jpg, .jpeg or .gif.";
                             return View(model);
                         }
                     }
@@ -219,7 +219,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         private bool CheckFileExtension(HttpPostedFileBase uploadedFile)
         {
             var supportedTypes = new[] { "jpg", "gif", "png", "jpeg"};
-            var fileExt = System.IO.Path.GetExtension(uploadedFile.FileName).Substring(1);
+            var fileExt = System.IO.Path.GetExtension(uploadedFile.FileName).Substring(1).ToLower();
             return supportedTypes.Contains(fileExt);
         }
     }
