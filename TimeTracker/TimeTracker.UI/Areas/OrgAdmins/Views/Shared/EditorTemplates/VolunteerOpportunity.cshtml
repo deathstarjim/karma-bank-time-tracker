@@ -28,7 +28,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- Add in the date range picker -->
         <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(Model => Model.DateRange, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(Model => Model.DateRange, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(Model => Model.DateRange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VolunteerLimit, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.VolunteerLimit, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VolunteerLimit, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(model => model.StartDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
                 <div class="form-group">
@@ -47,7 +71,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -68,17 +92,6 @@
                             @Html.EditorFor(model => model.IsVisibleToVolunteer.IsChecked, new { @class = "flat-red" })
                             @Html.ValidationMessageFor(model => model.IsVisibleToVolunteer, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.VolunteerLimit, htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.VolunteerLimit, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.VolunteerLimit, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

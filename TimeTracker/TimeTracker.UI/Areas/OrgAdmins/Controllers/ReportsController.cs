@@ -59,7 +59,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                var dates = GetDateRange(model.TransactionDateRange);
+                var dates = OrgAdminTools.GetDateRange(model.TransactionDateRange);
 
                 model.TransactionResults = _reports.GetTransactionsByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
@@ -86,7 +86,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                var dates = GetDateRange(dateRange);
+                var dates = OrgAdminTools.GetDateRange(dateRange);
 
                 var transResults = _reports.GetTransactionsByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
@@ -118,7 +118,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                var dates = GetDateRange(model.CreditDateRange);
+                var dates = OrgAdminTools.GetDateRange(model.CreditDateRange);
 
                 model.CreditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
@@ -145,7 +145,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                var dates = GetDateRange(dateRange);
+                var dates = OrgAdminTools.GetDateRange(dateRange);
 
                 var creditResults = _reports.GetCreditReportByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
@@ -177,7 +177,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                var dates = GetDateRange(model.CreditDateRange);
+                var dates = OrgAdminTools.GetDateRange(model.CreditDateRange);
                 DateTime startDate = dates.FirstOrDefault();
                 DateTime endDate = dates.LastOrDefault();
 
@@ -214,7 +214,7 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
         {
             try
             {
-                var dates = GetDateRange(model.VolSummaryDateRange);
+                var dates = OrgAdminTools.GetDateRange(model.VolSummaryDateRange);
 
                 var summaryResults = _reports.VolunteerSummaryByDateRange(dates.FirstOrDefault(), dates.LastOrDefault());
 
@@ -238,11 +238,6 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
 
                 return RedirectToAction("Index", "Errors", new { Area = "" });
             }
-        }
-
-        private List<DateTime> GetDateRange(string dateRange)
-        {
-            return dateRange.Split('-').Select(d => Convert.ToDateTime(d)).ToList();
         }
 
         private void SaveExcelExport(DataTable dataTable, DateTime startDate, DateTime endDate)

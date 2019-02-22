@@ -32,6 +32,9 @@ namespace TimeTracker.Core.Models
 
         public string Description { get; set; }
 
+        [DisplayName("Start / End Date & Time:")]
+        public string DateRange { get; set; }
+
         [DisplayName("Opportunity Start Date / Time:")]
         public DateTime? StartDateTime { get; set; }
 

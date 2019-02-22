@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.Core.Models;
+using TimeTracker.UI.Areas.OrgAdmins.Tools;
 using TimeTracker.UI.Areas.OrgAdmins.ViewModels;
 using TimeTracker.UI.Models;
 
@@ -65,6 +66,14 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
             {
                 model.CurrentOpportunity.Image = UI.Tools.FileTools.ConvertImageToBytes(model.CurrentOpportunity.PostedFile);
 
+                var volOppDates = OrgAdminTools.GetDateRange(model.CurrentOpportunity.DateRange);
+
+                if(volOppDates != null && volOppDates.Count > 0)
+                {
+                    model.CurrentOpportunity.StartDateTime = (DateTime)volOppDates.FirstOrDefault();
+                    model.CurrentOpportunity.EndDateTime = (DateTime)volOppDates.LastOrDefault();
+                }
+
                 _volunteerOpportunity.CreateVolunteerOpportunity(model.CurrentOpportunity);
 
                 model.VolunteerOpportunities = _volunteerOpportunity.GetVolunteerOpportunities();
@@ -105,6 +114,9 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                 VolunteerOpportunityViewModel model = new VolunteerOpportunityViewModel();
 
                 model.CurrentOpportunity = _volunteerOpportunity.GetVolunteerOpportunityById(volunteerOpportunityId);
+
+                model.CurrentOpportunity.DateRange = string.Format("{0} - {1}",  model.CurrentOpportunity.StartDateTime.ToString(),
+                    model.CurrentOpportunity.EndDateTime.ToString());
 
                 return View(model);
 
@@ -148,6 +160,14 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Controllers
                             ViewBag.FileExtError = "Please select a valid file: .png, .jpg, .jpeg or .gif.";
                             return View(model);
                         }
+                    }
+
+                    var volOppDates = OrgAdminTools.GetDateRange(model.CurrentOpportunity.DateRange);
+
+                    if(volOppDates != null && volOppDates.Count > 0)
+                    {
+                        model.CurrentOpportunity.StartDateTime = (DateTime)volOppDates.FirstOrDefault();
+                        model.CurrentOpportunity.EndDateTime = (DateTime)volOppDates.LastOrDefault();
                     }
 
                     _volunteerOpportunity.UpdateVolunteerOpportunity(model.CurrentOpportunity);

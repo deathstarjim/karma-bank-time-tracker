@@ -160,6 +160,13 @@
             $('#TransactionDateRange').daterangepicker();
             $('#CreditDateRange').daterangepicker();
             $('#VolSummaryDateRange').daterangepicker();
+            $("#CurrentOpportunity_DateRange").daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 15,
+                format: 'MM/DD/YYYY h:mm A',
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            });
 
             $("#TransactionTypes").DataTable({
                 paging: false
