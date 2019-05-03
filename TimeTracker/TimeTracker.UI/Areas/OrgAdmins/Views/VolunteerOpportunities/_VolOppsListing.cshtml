@@ -1,0 +1,63 @@
+﻿@model TimeTracker.UI.Areas.OrgAdmins.ViewModels.VolunteerOpportunityViewModel
+
+
+<table class="table table-striped table-responsive table-hover display" id="VolunteerOpportunities">
+    <thead>
+        <tr>
+            <th>Edit Opportunity</th>
+            <th>Name</th>
+            <th>Credit Value</th>
+            <th>Volunteer Limit</th>
+            <th>Visible to Volunteers?</th>
+            <th>Offsite?</th>
+            <th>Start Date / Time</th>
+            <th>End Date / Time</th>
+            <th>Opportunity Description</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.VolunteerOpportunities != null && Model.VolunteerOpportunities.Count > 0)
+        {
+            foreach (var opp in Model.VolunteerOpportunities)
+            {
+                <tr>
+                    <td>
+                        <a href='@Url.Action("EditVolunteerOpportunity", "VolunteerOpportunities", new { volunteerOpportunityId = opp.Id })'>
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>@opp.Name</td>
+                    <td>@opp.CreditValue</td>
+                    <td>@opp.VolunteerLimit</td>
+                    <td>@opp.IsVisibleToVolunteer.IsChecked</td>
+                    <td>@opp.IsOffsite.IsChecked</td>
+                    <td>
+                        @if (opp.StartDateTime != null && opp.StartDateTime != DateTime.MinValue)
+                        {
+                            @opp.StartDateTime
+                        }
+                    </td>
+                    <td>
+                        @if (opp.EndDateTime != null && opp.EndDateTime != DateTime.MinValue)
+                        {
+                            @opp.EndDateTime
+                        }
+                    </td>
+                    <td>@opp.Description</td>
+                    <td>
+                        @{
+                            var imageSource = "data: image/png; base64," + Convert.ToBase64String(opp.Image, 0, opp.Image.Length);
+                        }
+
+                        @if (imageSource != "data: image/png; base64,AAAAAA==")
+                        {
+                            <img src="@imageSource" width="100" height="100" />
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
