@@ -29,8 +29,5 @@ namespace TimeTracker.Core.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email address is required.")]
         public string EmailAddress { get; set; }
 
-        [DisplayName("Active:")]
-        public bool Active { get; set; }
-
     }
 }

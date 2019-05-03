@@ -1,5 +1,12 @@
 ﻿@model TimeTracker.UI.Areas.Volunteers.ViewModels.VolunteerViewModel
 
+<div class="row margin-top margin-bottom">
+    <div class="col-md-12">
+        <h3>@Model.ResultsMessage</h3>
+    </div>
+</div>
+
+
 @if (Model.Volunteers != null && Model.Volunteers.Count > 0)
 {
     <div class="row">
