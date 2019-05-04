@@ -36,5 +36,8 @@ namespace TimeTracker.Core.BaseModels
         [DisplayName("Credit Balance:")]
         public decimal CreditBalance { get; set; }
 
+        [DisplayName("Active:")]
+        public bool? Active { get; set; }
+
     }
 }

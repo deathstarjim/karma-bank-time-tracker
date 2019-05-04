@@ -26,5 +26,10 @@ namespace TimeTracker.UI.Areas.OrgAdmins.Tools
             return HttpContext.Current.Session["CurrentUserId"] == null;
         }
 
+        public static List<DateTime> GetDateRange(string dateRange)
+        {
+            return dateRange.Split('-').Select(d => Convert.ToDateTime(d)).ToList();
+        }
+
     }
 }

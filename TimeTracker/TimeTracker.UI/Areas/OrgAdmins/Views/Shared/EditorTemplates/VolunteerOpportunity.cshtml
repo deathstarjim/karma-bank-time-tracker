@@ -4,6 +4,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => Model.Id)
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -27,7 +28,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- Add in the date range picker -->
         <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(Model => Model.DateRange, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(Model => Model.DateRange, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(Model => Model.DateRange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VolunteerLimit, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.VolunteerLimit, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VolunteerLimit, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="row">
             <div class="col-md-6">
                 @Html.LabelFor(model => model.StartDateTime, htmlAttributes: new { @class = "control-label col-md-6" })
                 <div class="form-group">
@@ -46,7 +71,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -74,20 +99,15 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.VolunteerLimit, htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.VolunteerLimit, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.VolunteerLimit, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
                     @Html.LabelFor(model => Model.PostedFile, htmlAttributes: new { @class = "control-label col-md-6" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => Model.PostedFile, new { type = "file" })
+                        @Html.TextBoxFor(model => Model.PostedFile, new { type = "file", @class = "form-control" })                        
+                        @Html.ValidationMessageFor(model => Model.PostedFile, "", new { @class = "text-danger" })
+
+                        @if (!string.IsNullOrEmpty(ViewBag.FileExtError))
+                        {
+                            <span class="field-validation-valid text-danger" data-valmsg-for="PostedFile" data-valmsg-replace="true">@ViewBag.FileExtError</span>
+                        }
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,7 +118,12 @@
 
                             if (imageSource != "data: image/png; base64,AAAAAA==")
                             {
-                                <img src="@imageSource" style="max-width: 200px;" />
+                                <div id="VolOppImage">
+                                    <img src="@imageSource" style="max-width: 200px;" />
+                                    <span title="Delete Image" class="DeleteImage">
+                                        <i class="far fa-times-circle fa-2x" id="DeleteImage" data-id="@Model.Id"></i>
+                                    </span>
+                                </div>
                             }
                         }
                     </div>

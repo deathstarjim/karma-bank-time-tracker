@@ -42,7 +42,7 @@
     <link href="~/Areas/OrgAdmins/Plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
 
     <!-- Org Admin Custom Styles -->
-    @*<link href="~/Areas/OrgAdmins/Content/OrgAdminStyles.css" rel="stylesheet" />*@
+    <link href="~/Areas/OrgAdmins/Content/OrgAdminStyles.css" rel="stylesheet" />
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -160,6 +160,13 @@
             $('#TransactionDateRange').daterangepicker();
             $('#CreditDateRange').daterangepicker();
             $('#VolSummaryDateRange').daterangepicker();
+            $("#CurrentOpportunity_DateRange").daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 15,
+                format: 'MM/DD/YYYY h:mm A',
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            });
 
             $("#TransactionTypes").DataTable({
                 paging: false
@@ -205,6 +212,27 @@
                 });
             });
 
+            $('#DeleteImage').click(function () {
+                var url = '@Url.Action("RemoveVolOppImage", "VolunteerOpportunities", new { Area = "OrgAdmins" })';
+                var volOppId = $(this).attr('data-id');
+                $.get(url + "?volOppId=" + volOppId, function () {
+
+                    $("#VolOppImage").hide();
+                    $.toast({
+                        text: 'Your image has been deleted.',
+                        heading: 'Image Deleted',
+                        icon: 'success',
+                        showHideTransition: 'fade',
+                        allowToastClose: true,
+                        hideAfter: 3000,
+                        position: 'mid-center',
+                        textAlign: 'left',
+                        loader: false,
+                        loaderBg: '#E5F2EB'
+                    });
+                })
+            });
+
             $('.edit-admin-info').click(function () {
                 var url = '@Url.Action("EditAdminInfo", "Administrators", new{Area = "OrgAdmins"})'; // the url to the controller
                 var adminId = $(this).attr('data-id'); // the id that's given to each button in the list
@@ -213,6 +241,17 @@
                     $('#edit-admin-container').html(data);
 
                     $('#edit-admin-info').modal('show');
+                });
+            });
+
+            $('.edit-volunteer-info').click(function () {
+                var url = '@Url.Action("EditVolunteerDetails", "VolMgmt", new{Area = "OrgAdmins"})'; // the url to the controller
+                var volunteerId = $(this).attr('data-id'); // the id that's given to each button in the list
+                $.get(url + '?volunteerId=' + volunteerId, function (data) {
+
+                    $('#edit-volunteer-container').html(data);
+
+                    $('#edit-volunteer-info').modal('show');
                 });
             });
 

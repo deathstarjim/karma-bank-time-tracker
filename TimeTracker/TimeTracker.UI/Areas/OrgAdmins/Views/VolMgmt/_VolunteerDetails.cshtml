@@ -23,7 +23,13 @@
             </ul>
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-primary">Edit Volunteer Info</button>
+            <button class="btn btn-primary edit-volunteer-info" data-toggle="modal" data-target="#edit-volunteer-info" data-id="@Model.CurrentVolunteer.Id">Edit Information</button>
         </div>
     </div>
 </div>
+
+<!-- modal placeholder-->
+<div id='edit-volunteer-info' class="modal" role="dialog">
+    <div id='edit-volunteer-container'></div>
+</div>
+

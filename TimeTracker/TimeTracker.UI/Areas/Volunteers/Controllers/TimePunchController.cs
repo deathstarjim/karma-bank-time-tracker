@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using TimeTracker.Core.Contracts;
 using TimeTracker.UI.Areas.Volunteers.ViewModels;
+using TimeTracker.UI.Models;
 
 namespace TimeTracker.UI.Areas.Volunteers.Controllers
 {
@@ -23,22 +24,58 @@ namespace TimeTracker.UI.Areas.Volunteers.Controllers
 
         public ActionResult Index()
         {
-            VolunteerViewModel model = new VolunteerViewModel();
-            model.ControllerName = "TimePunch";
+            try
+            {
+                VolunteerViewModel model = new VolunteerViewModel();
+                model.ControllerName = "TimePunch";
 
-            return View(model);
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Time Punch",
+                    ActionName = "Index"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
 
         public ActionResult GetVolunteerHours(Guid volunteerId)
         {
-            VolunteerViewModel model = new VolunteerViewModel();
+            try
+            {
+                VolunteerViewModel model = new VolunteerViewModel();
 
-            model.CurrentVolunteer = _volunteer.GetVolunteerById(volunteerId);
+                model.CurrentVolunteer = _volunteer.GetVolunteerById(volunteerId);
 
-            model.OpenTimePunches = _timePunch.GetTimePunchesByVolunteerId(volunteerId).OrderByDescending(v => v.PunchOutDateTime).ToList();
-            model.VolunteerTransactions = _transactions.GetTransactionsByVolunteerId(volunteerId);
+                model.OpenTimePunches = _timePunch.GetTimePunchesByVolunteerId(volunteerId).OrderByDescending(v => v.PunchOutDateTime).ToList();
+                model.VolunteerTransactions = _transactions.GetTransactionsByVolunteerId(volunteerId);
 
-            return View("GetVolunteerHours", model);
+                return View("GetVolunteerHours", model);
+
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error
+                {
+                    Message = ex.Message,
+                    InnerException = (ex.InnerException != null) ? ex.InnerException.Message : "",
+                    ControllerName = "Time Punch",
+                    ActionName = "GetVolunteerHours"
+                };
+
+                TempData["Error"] = error;
+
+                return RedirectToAction("Index", "Errors", new { Area = "" });
+            }
         }
     }
 }
