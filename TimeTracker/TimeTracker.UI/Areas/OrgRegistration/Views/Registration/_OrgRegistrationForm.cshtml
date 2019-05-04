@@ -21,15 +21,8 @@
                                 @Html.ValidationMessageFor(model => model.CurrentOrg.WebsiteUrl, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(model => model.CurrentOrg.Subdomain, new
-                                {
-                                    htmlAttributes = new
-                                    {
-                                        @class = "form-control",
-                                    placeholder = "Subdomain*",
-                                        @required = "required"
-                                    }
-                                }) @Html.LabelFor(model => Model.CurrentOrg.Subdomain, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.CurrentOrg.Subdomain, new { htmlAttributes = new { @class = "form-control", placeholder = "Subdomain*", @required = "required"} }) 
+                                @Html.LabelFor(model => Model.CurrentOrg.Subdomain, htmlAttributes: new { @class = "control-label" })
 
                                 @Html.ValidationMessageFor(model => model.CurrentOrg.Subdomain, "", new { @class = "text-danger" })
                             </div>
