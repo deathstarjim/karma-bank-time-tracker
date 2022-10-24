@@ -1,4 +1,4 @@
-﻿    using FDCommonTools.SqlTools;
+﻿using FDCommonTools.SqlTools;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
