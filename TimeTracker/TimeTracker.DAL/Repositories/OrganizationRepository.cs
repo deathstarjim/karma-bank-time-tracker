@@ -20,7 +20,7 @@ namespace TimeTracker.DAL.Repositories
 	                            (
 		                            [OrganizationName]
 		                            ,[WebsiteUrl]
-		                            ,[OrgDescription]
+                                    ,[EmailAddress]
                                     ,[TaxExemptionFile]
                                     ,[Subdomain]
 	                            )
@@ -29,7 +29,7 @@ namespace TimeTracker.DAL.Repositories
 	                            (
 		                            @OrganizationName
 		                            ,@WebsiteUrl
-		                            ,@OrgDescription
+                                    ,@EmailAddress
                                     ,@TaxExemptionFile
                                     ,@Subdomain
 	                            )";
@@ -38,7 +38,7 @@ namespace TimeTracker.DAL.Repositories
             {
                 new SqlParameter("@OrganizationName", newOrg.Name),
                 new SqlParameter("@WebsiteUrl", newOrg.WebsiteUrl),
-                new SqlParameter("@OrgDescription", newOrg.Description ?? ""),
+                new SqlParameter("@EmailAddress", newOrg.EmailAddress ?? ""),
                 new SqlParameter("@Subdomain", newOrg.Subdomain),
                 new SqlParameter("@TaxExemptionFile", newOrg.TaxExemptionFile)
             };

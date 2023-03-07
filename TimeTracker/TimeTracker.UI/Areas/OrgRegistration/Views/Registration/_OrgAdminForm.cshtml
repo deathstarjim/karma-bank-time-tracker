@@ -5,7 +5,7 @@
         <h2>Tell us about yourself</h2>
         <p>
             Fill out the form below to create the administrator account for your organization. This account can be used to create other administrators,
-            edit volunteer information and enter credit purchases.
+            edit volunteer information and manage organization information.
         </p>
         @using (Html.BeginForm("CreateAdmin", "Registration", FormMethod.Post, new { autocomplete = "off" }))
         {
@@ -20,8 +20,8 @@
                         @Html.ValidationMessageFor(model => Model.CurrentAdmin.LastName, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-6 col-12-xsmall">
-                        @Html.EditorFor(model => Model.CurrentAdmin.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email address*", @required = "required" } })
-                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.Email, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => Model.CurrentAdmin.EmailAddress, new { htmlAttributes = new { @class = "form-control", placeholder = "Email address*", @required = "required" } })
+                        @Html.ValidationMessageFor(model => Model.CurrentAdmin.EmailAddress, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-6 col-12-xsmall">
                         @Html.EditorFor(model => Model.CurrentAdmin.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone number*", @required = "required" } })

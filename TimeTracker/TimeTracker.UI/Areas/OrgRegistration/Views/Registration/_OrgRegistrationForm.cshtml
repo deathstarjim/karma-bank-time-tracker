@@ -20,21 +20,23 @@
                                 @Html.EditorFor(model => model.CurrentOrg.WebsiteUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Website URL*", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.CurrentOrg.WebsiteUrl, "", new { @class = "text-danger" })
                             </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => model.CurrentOrg.Subdomain, new { htmlAttributes = new { @class = "form-control", placeholder = "Subdomain*", @required = "required"} }) 
+                                @Html.LabelFor(model => Model.CurrentOrg.Subdomain, htmlAttributes: new { @class = "control-label" })
+
+                                @Html.ValidationMessageFor(model => model.CurrentOrg.Subdomain, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                @Html.EditorFor(model => model.CurrentOrg.EmailAddress, new { htmlAttributes = new { @class = "form-control", placeholder = "Email Address*", @required = "required"}}) 
+
+                                @Html.ValidationMessageFor(model => model.CurrentOrg.EmailAddress, "", new { @class = "text-danger" })
+                            </div>
+
                             <div class="col-12">
                                 @Html.LabelFor(model => Model.CurrentOrg.PostedFile, htmlAttributes: new { @class = "control-label" })
                                 @Html.TextBoxFor(model => Model.CurrentOrg.PostedFile, new { type = "file", @required = "required" })
                             </div>
-                            <div class="col-6 col-12-xsmall">
-                                @Html.EditorFor(model => model.CurrentOrg.Subdomain, new { htmlAttributes = new { @class = "form-control",
-                                    placeholder = "Subdomain* (i.e. yourorg.biketimetracker.com)", @required = "required" } })
 
-                                @Html.ValidationMessageFor(model => model.CurrentOrg.Subdomain, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="col-12">
-                                @Html.TextAreaFor(model => Model.CurrentOrg.Description, new { rows = "6", cols = "55", @class = "form-control",
-                                    placeholder = "What is your organizations' mission?" })
-                            </div>
 
                             <div class="col-12">
                                 <ul class="actions">
