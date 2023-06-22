@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Start App",
+            "type": "clr",
+            "request": "attach",
+            "processName": "iisexpress",
+            "preLaunchTask": "startChrome",
+            "postDebugTask": "iisStop",
+            "justMyCode": false
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch apps and attach debuggers",
+            "configurations": [
+                "Start App"
+            ]
+        }
+    ]
+}

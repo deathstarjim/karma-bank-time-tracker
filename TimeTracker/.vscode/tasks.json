@@ -1,0 +1,61 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "launch site - no debugger",
+            "dependsOn": [
+                "msbuild",
+                "iisStart",
+                "startChrome"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        /* Start of the blog post tasks */
+        {
+            "label": "msbuild",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "${workspaceFolder}/TimeTracker.sln",
+                "/t:build",
+                "/p:GenerateFullPaths=true",
+                "/p:Configuration=Debug",
+                "/consoleloggerparameters:Summary"
+            ],
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "iisStart",
+            "type": "shell",
+            "dependsOn": "msbuild",
+            "command": "Start-Process",
+            "args": [
+                "iisexpress"
+            ],
+            "presentation": {
+                "reveal": "always",
+            }
+        },
+        {
+            "label": "iisStop",
+            "type": "shell",
+            "command": "Stop-Process",
+            "args": [
+                "-Name",
+                "iisexpress"
+            ]
+        },
+        {
+            "label": "startChrome",
+            "type": "shell",
+            "command": "chrome.exe",
+            "dependsOn": "iisStart",
+        }
+    ]
+}
