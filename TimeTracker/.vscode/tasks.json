@@ -56,6 +56,9 @@
             "type": "shell",
             "command": "chrome.exe",
             "dependsOn": "iisStart",
+            "args": [
+                "http://timetracker.local"
+            ]
         }
     ]
 }
