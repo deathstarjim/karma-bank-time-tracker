@@ -31,6 +31,19 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "clean project",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "${workspaceFolder}/TimeTracker.sln",
+                "-target:Clean"
+            ],
+            "presentation": {
+                "reveal": "always",
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "iisStart",
             "type": "shell",
             "dependsOn": "msbuild",
