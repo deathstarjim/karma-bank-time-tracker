@@ -10,7 +10,7 @@ namespace TimeTracker.DAL.Maps
         {
             VolunteerOpportunity opportunity = new VolunteerOpportunity();
 
-            if(row != null)
+            if (row != null)
             {
                 opportunity.Id = DataFieldHelper.GetUniqueIdentifier(row, "VolunteerOpportunityId");
                 opportunity.Name = DataFieldHelper.GetString(row, "OpportunityName");
@@ -21,7 +21,7 @@ namespace TimeTracker.DAL.Maps
                 opportunity.StartDateTime = DataFieldHelper.GetDateTime(row, "OpportunityStartDateTime");
                 opportunity.EndDateTime = DataFieldHelper.GetDateTime(row, "OpportunityEndDateTime");
                 opportunity.VolunteerLimit = DataFieldHelper.GetInt(row, "VolunteerLimit");
-                opportunity.Image = DataFieldHelper.GetBinaryData(row, "Image");
+                //opportunity.Image = DataFieldHelper.GetBinaryData(row, "Image");
             }
 
             return opportunity;
